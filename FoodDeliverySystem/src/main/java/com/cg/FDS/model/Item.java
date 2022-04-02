@@ -3,7 +3,7 @@ package com.cg.FDS.model;
 import java.util.List;
 
 public class Item {
-private  String itemid;
+private String itemId;
 private String itemName;
 private Category category;
 private int quantity;
@@ -12,21 +12,21 @@ List<Restaurant> restaurants;
 public Item() {
 	super();
 }
-public Item(String itemid, String itemName, Category category, int quantity, double cost,
+public Item(String itemId, String itemName, Category category, int quantity, double cost,
 		List<Restaurant> restaurants) {
 	super();
-	this.itemid = itemid;
+	this.itemId = itemId;
 	this.itemName = itemName;
 	this.category = category;
 	this.quantity = quantity;
 	this.cost = cost;
 	this.restaurants = restaurants;
 }
-public String getItemid() {
-	return itemid;
+public String getItemId() {
+	return itemId;
 }
-public void setItemid(String itemid) {
-	this.itemid = itemid;
+public void setItemId(String itemId) {
+	this.itemId = itemId;
 }
 public String getItemName() {
 	return itemName;
@@ -60,7 +60,7 @@ public void setRestaurants(List<Restaurant> restaurants) {
 }
 @Override
 public String toString() {
-	return "Item [itemid=" + itemid + ", itemName=" + itemName + ", category=" + category + ", quantity=" + quantity
+	return "Item [itemId=" + itemId + ", itemName=" + itemName + ", category=" + category + ", quantity=" + quantity
 			+ ", cost=" + cost + "]";
 }
 
