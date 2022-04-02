@@ -1,5 +1,7 @@
 package com.cg.FDS.model;
 
+import java.util.List;
+
 public class FoodCart {
 	private String cartId;
 	private Customer customer;
