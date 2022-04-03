@@ -1,8 +1,8 @@
 package com.cg.FDS.model;
 
 public class Category {
-	String catId;
-	String categoryName;
+	private String catId;
+	private String categoryName;
 	public Category(String catId, String categoryName) {
 		super();
 		this.catId = catId;
