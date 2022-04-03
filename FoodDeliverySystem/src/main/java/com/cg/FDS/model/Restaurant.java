@@ -2,7 +2,7 @@ package com.cg.FDS.model;
 
 import java.util.List;
 
-public class Resturant {
+public class Restaurant {
 	
 	private String resturantId;
 	private String resturantName;
@@ -10,10 +10,10 @@ public class Resturant {
 	private List<Item> itemList;
 	private String managerName;
 	private String contactNumber;
-	public Resturant() {
+	public Restaurant() {
 		super();
 	}
-	public Resturant(String resturantId, String resturantName, Address address, List<Item> itemList, String managerName,
+	public Restaurant(String resturantId, String resturantName, Address address, List<Item> itemList, String managerName,
 			String contactNumber) {
 		super();
 		this.resturantId = resturantId;
