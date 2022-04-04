@@ -2,6 +2,7 @@ package com.cg.FDS.model;
 
 import java.util.List;
 
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 public class FoodCart {
@@ -9,7 +10,11 @@ public class FoodCart {
 	private List<Item> itemList;
 	@OneToOne
 	private Customer customer;
+	@OneToOne
+	private OrderDetails orderDetail;
 	
+	@OneToMany
+	private List<Item> item;
 	public FoodCart() {
 		super();
 	}
@@ -36,6 +41,20 @@ public class FoodCart {
 	}
 	public void setItemList(List<Item> itemList) {
 		this.itemList = itemList;
+	}
+	
+	public OrderDetails getOrderDetail() {
+		return orderDetail;
+	}
+	public void setOrderDetail(OrderDetails orderDetail) {
+		this.orderDetail = orderDetail;
+	}
+	
+	public List<Item> getItem() {
+		return item;
+	}
+	public void setItem(List<Item> item) {
+		this.item = item;
 	}
 	@Override
 	public String toString() {
