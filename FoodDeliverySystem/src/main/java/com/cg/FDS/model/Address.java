@@ -1,14 +1,31 @@
 package com.cg.FDS.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+@Entity
 public class Address {
+	
+	@Id
 	private String addressId;
+	@Column(name="buildingName", length=30)
 	private String buildingName;
+	@Column(name="streetNo", length=30)
 	private String streetNo;
+	@Column(name="area", length=30)
 	private String area;
+	@Column(name="city", length=30)
 	private String city;
+	@Column(name="state", length=30)
 	private String state;
+	@Column(name="country", length=30)
 	private String country;
+	@Column(name="pincode", length=30)
 	private String pincode;
+	@OneToOne(mappedBy="Address")
+	private Customer customer;
 	
 	public Address() {
 		super();
@@ -25,6 +42,7 @@ public class Address {
 		this.state = state;
 		this.country = country;
 		this.pincode = pincode;
+		this.customer = customer;
 	}
 
 	public String getAddressId() {
@@ -90,13 +108,23 @@ public class Address {
 	public void setPincode(String pincode) {
 		this.pincode = pincode;
 	}
+	
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 
 	@Override
 	public String toString() {
 		return "Address [addressId=" + addressId + ", buildingName=" + buildingName + ", streetNo=" + streetNo
 				+ ", area=" + area + ", city=" + city + ", state=" + state + ", country=" + country + ", pincode="
-				+ pincode + "]";
+				+ pincode + ", customer=" + customer + "]";
 	}
+
+	
 	
 
 }
