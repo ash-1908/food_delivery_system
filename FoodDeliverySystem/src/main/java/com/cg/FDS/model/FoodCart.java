@@ -2,10 +2,14 @@ package com.cg.FDS.model;
 
 import java.util.List;
 
+import javax.persistence.OneToOne;
+
 public class FoodCart {
 	private String cartId;
-	private Customer customer;
 	private List<Item> itemList;
+	@OneToOne
+	private Customer customer;
+	
 	public FoodCart() {
 		super();
 	}
