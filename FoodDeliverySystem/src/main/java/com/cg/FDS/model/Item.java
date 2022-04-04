@@ -2,13 +2,23 @@ package com.cg.FDS.model;
 
 import java.util.List;
 
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+
 public class Item {
 	private String itemId;
 	private String itemName;
+	
+	@OneToOne(mappedBy="category")
 	private Category category;
+	
 	private int quantity;
 	private double cost;
+	
+	@ManyToMany(mappedBy="item")
 	List<Restaurant> restaurants;
+	
+	
 	public Item() {
 		super();
 	}

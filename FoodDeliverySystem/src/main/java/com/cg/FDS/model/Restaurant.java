@@ -2,14 +2,34 @@ package com.cg.FDS.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Restaurant")
 public class Restaurant {
 	
+	@Id
+	@Column(name = "restaurantId",length=20)
 	private String resturantId;
+	@Column(name = "restaurantName",length=20)
 	private String resturantName;
-	private Address address;
-	private List<Item> itemList;
+	
+	@Column(name = "managerName",length=20)
 	private String managerName;
+	@Column(name = "contactNumber",length=20)
 	private String contactNumber;
+	
+	@ManyToMany
+	private List<Item> itemList;
+	
+	@OneToOne
+	Address address;
+	
 	public Restaurant() {
 		super();
 	}
