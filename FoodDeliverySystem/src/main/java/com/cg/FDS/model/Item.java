@@ -3,11 +3,30 @@ package com.cg.FDS.model;
 import java.util.List;
 
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Item")
 public class Item {
-	private String itemId;
+	
+	@Id
+	@Column(name="itemId" ,length=30)
+	String itemId;
+	@Column(name="itemName" ,length=30)
 	private String itemName;
 	private Category category;
+
+	
+	@Column(name="quantity" ,length=30)
 	private int quantity;
+	@Column(name="cost" ,length=30)
 	private double cost;
 	List<Restaurant> restaurants;
 	public Item() {
