@@ -2,16 +2,6 @@ package com.cg.FDS.model;
 
 import java.util.List;
 
-<<<<<<< HEAD
-public class Restaurant {
-	
-	private String resturantId;
-	private String resturantName;
-	private Address address;
-	private List<Item> itemList;
-	private String managerName;
-	private String contactNumber;
-=======
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -40,7 +30,6 @@ public class Restaurant {
 	@OneToOne
 	Address address;
 	
->>>>>>> branch 'main' of https://github.com/ash-1908/food_delivery_system.git
 	public Restaurant() {
 		super();
 	}
