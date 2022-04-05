@@ -2,10 +2,18 @@ package com.cg.FDS.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="FoodCart")
 public class FoodCart {
+	@Id
+	@Column(name="cartId" ,length=30)
 	private String cartId;
 	private List<Item> itemList;
 	@OneToOne
