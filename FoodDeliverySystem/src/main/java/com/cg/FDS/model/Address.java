@@ -4,8 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="Address_tbl")
 public class Address {
 	
 	@Id
@@ -24,8 +26,6 @@ public class Address {
 	private String country;
 	@Column(name="pincode", length=30)
 	private String pincode;
-	@OneToOne(mappedBy="Address")
-	private Customer customer;
 	
 	public Address() {
 		super();
@@ -42,7 +42,7 @@ public class Address {
 		this.state = state;
 		this.country = country;
 		this.pincode = pincode;
-		this.customer = customer;
+		
 	}
 
 	public String getAddressId() {
@@ -109,19 +109,12 @@ public class Address {
 		this.pincode = pincode;
 	}
 	
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
+	
 	@Override
 	public String toString() {
 		return "Address [addressId=" + addressId + ", buildingName=" + buildingName + ", streetNo=" + streetNo
 				+ ", area=" + area + ", city=" + city + ", state=" + state + ", country=" + country + ", pincode="
-				+ pincode + ", customer=" + customer + "]";
+				+ pincode + "]";
 	}
 
 	

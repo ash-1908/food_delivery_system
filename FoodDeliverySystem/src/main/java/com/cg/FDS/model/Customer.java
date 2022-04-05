@@ -4,8 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="Customer_tbl")
 public class Customer {
 	
 	@Id
@@ -25,9 +27,7 @@ public class Customer {
 	
 	@OneToOne
 	private Address address;
-	
-	@OneToOne(mappedBy="Customer")
-	private FoodCart foodCart; 
+ 
 	
 	public Customer() {
 		super();
@@ -44,7 +44,6 @@ public class Customer {
 		this.mobileNumber = mobileNumber;
 		this.address = address;
 		this.email = email;
-		this.foodCart=foodCart;
 	}
 
 	public String getCustomerId() {
@@ -111,19 +110,12 @@ public class Customer {
 		this.email = email;
 	}
 
-	public FoodCart getFoodCart() {
-		return foodCart;
-	}
-
-	public void setFoodCart(FoodCart foodCart) {
-		this.foodCart = foodCart;
-	}
 
 	@Override
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", firstName=" + firstName + ", lastName=" + lastName + ", age="
 				+ age + ", gender=" + gender + ", mobileNumber=" + mobileNumber + ", email=" + email + ", address="
-				+ address + ", foodCart=" + foodCart + "]";
+				+ address + "]";
 	}
 
 	

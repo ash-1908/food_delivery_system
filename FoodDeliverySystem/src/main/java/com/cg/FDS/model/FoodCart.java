@@ -10,7 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="FoodCart")
+@Table(name="FoodCart_tbl")
 public class FoodCart {
 	@Id
 	@Column(name="cartId" ,length=30)
