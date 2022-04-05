@@ -2,6 +2,7 @@ package com.cg.FDS.model;
 
 import java.util.List;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,19 +21,14 @@ public class Item {
 	String itemId;
 	@Column(name="itemName" ,length=30)
 	private String itemName;
-	
-	@OneToOne(mappedBy="category")
 	private Category category;
+
 	
 	@Column(name="quantity" ,length=30)
 	private int quantity;
 	@Column(name="cost" ,length=30)
 	private double cost;
-	
-	@ManyToMany(mappedBy="item")
 	List<Restaurant> restaurants;
-	
-	
 	public Item() {
 		super();
 	}

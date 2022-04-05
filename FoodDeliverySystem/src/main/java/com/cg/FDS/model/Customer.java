@@ -27,7 +27,11 @@ public class Customer {
 	
 	@OneToOne
 	private Address address;
- 
+
+	
+	@OneToOne(mappedBy="customer")
+	private FoodCart foodCart; 
+
 	
 	public Customer() {
 		super();
