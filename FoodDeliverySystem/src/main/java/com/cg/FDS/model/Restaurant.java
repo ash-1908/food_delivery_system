@@ -2,6 +2,7 @@ package com.cg.FDS.model;
 
 import java.util.List;
 
+<<<<<<< HEAD
 public class Restaurant {
 	
 	private String resturantId;
@@ -10,6 +11,36 @@ public class Restaurant {
 	private List<Item> itemList;
 	private String managerName;
 	private String contactNumber;
+=======
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Restaurant")
+public class Restaurant {
+	
+	@Id
+	@Column(name = "restaurantId",length=20)
+	private String resturantId;
+	@Column(name = "restaurantName",length=20)
+	private String resturantName;
+	
+	@Column(name = "managerName",length=20)
+	private String managerName;
+	@Column(name = "contactNumber",length=20)
+	private String contactNumber;
+	
+	@ManyToMany
+	private List<Item> itemList;
+	
+	@OneToOne
+	Address address;
+	
+>>>>>>> branch 'main' of https://github.com/ash-1908/food_delivery_system.git
 	public Restaurant() {
 		super();
 	}

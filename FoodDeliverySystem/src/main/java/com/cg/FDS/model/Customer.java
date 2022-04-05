@@ -1,15 +1,33 @@
 package com.cg.FDS.model;
 
-public class Customer {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
+@Entity
+public class Customer {
+	
+	@Id
 	private String customerId;
+	@Column(name="firstName", length=30)
 	private String firstName;
+	@Column(name="lastName", length=30)
 	private String lastName;
+	@Column(name="age", length=30)
 	private int age;
+	@Column(name="gender", length=30)
 	private String gender;
+	@Column(name="mobileNumber", length=30)
 	private String mobileNumber;
-	private Address address;
+	@Column(name="email", length=30)
 	private String email;
+	
+	@OneToOne
+	private Address address;
+	
+	@OneToOne(mappedBy="Customer")
+	private FoodCart foodCart; 
 	
 	public Customer() {
 		super();
@@ -26,6 +44,7 @@ public class Customer {
 		this.mobileNumber = mobileNumber;
 		this.address = address;
 		this.email = email;
+		this.foodCart=foodCart;
 	}
 
 	public String getCustomerId() {
@@ -92,12 +111,20 @@ public class Customer {
 		this.email = email;
 	}
 
+	public FoodCart getFoodCart() {
+		return foodCart;
+	}
+
+	public void setFoodCart(FoodCart foodCart) {
+		this.foodCart = foodCart;
+	}
+
 	@Override
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", firstName=" + firstName + ", lastName=" + lastName + ", age="
-				+ age + ", gender=" + gender + ", mobileNumber=" + mobileNumber + ", address=" + address + ", email="
-				+ email + "]";
+				+ age + ", gender=" + gender + ", mobileNumber=" + mobileNumber + ", email=" + email + ", address="
+				+ address + ", foodCart=" + foodCart + "]";
 	}
-	
+
 	
 }

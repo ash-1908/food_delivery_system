@@ -1,8 +1,23 @@
 package com.cg.FDS.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="category")
 public class Category {
+	@Id
+	@Column(name = "catId",length=20)
 	private String catId;
+	@Column(name = "categoryName",length=20)
 	private String categoryName;
+	
+	@OneToOne
+	Item item;
+	
 	public Category(String catId, String categoryName) {
 		super();
 		this.catId = catId;
