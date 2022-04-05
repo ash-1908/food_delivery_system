@@ -1,11 +1,22 @@
 package com.cg.FDS.model;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="orderdetails_tbl")
 public class OrderDetails {
+	@Id
 	private Integer orderId;
 	private LocalDateTime orderDate;
-	private FoodCart cart;
+	@Column(name="orderstatus", length=20)
 	private String orderStatus;
+	@OneToOne
+	private FoodCart cart;
 	
 	public OrderDetails() {
 		

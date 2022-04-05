@@ -2,12 +2,24 @@ package com.cg.FDS.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="bill_tbl")
 public class Bill {
+	@Id
+	@Column(name="billId", length=20)
 	private String billId;
 	private LocalDateTime billDate;
-	private OrderDetails order;
 	private Integer totalItem;
 	private Double totalCost;
+	
+	@OneToOne
+	private OrderDetails order;
 	
 	public Bill() {
 		
