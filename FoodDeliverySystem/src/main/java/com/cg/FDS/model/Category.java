@@ -7,7 +7,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="category")
+@Table(name="category_tbl")
 public class Category {
 	@Id
 	@Column(name = "catId",length=20)
@@ -15,8 +15,7 @@ public class Category {
 	@Column(name = "categoryName",length=20)
 	private String categoryName;
 	
-	@OneToOne
-	Item item;
+	
 	
 	public Category(String catId, String categoryName) {
 		super();
