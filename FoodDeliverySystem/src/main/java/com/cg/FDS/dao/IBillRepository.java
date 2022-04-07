@@ -11,6 +11,9 @@ import com.cg.FDS.model.Bill;
 
 @Repository
 public interface IBillRepository extends JpaRepository<Bill, String>{
+	
+	Bill viewBill(Bill bill);
+	
 	@Query("SELECT b from Bill b where b.billDate >= to_date(?1) and b.billDate < to_date(?2)")
 	List<Bill> viewBills(LocalDate startDate, LocalDate endDate);
 
