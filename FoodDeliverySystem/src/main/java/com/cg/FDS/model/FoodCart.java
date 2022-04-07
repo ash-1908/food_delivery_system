@@ -10,19 +10,17 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="FoodCart_tbl")
+@Table(name="foodcart_tbl")
 public class FoodCart {
+	
 	@Id
 	@Column(name="cartId" ,length=30)
 	private String cartId;
+	@OneToMany
 	private List<Item> itemList;
 	@OneToOne
 	private Customer customer;
-	@OneToOne
-	private OrderDetails orderDetail;
 	
-	@OneToMany
-	private List<Item> item;
 	public FoodCart() {
 		super();
 	}
@@ -50,20 +48,7 @@ public class FoodCart {
 	public void setItemList(List<Item> itemList) {
 		this.itemList = itemList;
 	}
-	
-	public OrderDetails getOrderDetail() {
-		return orderDetail;
-	}
-	public void setOrderDetail(OrderDetails orderDetail) {
-		this.orderDetail = orderDetail;
-	}
-	
-	public List<Item> getItem() {
-		return item;
-	}
-	public void setItem(List<Item> item) {
-		this.item = item;
-	}
+
 	@Override
 	public String toString() {
 		return "FoodCart [cartId=" + cartId + ", customer=" + customer + ", itemList=" + itemList + "]";

@@ -21,6 +21,7 @@ public class Item {
 	String itemId;
 	@Column(name="itemName" ,length=30)
 	private String itemName;
+	@OneToOne
 	private Category category;
 
 	
@@ -28,6 +29,7 @@ public class Item {
 	private int quantity;
 	@Column(name="cost" ,length=30)
 	private double cost;
+	@ManyToMany(mappedBy="itemList")
 	List<Restaurant> restaurants;
 	public Item() {
 		super();
