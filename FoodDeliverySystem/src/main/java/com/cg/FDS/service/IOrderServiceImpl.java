@@ -3,12 +3,14 @@ package com.cg.FDS.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cg.FDS.dao.IOrderRepository;
 import com.cg.FDS.model.Customer;
 import com.cg.FDS.model.OrderDetails;
 import com.cg.FDS.model.Restaurant;
 
+@Service
 public class IOrderServiceImpl implements IOrderService{
 
 	@Autowired
