@@ -32,7 +32,7 @@ public class IRestaurantServiceImpl implements  IRestaurantService {
 	}
 
 	@Override
-	public Restaurant RemoveRestaurant(Restaurant rest) {
+	public Restaurant removeRestaurant(Restaurant rest) {
 		// TODO Auto-generated method stub
 		if(resRepo.existsById(rest.getResturantId())) {
 			resRepo.deleteById(rest.getResturantId());
