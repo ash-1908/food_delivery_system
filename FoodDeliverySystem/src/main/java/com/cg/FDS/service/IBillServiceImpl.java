@@ -4,10 +4,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cg.FDS.dao.IBillRepository;
 import com.cg.FDS.model.Bill;
 
+@Service
 public class IBillServiceImpl implements IBillService{
 
 	@Autowired
