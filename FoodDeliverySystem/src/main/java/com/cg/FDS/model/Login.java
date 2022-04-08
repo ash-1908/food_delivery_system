@@ -1,9 +1,17 @@
 package com.cg.FDS.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity(name="login_tbl")
 public class Login {
 	
+	@Id
 	private String userId;
+	@Column(length=30)
 	private String userName;
+	@Column(length=30)
 	private String password;
 	public Login() {
 		super();
