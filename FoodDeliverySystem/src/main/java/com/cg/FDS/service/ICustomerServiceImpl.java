@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cg.FDS.dao.ICustomerRepository;
-import com.cg.FDS.model.Bill;
 import com.cg.FDS.model.Customer;
 import com.cg.FDS.model.Restaurant;
 
@@ -52,9 +51,11 @@ public class ICustomerServiceImpl implements ICustomerService {
 	public List<Customer> viewAllCustomer(Restaurant rest) {
 		// TODO Auto-generated method stub
 		List<Customer> customerList = customerRepo.viewAllCustomer(rest);
+		for(Customer c:customerList){
+			System.out.println(c);
+		}
 		return customerList;
 	}
-	
 	
 
 }
