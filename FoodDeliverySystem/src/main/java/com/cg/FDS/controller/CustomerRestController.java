@@ -22,27 +22,27 @@ public class CustomerRestController {
 	@Autowired
 	ICustomerServiceImpl custserv;
 	
-	@GetMapping("CustomerView")
+	@GetMapping("/CustomerView")
 	public Customer viewCustomer(@RequestBody Customer customer) {
 		return custserv.viewCustomer(customer);
 	}
 	
-	@GetMapping("CustomerViewAll")
+	@GetMapping("/CustomerViewAll")
 	public List<Customer> viewAllcustomer(@RequestBody Restaurant rest){
 		return custserv.viewAllCustomer(rest);
 	}
 	
-	@PostMapping("AddCustomer")
+	@PostMapping("/AddCustomer")
 	public Customer addCustomer(@RequestBody Customer customer) {
 		return custserv.addCustomer(customer);
 	}
 	
-	@PutMapping("UpdateCustomer")
+	@PutMapping("/UpdateCustomer")
 	public Customer updateCustomer(@RequestBody Customer customer) {
 		return custserv.updateCustomer(customer);
 	}
 	
-	@DeleteMapping("RemoveCustomer")
+	@DeleteMapping("/RemoveCustomer")
 	public Customer removeCustomer(@RequestBody Customer customer) {
 		return custserv.removeCustomer(customer);
 	}	

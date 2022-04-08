@@ -17,12 +17,12 @@ public class LoginRestController {
 	@Autowired
 	ILoginServiceImpl logserve;
 	
-	@PostMapping("SignIn")
+	@PostMapping("/SignIn")
 	public Login signIn(@RequestBody Login login) {
 		return logserve.signIn(login);
 	}
 	
-	@DeleteMapping("SignOut")
+	@DeleteMapping("/SignOut")
 	public Login signOut(@RequestBody Login login) {
 		return logserve.signOut(login);
 	}	
