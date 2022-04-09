@@ -3,12 +3,14 @@ package com.cg.FDS.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cg.FDS.dao.IItemRepository;
 import com.cg.FDS.model.Category;
 import com.cg.FDS.model.Item;
 import com.cg.FDS.model.Restaurant;
 
+@Service
 public class IItemServiceImpl implements  IItemService{
 	@Autowired
 	IItemRepository itemRepo;

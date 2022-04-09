@@ -1,11 +1,13 @@
 package com.cg.FDS.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cg.FDS.dao.ICartRepository;
 import com.cg.FDS.model.FoodCart;
 import com.cg.FDS.model.Item;
 
+@Service
 public class ICartServiceImpl implements ICartService{
 	@Autowired
 	ICartRepository cartRepo;
