@@ -7,9 +7,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="Restaurant_tbl")
@@ -27,6 +31,7 @@ public class Restaurant {
 	private String contactNumber;
 	
 	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="restaurant_items", joinColumns= {@JoinColumn(name="restaurantId")}, inverseJoinColumns= {@JoinColumn(name="itemId")})
 	private List<Item> itemList = new ArrayList<Item>();
 	
 	@OneToOne(cascade=CascadeType.ALL)
