@@ -12,7 +12,7 @@ import com.cg.FDS.model.Bill;
 @Repository
 public interface IBillRepository extends JpaRepository<Bill, String>{
 
-	Bill viewBill(Bill bill);
+	
 	
 	@Query("FROM Bill WHERE billDate >= ?1 and billDate < ?2")
 	List<Bill> viewBills(LocalDate startDate, LocalDate endDate);
@@ -20,5 +20,5 @@ public interface IBillRepository extends JpaRepository<Bill, String>{
 	@Query("FROM Bill WHERE order.cart.customer.customerId = ?1")
 	List<Bill> viewBills(String custId);
 
-	double calculateTotalCost(Bill bill);
+	
 }
