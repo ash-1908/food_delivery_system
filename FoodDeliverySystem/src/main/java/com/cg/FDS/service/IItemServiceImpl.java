@@ -48,26 +48,29 @@ public class IItemServiceImpl implements  IItemService{
 
 	public List<Item> viewAllItems(Category cat) {
 		// TODO Auto-generated method stub
-		List<Item> itemList=itemRepo.viewAllItems(cat);
-		for(Item it:itemList)
-			System.out.println(it);
-		return itemList;
+//		List<Item> itemList=itemRepo.viewAllItems(cat);
+//		for(Item it:itemList)
+//			System.out.println(it);
+//		return itemList;
+		return null;
 	}
 
 	public List<Item> viewAllItems(Restaurant res) {
 		// TODO Auto-generated method stub
-		List<Item> itemList1=itemRepo.viewAllItems(res);
-		for(Item it1:itemList1)
-			System.out.println(it1);
-		return itemList1;
+//		List<Item> itemList1=itemRepo.viewAllItems(res);
+//		for(Item it1:itemList1)
+//			System.out.println(it1);
+//		return itemList1;
+		return null;
 	}
 
 	public List<Item> viewAllItemsByName(String name) {
 		// TODO Auto-generated method stub
-		List<Item> nameList=itemRepo.viewAllItemsByName(name);
-		for(Item i : nameList)
-			System.out.println(i);
-		return nameList;
+//		List<Item> nameList=itemRepo.viewAllItemsByName(name);
+//		for(Item i : nameList)
+//			System.out.println(i);
+//		return nameList;
+		return null;
 	}
 
 }
