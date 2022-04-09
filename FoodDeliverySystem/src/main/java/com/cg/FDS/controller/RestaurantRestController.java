@@ -22,7 +22,7 @@ public class RestaurantRestController {
 	@Autowired
 	IRestaurantServiceImpl rserv;
 	
-	@PostMapping("/restaurant/add")
+	@PostMapping("/restaurant/new")
 	public Restaurant addRestaurant(@RequestBody Restaurant res) {
 		return rserv.addRestaurant(res);
 	}
