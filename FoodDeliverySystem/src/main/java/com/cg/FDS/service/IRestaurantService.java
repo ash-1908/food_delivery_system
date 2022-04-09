@@ -9,7 +9,7 @@ public interface IRestaurantService {
 	
 	 Restaurant addRestaurant(Restaurant rest);
 	 Restaurant updateRestaurant(Restaurant rest);
-	 Restaurant RemoveRestaurant(Restaurant rest);
+	 Restaurant removeRestaurant(Restaurant rest);
 	 Restaurant viewRestaurant(Restaurant rest);
 	 List<Restaurant> viewNearByRestaurant(String location);
 	 List<Restaurant> viewRestaurantByItemName(String name);

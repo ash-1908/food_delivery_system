@@ -3,15 +3,18 @@ package com.cg.FDS.dao;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
 import com.cg.FDS.model.Restaurant;
 
 public interface IRestaurantRepository extends JpaRepository<Restaurant,String> {
 	
-	public Restaurant addRestaurant(Restaurant rest);
-	public Restaurant updateRestaurant(Restaurant rest);
-	public Restaurant removeRestaurant(Restaurant rest);
-	public Restaurant viewRestaurant(Restaurant rest);
+  
+	
+	@Query("select r from Restaurant r where r.address.area=?1")
 	public List<Restaurant> viewNearByRestaurant(String location);
+	
+	@Query("select r from Restaurant r join r.itemList i where i.itemName=?1")
 	public List<Restaurant> viewRestaurantByItemName(String name);
 	
 

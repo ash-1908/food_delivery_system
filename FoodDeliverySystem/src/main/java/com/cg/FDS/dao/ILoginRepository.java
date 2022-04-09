@@ -7,6 +7,4 @@ import com.cg.FDS.model.OrderDetails;
 
 public interface ILoginRepository extends JpaRepository<Login,String >{
 
-	public Login signIn(Login login);
-	public Login signOut(Login login);
 }
