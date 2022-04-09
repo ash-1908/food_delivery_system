@@ -10,6 +10,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="Item_tbl")
 public class Item {
@@ -28,6 +30,7 @@ public class Item {
 	@Column(name="cost" ,length=30)
 	private double cost;
 	@ManyToMany(mappedBy="itemList", cascade=CascadeType.ALL)
+	@JsonIgnore
 	List<Restaurant> restaurants = new ArrayList<Restaurant>();
 	public Item() {
 		super();
