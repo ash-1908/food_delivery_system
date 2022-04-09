@@ -11,7 +11,7 @@ import com.cg.FDS.model.Restaurant;
 @Repository
 public interface IOrderRepository extends JpaRepository<OrderDetails, Integer>{
 	
-	OrderDetails viewOrder(OrderDetails order);
+	
 	
 	@Query("SELECT o FROM OrderDetails o JOIN o.cart c JOIN c.itemList i JOIN i.restaurants r WHERE r = ?1")
 	List<OrderDetails> viewAllOrders(Restaurant res);

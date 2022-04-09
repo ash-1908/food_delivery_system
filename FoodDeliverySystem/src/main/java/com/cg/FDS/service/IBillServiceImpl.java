@@ -1,6 +1,7 @@
 package com.cg.FDS.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.cg.FDS.dao.IBillRepository;
 import com.cg.FDS.model.Bill;
+import com.cg.FDS.model.Item;
 
 @Service
 public class IBillServiceImpl implements IBillService{
@@ -70,8 +72,12 @@ public class IBillServiceImpl implements IBillService{
 	@Override
 	public double calculateTotalCost(Bill bill) {
 		// TODO Auto-generated method stub
-		double total = billRepo.calculateTotalCost(bill);
-		return total;
+		List<Item> itemList = bill.getOrder().getCart().getItemList();
+		double totalCost = 0.0;
+		for(Item i: itemList) {
+			totalCost += (i.getQuantity() * i.getCost());
+		}
+		return totalCost;
 	}
 
 }
