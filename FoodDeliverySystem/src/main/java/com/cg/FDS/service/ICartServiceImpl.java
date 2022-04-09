@@ -16,6 +16,7 @@ public class ICartServiceImpl implements ICartService{
 	@Override
 	public FoodCart addItemToCart(FoodCart cart, Item item) {
 		// TODO Auto-generated method stub
+
 		List<Item> itemList = cart.getItemList();
 		itemList.add(item);
 		cart.setItemList(itemList);
@@ -48,6 +49,7 @@ public class ICartServiceImpl implements ICartService{
 	@Override
 	public FoodCart removeItem(FoodCart cart, Item item) {
 		// TODO Auto-generated method stub
+
         List<Item> itemList = cart.getItemList();
         itemList = itemList.stream().filter((i)-> i.getItemId() != item.getItemId()).collect(Collectors.toList());
 		return cart;
