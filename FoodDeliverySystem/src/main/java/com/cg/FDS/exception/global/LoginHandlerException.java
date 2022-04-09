@@ -1,0 +1,32 @@
+package com.cg.FDS.exception.global;
+
+import java.time.LocalDateTime;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.cg.FDS.exception.CustomerAlreadyExistsException;
+import com.cg.FDS.exception.LoginAlreadyExistsException;
+import com.cg.FDS.exception.LoginNotFoundException;
+
+@ControllerAdvice
+public class LoginHandlerException {
+	
+	@ExceptionHandler(LoginAlreadyExistsException.class)
+	public @ResponseBody ErrorInfo addException(LoginAlreadyExistsException e,HttpServletRequest req) {
+		
+		
+		return new ErrorInfo(LocalDateTime.now(),e.getMessage(),req.getRequestURI());
+	}
+	
+	@ExceptionHandler(LoginNotFoundException.class)
+	public @ResponseBody ErrorInfo signOut(LoginNotFoundException e,HttpServletRequest req) {
+		
+		
+		return new ErrorInfo(LocalDateTime.now(),e.getMessage(),req.getRequestURI());
+	}
+
+}

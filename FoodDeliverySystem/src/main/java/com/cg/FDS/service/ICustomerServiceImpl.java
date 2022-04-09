@@ -52,12 +52,12 @@ public class ICustomerServiceImpl implements ICustomerService {
 	@Override
 	public List<Customer> viewAllCustomer(Restaurant rest) {
 		// TODO Auto-generated method stub
-//		List<Customer> customerList = customerRepo.viewAllCustomer(rest);
-//		for(Customer c:customerList){
-//			System.out.println(c);
-//		}
-//		return customerList;
-		return null;
+		List<Customer> customerList = customerRepo.viewAllCustomer(rest);
+		for(Customer c:customerList){
+			System.out.println(c);
+		}
+		return customerList;
+		
 	}
 	
 
