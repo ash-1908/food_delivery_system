@@ -4,37 +4,42 @@ import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cg.FDS.exception.FoodCartException;
+import com.cg.FDS.exception.AlreadyExistInCartException;
+import com.cg.FDS.exception.ItemCannotRemoved;
+import com.cg.FDS.exception.ItemIdNotExistException;
+import com.cg.FDS.exception.QuantityIsNullException;
 
+@Controller
 @ControllerAdvice
 public class FoodCartHandlerException {
-	@ExceptionHandler(FoodCartException.class)
-public @ResponseBody ErrorInfo increaseQuantityException(FoodCartException e, HttpServletRequest req) {
+	@ExceptionHandler(ItemIdNotExistException.class)
+public @ResponseBody ErrorInfo increaseQuantityException(ItemIdNotExistException e, HttpServletRequest req) {
 		
 		return new ErrorInfo(LocalDateTime.now(),e.getMessage(),req.getRequestURI());
 		
 	}
-	@ExceptionHandler(FoodCartException.class)
-public @ResponseBody ErrorInfo reduceQuantityException(FoodCartException e, HttpServletRequest req) {
+	@ExceptionHandler(QuantityIsNullException.class)
+public @ResponseBody ErrorInfo reduceQuantityException(QuantityIsNullException e, HttpServletRequest req) {
 		
 		return new ErrorInfo(LocalDateTime.now(),e.getMessage(),req.getRequestURI());
 		
 	}
-	@ExceptionHandler(FoodCartException.class)
-	public @ResponseBody ErrorInfo removeItemException(FoodCartException e, HttpServletRequest req) {
+	@ExceptionHandler(ItemCannotRemoved.class)
+	public @ResponseBody ErrorInfo removeItemException(AlreadyExistInCartException e, HttpServletRequest req) {
 			
 			return new ErrorInfo(LocalDateTime.now(),e.getMessage(),req.getRequestURI());
 			
 		}
-	@ExceptionHandler(FoodCartException.class)
-	public @ResponseBody ErrorInfo clearCartException(FoodCartException e, HttpServletRequest req) {
-			
-			return new ErrorInfo(LocalDateTime.now(),e.getMessage(),req.getRequestURI());
-			
-		}
+//	@ExceptionHandler(AlreadyExistInCartException.class)
+//	public @ResponseBody ErrorInfo clearCartException(AlreadyExistInCartException e, HttpServletRequest req) {
+//			
+//			return new ErrorInfo(LocalDateTime.now(),e.getMessage(),req.getRequestURI());
+//			
+		
 	
 }

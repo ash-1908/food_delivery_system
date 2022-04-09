@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.FDS.dao.IItemRepository;
+import com.cg.FDS.exception.ItemNotFoundException;
+import com.cg.FDS.exception.ItemNotFoundInCategoryException;
 import com.cg.FDS.model.Category;
 import com.cg.FDS.model.Item;
 import com.cg.FDS.model.Restaurant;
@@ -23,13 +26,27 @@ import com.cg.FDS.service.IItemServiceImpl;
 public class ItemRestController {
 	@Autowired
 	IItemServiceImpl iserv;
+	IItemRepository itemRepo;
 	@PostMapping("/AddItem")
 	public  Item addItem(@RequestBody Item item) {
 		return iserv.addItem(item);
 	}
 	@PutMapping("/UpdateItem")
 	public Item updateItem(@RequestBody Item item) {
-		return iserv.updateItem(item);
+		try {
+			if(itemRepo.existsById(item.getItemId())) {
+				itemRepo.save(item);
+				return item;
+				
+			}else {
+				throw new ItemNotFoundException("Item Id Does not Match");
+				
+			}
+		}
+		catch(ItemNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+		return item;
 	}
 	@GetMapping("/viewItem")
 	public Item viewItem(@RequestBody Item item) {
@@ -37,10 +54,36 @@ public class ItemRestController {
 	}
 	@DeleteMapping("/RemoveItem")
 	public Item removeItem(@RequestBody Item item) {
-		return iserv.removeItem(item);
+		try {
+			if(itemRepo.existsById(item.getItemId())) {
+				itemRepo.deleteById(item.getItemId());
+				return item;
+			}
+			else {
+				throw new ItemNotFoundException("Item not existing");
+				
+			}
+		}
+		catch(ItemNotFoundException e) {		
+			System.out.println(e.getMessage());
+		}
+		return item;
 	}
 	@GetMapping("/viewAllItem/category")
 	public List<Item> viewAllItems(@RequestBody Category cat){
+		try {
+			if(itemRepo.viewAllItems(cat) != null) {
+				return iserv.viewAllItems(cat);
+			}
+				else {
+					throw new ItemNotFoundInCategoryException("Item is  not present in Category");
+				}
+		}
+		catch(ItemNotFoundInCategoryException e) {
+			System.out.println(e.getMessage());
+			
+		}
+			
 		return iserv.viewAllItems(cat);
 	}
 	@GetMapping("/viewAllItem/restaurant")
