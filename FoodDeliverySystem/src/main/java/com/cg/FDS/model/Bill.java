@@ -21,7 +21,7 @@ public class Bill {
 	private String billId;
 	
 	@DateTimeFormat(style = "dd:MM:yy")
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd:MM:yy")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss[.SSS][.SS][.S]")
 	private LocalDateTime billDate;
 	private Integer totalItem;
 	private Double totalCost;

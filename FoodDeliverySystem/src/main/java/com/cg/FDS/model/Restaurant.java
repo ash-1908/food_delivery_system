@@ -1,7 +1,9 @@
 package com.cg.FDS.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,45 +17,45 @@ public class Restaurant {
 	
 	@Id
 	@Column(name = "restaurantId",length=20)
-	private String resturantId;
+	private String restaurantId;
 	@Column(name = "restaurantName",length=20)
-	private String resturantName;
+	private String restaurantName;
 	
 	@Column(name = "managerName",length=20)
 	private String managerName;
 	@Column(name = "contactNumber",length=20)
 	private String contactNumber;
 	
-	@ManyToMany
-	private List<Item> itemList;
+	@ManyToMany(cascade=CascadeType.ALL)
+	private List<Item> itemList = new ArrayList<Item>();
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	Address address;
 	
 	public Restaurant() {
 		super();
 	}
-	public Restaurant(String resturantId, String resturantName, Address address, List<Item> itemList, String managerName,
+	public Restaurant(String restaurantId, String restaurantName, Address address, List<Item> itemList, String managerName,
 			String contactNumber) {
 		super();
-		this.resturantId = resturantId;
-		this.resturantName = resturantName;
+		this.restaurantId = restaurantId;
+		this.restaurantName = restaurantName;
 		this.address = address;
 		this.itemList = itemList;
 		this.managerName = managerName;
 		this.contactNumber = contactNumber;
 	}
 	public String getResturantId() {
-		return resturantId;
+		return restaurantId;
 	}
 	public void setResturantId(String resturantId) {
-		this.resturantId = resturantId;
+		this.restaurantId = resturantId;
 	}
 	public String getResturantName() {
-		return resturantName;
+		return restaurantName;
 	}
 	public void setResturantName(String resturantName) {
-		this.resturantName = resturantName;
+		this.restaurantName = resturantName;
 	}
 	public Address getAddress() {
 		return address;
@@ -81,7 +83,7 @@ public class Restaurant {
 	}
 	@Override
 	public String toString() {
-		return "Resturant [resturantId=" + resturantId + ", resturantName=" + resturantName + ", address=" + address
+		return "Resturant [resturantId=" + restaurantId + ", resturantName=" + restaurantName + ", address=" + address
 				+ ", managerName=" + managerName + ", contactNumber=" + contactNumber + "]";
 	}
 	

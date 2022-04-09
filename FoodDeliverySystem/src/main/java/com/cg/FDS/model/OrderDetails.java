@@ -18,7 +18,7 @@ public class OrderDetails {
 	@Id
 	private Integer orderId;
 	@DateTimeFormat(style = "dd:MM:yy")
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd:MM:yy")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss[.SSS][.SS][.S]")
 	private LocalDateTime orderDate;
 	@Column(name="orderstatus", length=20)
 	private String orderStatus;

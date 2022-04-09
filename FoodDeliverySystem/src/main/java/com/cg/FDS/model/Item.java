@@ -1,7 +1,7 @@
 package com.cg.FDS.model;
 
+import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,8 +27,8 @@ public class Item {
 	private int quantity;
 	@Column(name="cost" ,length=30)
 	private double cost;
-	@ManyToMany(mappedBy="itemList")
-	List<Restaurant> restaurants;
+	@ManyToMany(mappedBy="itemList", cascade=CascadeType.ALL)
+	List<Restaurant> restaurants = new ArrayList<Restaurant>();
 	public Item() {
 		super();
 	}
