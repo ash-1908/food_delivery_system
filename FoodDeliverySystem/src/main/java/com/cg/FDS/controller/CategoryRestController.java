@@ -24,25 +24,25 @@ public class CategoryRestController {
 	@Autowired
 	ICategoryServiceImpl cserv;
 	
-	@PostMapping("/add")
+	@PostMapping("/category/add")
 	public Category addCategory(@RequestBody Category cat) {
 		return cserv.addCategory(cat);
 	}
 	
-	@PutMapping("/update")
+	@PutMapping("/category/update")
 	public Category updateCategory(@RequestBody Category cat) {
 		return cserv.updateCategory(cat);
 	}
 	
-	@DeleteMapping("/remove")
+	@DeleteMapping("/category/remove")
 	public Category removeCategory(@RequestBody Category cat ) {
 		return cserv.removeCategory(cat);
 	}
-	@GetMapping("/view")
+	@GetMapping("/category/view")
 	public Category viewCategory(@RequestBody Category cat) {
 		return cserv.viewCategory(cat);
 	}
-	@GetMapping("/viewAllCategory")
+	@GetMapping("/category/view/all")
 	public List<Category> viewAllCategory() {
 		return cserv.viewAllCategory();
 	}

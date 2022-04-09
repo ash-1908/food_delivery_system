@@ -22,28 +22,28 @@ public class RestaurantRestController {
 	@Autowired
 	IRestaurantServiceImpl rserv;
 	
-	@PostMapping("/add")
+	@PostMapping("/restaurant/add")
 	public Restaurant addRestaurant(@RequestBody Restaurant res) {
 		return rserv.addRestaurant(res);
 	}
-	@PutMapping("/update")
+	@PutMapping("/restaurant/update")
 	public Restaurant updateRestaurant(@RequestBody Restaurant res) {
 		return rserv.updateRestaurant(res);
 	}
-	@DeleteMapping("/remove")
+	@DeleteMapping("/restaurant/remove")
 	public Restaurant removeRestaurant(@RequestBody Restaurant res ) {
 		return rserv.removeRestaurant(res);
 	}
-	@GetMapping("/view")
+	@GetMapping("/restaurant/view")
 	public Restaurant viewRestaurant(@RequestBody Restaurant res) {
 		return rserv.viewRestaurant(res);
 	}
-	@GetMapping("/viewNearByRestaurant/{location}")
+	@GetMapping("/restaurant/view/{location}")
 	public List<Restaurant> viewNearByRestaurant(@PathVariable("location") String location) {
 		return rserv.viewNearByRestaurant(location);
 	}
-	@GetMapping("/viewRestaurantByItemName/{name}")
-	public List<Restaurant> viewRestaurantByItemName(@PathVariable("name") String name) {
+	@GetMapping("/restaurant/view/{item}")
+	public List<Restaurant> viewRestaurantByItemName(@PathVariable("item") String name) {
 		return rserv.viewRestaurantByItemName(name);
 	}
 	
