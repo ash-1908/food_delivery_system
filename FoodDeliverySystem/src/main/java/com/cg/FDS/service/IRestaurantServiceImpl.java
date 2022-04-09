@@ -24,7 +24,7 @@ public class IRestaurantServiceImpl implements  IRestaurantService {
 	
 	public Restaurant updateRestaurant(Restaurant rest) {
 		// TODO Auto-generated method stub
-		if(resRepo.existsById(rest.getResturantId())) {
+		if(resRepo.existsById(rest.getRestaurantId())) {
 			resRepo.save(rest);
 			return rest;
 			
@@ -35,8 +35,8 @@ public class IRestaurantServiceImpl implements  IRestaurantService {
 	@Override
 	public Restaurant removeRestaurant(Restaurant rest) {
 		// TODO Auto-generated method stub
-		if(resRepo.existsById(rest.getResturantId())) {
-			resRepo.deleteById(rest.getResturantId());
+		if(resRepo.existsById(rest.getRestaurantId())) {
+			resRepo.deleteById(rest.getRestaurantId());
 			return rest;
 		}
 		
