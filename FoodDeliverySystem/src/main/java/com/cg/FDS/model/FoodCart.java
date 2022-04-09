@@ -1,7 +1,9 @@
 package com.cg.FDS.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,9 +18,9 @@ public class FoodCart {
 	@Id
 	@Column(name="cartId" ,length=30)
 	private String cartId;
-	@OneToMany
-	private List<Item> itemList;
-	@OneToOne
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<Item> itemList = new ArrayList<Item>();
+	@OneToOne(cascade=CascadeType.ALL)
 	private Customer customer;
 	
 	public FoodCart() {

@@ -1,5 +1,6 @@
 package com.cg.FDS.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -25,7 +26,7 @@ public class Customer {
 	@Column(name="email", length=30)
 	private String email;
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	private Address address;
 
 	public Customer() {

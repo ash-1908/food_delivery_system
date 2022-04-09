@@ -1,21 +1,28 @@
 package com.cg.FDS.model;
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name="orderdetails_tbl")
 public class OrderDetails {
 	@Id
 	private Integer orderId;
+	@DateTimeFormat(style = "dd:MM:yy")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd:MM:yy")
 	private LocalDateTime orderDate;
 	@Column(name="orderstatus", length=20)
 	private String orderStatus;
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	private FoodCart cart;
 	
 	public OrderDetails() {

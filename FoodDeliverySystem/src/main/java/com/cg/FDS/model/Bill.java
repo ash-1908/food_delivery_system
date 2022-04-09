@@ -2,11 +2,16 @@ package com.cg.FDS.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name="bill_tbl")
@@ -14,11 +19,14 @@ public class Bill {
 	@Id
 	@Column(name="billId", length=20)
 	private String billId;
+	
+	@DateTimeFormat(style = "dd:MM:yy")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd:MM:yy")
 	private LocalDateTime billDate;
 	private Integer totalItem;
 	private Double totalCost;
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	private OrderDetails order;
 	
 	public Bill() {
