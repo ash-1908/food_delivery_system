@@ -45,17 +45,17 @@ public class Restaurant {
 		this.managerName = managerName;
 		this.contactNumber = contactNumber;
 	}
-	public String getResturantId() {
+	public String getRestaurantId() {
 		return restaurantId;
 	}
-	public void setResturantId(String resturantId) {
+	public void setRestaurantId(String resturantId) {
 		this.restaurantId = resturantId;
 	}
-	public String getResturantName() {
+	public String getRestaurantName() {
 		return restaurantName;
 	}
-	public void setResturantName(String resturantName) {
-		this.restaurantName = resturantName;
+	public void setRestaurantName(String restaurantName) {
+		this.restaurantName = restaurantName;
 	}
 	public Address getAddress() {
 		return address;
@@ -83,7 +83,7 @@ public class Restaurant {
 	}
 	@Override
 	public String toString() {
-		return "Resturant [resturantId=" + restaurantId + ", resturantName=" + restaurantName + ", address=" + address
+		return "Restaurant [restaurantId=" + restaurantId + ", restaurantName=" + restaurantName + ", address=" + address
 				+ ", managerName=" + managerName + ", contactNumber=" + contactNumber + "]";
 	}
 	
