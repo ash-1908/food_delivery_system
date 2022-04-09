@@ -3,11 +3,13 @@ package com.cg.FDS.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cg.FDS.dao.ICustomerRepository;
 import com.cg.FDS.model.Customer;
 import com.cg.FDS.model.Restaurant;
 
+@Service
 public class ICustomerServiceImpl implements ICustomerService {
 
 	@Autowired
@@ -50,11 +52,12 @@ public class ICustomerServiceImpl implements ICustomerService {
 	@Override
 	public List<Customer> viewAllCustomer(Restaurant rest) {
 		// TODO Auto-generated method stub
-		List<Customer> customerList = customerRepo.viewAllCustomer(rest);
-		for(Customer c:customerList){
-			System.out.println(c);
-		}
-		return customerList;
+//		List<Customer> customerList = customerRepo.viewAllCustomer(rest);
+//		for(Customer c:customerList){
+//			System.out.println(c);
+//		}
+//		return customerList;
+		return null;
 	}
 	
 
