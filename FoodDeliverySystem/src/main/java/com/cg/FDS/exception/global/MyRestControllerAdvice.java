@@ -9,8 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.cg.FDS.exception.bill.BillAlreadyExists;
+import com.cg.FDS.exception.EmptyValuesException;
+import com.cg.FDS.exception.bill.BillAlreadyExistsException;
 import com.cg.FDS.exception.bill.BillNotFoundException;
 import com.cg.FDS.exception.bill.InvalidBillCustomerIdException;
 import com.cg.FDS.exception.bill.InvalidBillDateException;
@@ -36,11 +38,18 @@ import com.cg.FDS.exception.restaurant.RestaurantAlreadyExists;
 import com.cg.FDS.exception.restaurant.RestaurantNotFoundException;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler {
+public class MyRestControllerAdvice extends ResponseEntityExceptionHandler {
+	@ExceptionHandler(EmptyValuesException.class)
+	public @ResponseBody ResponseEntity<ErrorInfo> handleEmptyValuesException(EmptyValuesException e,
+			HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.BAD_REQUEST);
+	}
+
 	// Bill exceptions
 
-	@ExceptionHandler(BillAlreadyExists.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> addBillException(BillAlreadyExists e, HttpServletRequest req) {
+	@ExceptionHandler(BillAlreadyExistsException.class)
+	public @ResponseBody ResponseEntity<ErrorInfo> addBillException(BillAlreadyExistsException e, HttpServletRequest req) {
 		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
