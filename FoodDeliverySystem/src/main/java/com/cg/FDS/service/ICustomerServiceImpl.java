@@ -25,7 +25,7 @@ public class ICustomerServiceImpl implements ICustomerService {
 	@Override
 	public Customer updateCustomer(Customer customer) {
 		// TODO Auto-generated method stub
-		if(customerRepo.existsById(customer.getCustomerId())) {
+		if (customerRepo.existsById(customer.getCustomerId())) {
 			customerRepo.save(customer);
 			return customer;
 		}
@@ -35,7 +35,7 @@ public class ICustomerServiceImpl implements ICustomerService {
 	@Override
 	public Customer removeCustomer(Customer customer) {
 		// TODO Auto-generated method stub
-		if(customerRepo.existsById(customer.getCustomerId())) {
+		if (customerRepo.existsById(customer.getCustomerId())) {
 			customerRepo.deleteById(customer.getCustomerId());
 			return customer;
 		}
@@ -53,12 +53,10 @@ public class ICustomerServiceImpl implements ICustomerService {
 	public List<Customer> viewAllCustomer(Restaurant rest) {
 		// TODO Auto-generated method stub
 		List<Customer> customerList = customerRepo.viewAllCustomer(rest);
-		for(Customer c:customerList){
+		for (Customer c : customerList) {
 			System.out.println(c);
 		}
 		return customerList;
-		
 	}
-	
 
 }

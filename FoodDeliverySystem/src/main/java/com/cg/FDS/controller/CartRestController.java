@@ -24,6 +24,7 @@ import com.cg.FDS.service.ICartServiceImpl;
 public class CartRestController {
 @Autowired
 ICartServiceImpl caserv;
+@Autowired
 ICartRepository carepo;
 
 @PostMapping("/add")

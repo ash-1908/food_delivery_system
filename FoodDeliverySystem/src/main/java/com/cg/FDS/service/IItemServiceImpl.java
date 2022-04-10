@@ -11,66 +11,70 @@ import com.cg.FDS.model.Item;
 import com.cg.FDS.model.Restaurant;
 
 @Service
-public class IItemServiceImpl implements  IItemService{
+public class IItemServiceImpl implements IItemService {
 	@Autowired
 	IItemRepository itemRepo;
 
+	@Override
 	public Item addItem(Item item) {
 		// TODO Auto-generated method stub
 		itemRepo.save(item);
 		return item;
 	}
 
+	@Override
 	public Item updateItem(Item item) {
 		// TODO Auto-generated method stub
-		if(itemRepo.existsById(item.getItemId())) {
+		if (itemRepo.existsById(item.getItemId())) {
 			itemRepo.save(item);
 			return item;
-			
+
 		}
 		return null;
 	}
 
+	@Override
 	public Item viewItem(Item item) {
 		// TODO Auto-generated method stub
 		System.out.println(item);
 		return item;
 	}
 
+	@Override
 	public Item removeItem(Item item) {
 		// TODO Auto-generated method stub
-		if(itemRepo.existsById(item.getItemId())) {
+		if (itemRepo.existsById(item.getItemId())) {
 			itemRepo.deleteById(item.getItemId());
 			return item;
 		}
 		return null;
 	}
 
+	@Override
 	public List<Item> viewAllItems(Category cat) {
 		// TODO Auto-generated method stub
-		List<Item> itemList=itemRepo.viewAllItems(cat);
-		for(Item it:itemList)
+		List<Item> itemList = itemRepo.viewAllItems(cat);
+		for (Item it : itemList)
 			System.out.println(it);
 		return itemList;
-		//return null;
 	}
 
+	@Override
 	public List<Item> viewAllItems(Restaurant res) {
 		// TODO Auto-generated method stub
-		List<Item> itemList1=itemRepo.viewAllItems(res);
-		for(Item it1:itemList1)
+		List<Item> itemList1 = itemRepo.viewAllItems(res);
+		for (Item it1 : itemList1)
 			System.out.println(it1);
 		return itemList1;
-		//return null;
 	}
 
+	@Override
 	public List<Item> viewAllItemsByName(String name) {
 		// TODO Auto-generated method stub
-		List<Item> nameList=itemRepo.viewAllItemsByName(name);
-		for(Item i : nameList)
+		List<Item> nameList = itemRepo.viewAllItemsByName(name);
+		for (Item i : nameList)
 			System.out.println(i);
 		return nameList;
-//		return null;
 	}
 
 }

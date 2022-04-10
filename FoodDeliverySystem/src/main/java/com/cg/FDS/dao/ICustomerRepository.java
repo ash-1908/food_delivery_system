@@ -7,14 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.cg.FDS.model.Customer;
-import com.cg.FDS.model.OrderDetails;
 import com.cg.FDS.model.Restaurant;
 
 @Repository
-public interface ICustomerRepository extends JpaRepository<Customer, String>{
-	
-	
-	@Query("SELECT c from Customer c JOIN c.FoodCart f JOIN f.ItemList i JOIN i.restaurant r WHERE r=?1")
+public interface ICustomerRepository extends JpaRepository<Customer, String> {
+
+	@Query("SELECT c FROM Customer c JOIN c.cartList l JOIN l.itemList i JOIN i.restaurants r WHERE r=?1")
 	public List<Customer> viewAllCustomer(Restaurant rest);
 
 }

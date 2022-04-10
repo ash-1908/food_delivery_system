@@ -1,40 +1,46 @@
 package com.cg.FDS.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Customer_tbl")
+@Table(name = "Customer_tbl")
 public class Customer {
-	
+
 	@Id
 	private String customerId;
-	@Column(name="firstName", length=30)
+	@Column(name = "firstName", length = 30)
 	private String firstName;
-	@Column(name="lastName", length=30)
+	@Column(name = "lastName", length = 30)
 	private String lastName;
-	@Column(name="age", length=30)
+	@Column(name = "age", length = 30)
 	private int age;
-	@Column(name="gender", length=30)
+	@Column(name = "gender", length = 30)
 	private String gender;
-	@Column(name="mobileNumber", length=30)
+	@Column(name = "mobileNumber", length = 30)
 	private String mobileNumber;
-	@Column(name="email", length=30)
+	@Column(name = "email", length = 30)
 	private String email;
-	
-	@OneToOne(cascade=CascadeType.ALL)
+
+	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
 
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<FoodCart> cartList = new ArrayList<>();
+
 	public Customer() {
-		super();
 	}
-	
+
 	public Customer(String customerId, String firstName, String lastName, int age, String gender, String mobileNumber,
-			Address address, String email) {
+			String email, Address address, List<FoodCart> cartList) {
 		super();
 		this.customerId = customerId;
 		this.firstName = firstName;
@@ -42,8 +48,17 @@ public class Customer {
 		this.age = age;
 		this.gender = gender;
 		this.mobileNumber = mobileNumber;
-		this.address = address;
 		this.email = email;
+		this.address = address;
+		this.cartList = cartList;
+	}
+
+	public List<FoodCart> getCartList() {
+		return cartList;
+	}
+
+	public void setCartList(List<FoodCart> cartList) {
+		this.cartList = cartList;
 	}
 
 	public String getCustomerId() {
@@ -110,13 +125,11 @@ public class Customer {
 		this.email = email;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", firstName=" + firstName + ", lastName=" + lastName + ", age="
 				+ age + ", gender=" + gender + ", mobileNumber=" + mobileNumber + ", email=" + email + ", address="
-				+ address + "]";
+				+ address + ", cartList=" + cartList + "]";
 	}
 
-	
 }
