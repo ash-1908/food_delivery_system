@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cg.FDS.dao.IItemRepository;
 import com.cg.FDS.dao.IRestaurantRepository;
+import com.cg.FDS.exception.EmptyValuesException;
+import com.cg.FDS.exception.restaurant.RestaurantAlreadyExistsException;
+import com.cg.FDS.exception.restaurant.RestaurantNotFoundException;
 import com.cg.FDS.model.Address;
 import com.cg.FDS.model.Item;
 import com.cg.FDS.model.Restaurant;
@@ -24,72 +26,83 @@ public class IRestaurantServiceImpl implements IRestaurantService {
 	@Autowired
 	IItemServiceImpl itemServ;
 
-	@Autowired
-	IItemRepository itemRepo;
-
 	@Override
 	public Restaurant addRestaurant(Restaurant rest) {
-		// TODO Auto-generated method stub
+		if (rest.getRestaurantId() == null || rest.getRestaurantId().length() == 0)
+			throw new EmptyValuesException("Restaurant Id cannot be empty.");
+		if (resRepo.existsById(rest.getRestaurantId()))
+			throw new RestaurantAlreadyExistsException("Restaurant already exists.");
+
+		if (rest.getAddress() == null || rest.getAddress().getAddressId() == null
+				|| rest.getAddress().getAddressId().length() == 0)
+			throw new EmptyValuesException("Restaurant address cannot be empty.");
+
 		Address adr = addrServ.getAddress(rest.getAddress().getAddressId());
-		List<Item> itemList = new ArrayList<>();
-		for (Item i : rest.getItemList()) {
-			itemList.add(itemRepo.findById(i.getItemId()).get());
+		if (rest.getItemList().size() != 0) {
+			List<Item> itemList = new ArrayList<>();
+			for (Item i : rest.getItemList()) {
+				itemList.add(itemServ.getItem(i.getItemId()));
+			}
+			rest.setItemList(itemList);
 		}
-		rest.setAddress(null);
-		rest.setItemList(null);
-		resRepo.save(rest);
-
 		rest.setAddress(adr);
-		rest.setItemList(itemList);
 		resRepo.save(rest);
-
 		return rest;
 	}
 
 	@Override
 	public Restaurant updateRestaurant(Restaurant rest) {
-		// TODO Auto-generated method stub
-		if (resRepo.existsById(rest.getRestaurantId())) {
-			addrServ.updateAddress(rest.getAddress());
-			for (Item i : rest.getItemList()) {
-				itemServ.addItem(i);
-			}
-			resRepo.save(rest);
-			return rest;
+		if (rest.getRestaurantId() == null || rest.getRestaurantId().length() == 0)
+			throw new EmptyValuesException("Restaurant Id cannot be empty.");
+		if (!resRepo.existsById(rest.getRestaurantId()))
+			throw new RestaurantNotFoundException("Restaurant does not exist.");
 
+		if (rest.getAddress() == null || rest.getAddress().getAddressId() == null
+				|| rest.getAddress().getAddressId().length() == 0)
+			throw new EmptyValuesException("Restaurant address cannot be empty.");
+
+		addrServ.updateAddress(rest.getAddress());
+		for (Item i : rest.getItemList()) {
+			itemServ.addItem(i);
 		}
-		return null;
+		resRepo.save(rest);
+		return rest;
 	}
 
 	@Override
 	public Restaurant removeRestaurant(Restaurant rest) {
-		// TODO Auto-generated method stub
-		if (resRepo.existsById(rest.getRestaurantId())) {
-			addrServ.deleteAddress(rest.getAddress().getAddressId());
-			resRepo.deleteById(rest.getRestaurantId());
-			return rest;
-		}
+		if (rest.getRestaurantId() == null || rest.getRestaurantId().length() == 0)
+			throw new EmptyValuesException("Restaurant Id cannot be empty.");
+		if (!resRepo.existsById(rest.getRestaurantId()))
+			throw new RestaurantNotFoundException("Restaurant does not exist.");
 
-		return null;
+		addrServ.deleteAddress(rest.getAddress().getAddressId());
+		resRepo.deleteById(rest.getRestaurantId());
+		return rest;
 	}
 
 	@Override
 	public Restaurant viewRestaurant(Restaurant rest) {
-		System.out.println(rest);
+		if (rest.getRestaurantId() == null || rest.getRestaurantId().length() == 0)
+			throw new EmptyValuesException("Restaurant Id cannot be empty.");
+
 		return rest;
 	}
 
 	@Override
 	public List<Restaurant> viewNearByRestaurant(String location) {
-		// TODO Auto-generated method stub
-		List<Restaurant> restList = resRepo.viewNearByRestaurant(location);
+		if (location == null || location.length() == 0)
+			throw new EmptyValuesException("Restaurant location cannot be empty.");
 
+		List<Restaurant> restList = resRepo.viewNearByRestaurant(location);
 		return restList;
 	}
 
 	@Override
 	public List<Restaurant> viewRestaurantByItemName(String name) {
-		// TODO Auto-generated method stub
+		if (name == null || name.length() == 0)
+			throw new EmptyValuesException("Restaurant name cannot be empty.");
+
 		List<Restaurant> restList = resRepo.viewRestaurantByItemName(name);
 		return restList;
 	}

@@ -14,8 +14,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.cg.FDS.exception.EmptyValuesException;
 import com.cg.FDS.exception.bill.BillAlreadyExistsException;
 import com.cg.FDS.exception.bill.BillNotFoundException;
-import com.cg.FDS.exception.bill.InvalidBillCustomerIdException;
-import com.cg.FDS.exception.bill.InvalidBillDateException;
 import com.cg.FDS.exception.category.CategoryAlreadyExists;
 import com.cg.FDS.exception.category.CategoryNotFoundException;
 import com.cg.FDS.exception.category.NullCategoryException;
@@ -33,8 +31,7 @@ import com.cg.FDS.exception.login.LoginNotFoundException;
 import com.cg.FDS.exception.order.NullOrderException;
 import com.cg.FDS.exception.order.OrderAlreadyExistsException;
 import com.cg.FDS.exception.order.OrderNotFoundException;
-import com.cg.FDS.exception.restaurant.NullRestaurantException;
-import com.cg.FDS.exception.restaurant.RestaurantAlreadyExists;
+import com.cg.FDS.exception.restaurant.RestaurantAlreadyExistsException;
 import com.cg.FDS.exception.restaurant.RestaurantNotFoundException;
 
 @RestControllerAdvice
@@ -49,29 +46,14 @@ public class MyRestControllerAdvice extends ResponseEntityExceptionHandler {
 	// Bill exceptions
 
 	@ExceptionHandler(BillAlreadyExistsException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> addBillException(BillAlreadyExistsException e, HttpServletRequest req) {
+	public @ResponseBody ResponseEntity<ErrorInfo> addBillException(BillAlreadyExistsException e,
+			HttpServletRequest req) {
 		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(BillNotFoundException.class)
 	public @ResponseBody ResponseEntity<ErrorInfo> billNotFound(BillNotFoundException e, HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.NOT_FOUND);
-
-	}
-
-	@ExceptionHandler(InvalidBillDateException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> viewBillbyDateException(InvalidBillDateException e,
-			HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.NOT_FOUND);
-
-	}
-
-	@ExceptionHandler(InvalidBillCustomerIdException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> viewBillbyCustomerIdException(InvalidBillCustomerIdException e,
-			HttpServletRequest req) {
 		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.NOT_FOUND);
 
@@ -195,8 +177,8 @@ public class MyRestControllerAdvice extends ResponseEntityExceptionHandler {
 	}
 
 	// Restaurant exceptions
-	@ExceptionHandler(RestaurantAlreadyExists.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> addRestaurantException(RestaurantAlreadyExists e,
+	@ExceptionHandler(RestaurantAlreadyExistsException.class)
+	public @ResponseBody ResponseEntity<ErrorInfo> addRestaurantException(RestaurantAlreadyExistsException e,
 			HttpServletRequest req) {
 		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
@@ -204,13 +186,6 @@ public class MyRestControllerAdvice extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(RestaurantNotFoundException.class)
 	public @ResponseBody ResponseEntity<ErrorInfo> restaurantNotFound(RestaurantNotFoundException e,
-			HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
-	}
-
-	@ExceptionHandler(NullRestaurantException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> restaurantWithNullValues(NullRestaurantException e,
 			HttpServletRequest req) {
 		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
