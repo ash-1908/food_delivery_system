@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -12,6 +13,7 @@ import com.cg.FDS.exception.BillNotFoundException;
 import com.cg.FDS.exception.InvalidBillCustomerIdException;
 import com.cg.FDS.exception.InvalidBillDateException;
 
+@ControllerAdvice
 public class BillHandlerException {
 	
 	@ExceptionHandler(BillAlreadyExists.class)
