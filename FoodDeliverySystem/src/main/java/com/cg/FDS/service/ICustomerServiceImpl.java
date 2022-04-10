@@ -15,9 +15,13 @@ public class ICustomerServiceImpl implements ICustomerService {
 	@Autowired
 	ICustomerRepository customerRepo;
 
+	@Autowired
+	IAddressServiceImpl addrServ;
+
 	@Override
 	public Customer addCustomer(Customer customer) {
 		// TODO Auto-generated method stub
+		addrServ.addAddress(customer.getAddress());
 		customerRepo.save(customer);
 		return customer;
 	}
@@ -26,6 +30,7 @@ public class ICustomerServiceImpl implements ICustomerService {
 	public Customer updateCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		if (customerRepo.existsById(customer.getCustomerId())) {
+			addrServ.updateAddress(customer.getAddress());
 			customerRepo.save(customer);
 			return customer;
 		}
@@ -36,7 +41,9 @@ public class ICustomerServiceImpl implements ICustomerService {
 	public Customer removeCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		if (customerRepo.existsById(customer.getCustomerId())) {
+			addrServ.deleteAddress(customer.getAddress().getAddressId());
 			customerRepo.deleteById(customer.getCustomerId());
+			// return customer and address object
 			return customer;
 		}
 		return null;

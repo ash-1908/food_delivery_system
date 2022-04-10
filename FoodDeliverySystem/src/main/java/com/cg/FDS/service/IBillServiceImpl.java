@@ -1,7 +1,6 @@
 package com.cg.FDS.service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +11,17 @@ import com.cg.FDS.model.Bill;
 import com.cg.FDS.model.Item;
 
 @Service
-public class IBillServiceImpl implements IBillService{
+public class IBillServiceImpl implements IBillService {
 
 	@Autowired
 	IBillRepository billRepo;
-	
+	@Autowired
+	IOrderServiceImpl orderService;
+
 	@Override
 	public Bill addBill(Bill bill) {
 		// TODO Auto-generated method stub
+		orderService.addOrder(bill.getOrder());
 		billRepo.save(bill);
 		return bill;
 	}
@@ -27,7 +29,8 @@ public class IBillServiceImpl implements IBillService{
 	@Override
 	public Bill updateBill(Bill bill) {
 		// TODO Auto-generated method stub
-		if(billRepo.existsById(bill.getBillId())) {
+		if (billRepo.existsById(bill.getBillId())) {
+			orderService.addOrder(bill.getOrder());
 			billRepo.save(bill);
 			return bill;
 		}
@@ -37,7 +40,8 @@ public class IBillServiceImpl implements IBillService{
 	@Override
 	public Bill removeBill(Bill bill) {
 		// TODO Auto-generated method stub
-		if(billRepo.existsById(bill.getBillId())) {
+		if (billRepo.existsById(bill.getBillId())) {
+			orderService.removeOrder(bill.getOrder());
 			billRepo.deleteById(bill.getBillId());
 			return bill;
 		}
@@ -55,7 +59,7 @@ public class IBillServiceImpl implements IBillService{
 	public List<Bill> viewBills(LocalDate startDate, LocalDate endDate) {
 		// TODO Auto-generated method stub
 		List<Bill> billList = billRepo.viewBills(startDate, endDate);
-		for(Bill b: billList)
+		for (Bill b : billList)
 			System.out.println(b);
 		return billList;
 	}
@@ -64,7 +68,7 @@ public class IBillServiceImpl implements IBillService{
 	public List<Bill> viewBills(String custId) {
 		// TODO Auto-generated method stub
 		List<Bill> billList = billRepo.viewBills(custId);
-		for(Bill b: billList)
+		for (Bill b : billList)
 			System.out.println(b);
 		return billList;
 	}
@@ -74,7 +78,7 @@ public class IBillServiceImpl implements IBillService{
 		// TODO Auto-generated method stub
 		List<Item> itemList = bill.getOrder().getCart().getItemList();
 		double totalCost = 0.0;
-		for(Item i: itemList) {
+		for (Item i : itemList) {
 			totalCost += (i.getQuantity() * i.getCost());
 		}
 		return totalCost;

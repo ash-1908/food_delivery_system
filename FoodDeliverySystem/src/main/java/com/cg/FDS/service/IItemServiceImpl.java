@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cg.FDS.dao.ICategoryRepository;
 import com.cg.FDS.dao.IItemRepository;
 import com.cg.FDS.model.Category;
 import com.cg.FDS.model.Item;
@@ -14,10 +15,16 @@ import com.cg.FDS.model.Restaurant;
 public class IItemServiceImpl implements IItemService {
 	@Autowired
 	IItemRepository itemRepo;
+	@Autowired
+	ICategoryServiceImpl catServ;
+	@Autowired
+	ICategoryRepository catRepo;
 
 	@Override
 	public Item addItem(Item item) {
 		// TODO Auto-generated method stub
+		if (!catRepo.existsById(item.getCategory().getCatId()))
+			catServ.addCategory(item.getCategory());
 		itemRepo.save(item);
 		return item;
 	}
@@ -26,9 +33,10 @@ public class IItemServiceImpl implements IItemService {
 	public Item updateItem(Item item) {
 		// TODO Auto-generated method stub
 		if (itemRepo.existsById(item.getItemId())) {
+			if (!catRepo.existsById(item.getCategory().getCatId()))
+				catServ.addCategory(item.getCategory());
 			itemRepo.save(item);
 			return item;
-
 		}
 		return null;
 	}

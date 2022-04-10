@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.cg.FDS.model.Address;
 
 @Repository
-public interface IAddressDao extends JpaRepository<Address, String>{
+public interface IAddressRepository extends JpaRepository<Address, String>{
 
 }
