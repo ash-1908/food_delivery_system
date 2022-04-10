@@ -1,19 +1,37 @@
 package com.cg.FDS.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.FDS.dao.IBillRepository;
+import com.cg.FDS.exception.BillAlreadyExists;
+import com.cg.FDS.exception.BillNotFoundException;
+import com.cg.FDS.exception.CategoryNotFoundException;
+import com.cg.FDS.exception.CustomerNotFoundException;
+import com.cg.FDS.exception.InvalidBillCustomerIdException;
+import com.cg.FDS.exception.InvalidBillDateException;
+import com.cg.FDS.exception.NullRestaurantException;
+import com.cg.FDS.exception.RestaurantAlreadyExists;
+import com.cg.FDS.exception.RestaurantNotFoundException;
+import com.cg.FDS.exception.global.ErrorInfo;
 import com.cg.FDS.model.Bill;
+import com.cg.FDS.model.Restaurant;
 import com.cg.FDS.service.IBillServiceImpl;
 
 @RestController
@@ -21,34 +39,101 @@ import com.cg.FDS.service.IBillServiceImpl;
 public class BillRestController {
 	@Autowired
 	IBillServiceImpl bserv;
+	IBillRepository brepo;
 	
 	@GetMapping("/bill/view")
 	public Bill viewBill(@RequestBody Bill bill) {
+
+		try {
+			if(!brepo.existsById(bill.getBillId())){
+				throw new BillNotFoundException("Invalid Bill Id.");
+			}
+		}
+		catch(BillNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
 		return bserv.viewBill(bill);
+		
+		
 	}
 	
 	@GetMapping("/bill/view/filter/date/{startDate}/{endDate}")
 	public List<Bill> viewBill(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate) {
-		return bserv.viewBills(startDate, endDate);
+		List<Bill> billList = bserv.viewBills(startDate,endDate);
+		Iterator<Bill> it = billList.listIterator();
+		try {
+			while(!it.hasNext()){
+				throw new InvalidBillDateException("No bill available with the given date");
+			}
+		}
+		catch(InvalidBillDateException e) {
+			System.out.println(e.getMessage());
+		}
+		return bserv.viewBills(startDate,endDate);
 	}
 	
 	@GetMapping("/bill/view/filter/customer/{custId}")
 	public List<Bill> viewBills(@RequestParam("custId") String custId) {
+		
+		List<Bill> billList = bserv.viewBills(custId);
+		Iterator<Bill> it = billList.listIterator();
+		try {
+			while(!it.hasNext()){
+				throw new InvalidBillCustomerIdException("No bill available with the given customer id");
+			}
+		}
+		catch(InvalidBillCustomerIdException e) {
+			System.out.println(e.getMessage());
+		}
 		return bserv.viewBills(custId);
+		
 	}
 	
 	@PostMapping("/bill/new")
 	public Bill addBill(@RequestBody Bill bill) {
-		return bserv.addBill(bill);
+		try {
+			
+			if(brepo.existsById(bill.getBillId())) {
+				throw new BillAlreadyExists("Bill Already exists");
+				
+			}
+		}
+	
+			catch(BillAlreadyExists e) {
+				System.out.println(e.getMessage());
+			}
+			return bserv.addBill(bill);
 	}
 	
 	@PutMapping("/bill/update")
 	public Bill updateBill(@RequestBody Bill bill) {
-		return bserv.updateBill(bill);
+		Bill b=bill;
+		try {
+			
+			if(brepo.existsById(bill.getBillId())) {
+				b= bserv.updateBill(b);
+				return b;
+			}
+			else {
+				throw new BillNotFoundException("Bill not found");
+			}
+			}
+			catch(BillNotFoundException e) {
+				System.out.println(e.getMessage());
+			}
+			return b;
 	}
 	
 	@DeleteMapping("/bill/remove")
 	public Bill removeBill(@RequestBody Bill bill) {
+		try {
+			if(!brepo.existsById(bill.getBillId())) {
+				throw new BillNotFoundException("Bill does not exists to remove");
+			}
+		}
+		catch(BillNotFoundException e) {
+			System.out.println(e.getMessage());
+		}	
 		return bserv.removeBill(bill);
 	}	
 }
