@@ -1,5 +1,6 @@
 package com.cg.FDS.controller;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.FDS.dao.IItemRepository;
+import com.cg.FDS.exception.ItemNotExistInRestaurant;
 import com.cg.FDS.exception.ItemNotFoundException;
 import com.cg.FDS.exception.ItemNotFoundInCategoryException;
+import com.cg.FDS.exception.NoItemWithThisNameException;
 import com.cg.FDS.model.Category;
 import com.cg.FDS.model.Item;
 import com.cg.FDS.model.Restaurant;
@@ -82,17 +85,42 @@ public class ItemRestController {
 		catch(ItemNotFoundInCategoryException e) {
 			System.out.println(e.getMessage());
 			
-		}
+	}
 			
 		return iserv.viewAllItems(cat);
 	}
 	@GetMapping("/viewAllItem/restaurant")
 	public List<Item> viewAllItems(@RequestBody Restaurant res){
+		Restaurant r= res;
+		try {
+			if(itemRepo.existsById(res.getRestaurantId())){
+				r=(Restaurant) iserv.viewAllItems(r);
+			return iserv.viewAllItems(res);	
+			}
+			else {
+				throw new ItemNotExistInRestaurant("Item is not in Restaturant");
+			}
+		}catch(ItemNotExistInRestaurant e) {
+			System.out.println(e.getMessage());
+			
+		}
+		
 		return iserv.viewAllItems(res);
 	}
 	@GetMapping("/viewAllItemByName/{name}")
 	public List<Item> viewAllItemByName(@PathVariable("name") String name){
-		return iserv.viewAllItemsByName(name);
+		List<Item> i1= iserv.viewAllItemsByName(name);
+		Iterator<Item> it=i1.listIterator();
+		try {
+			while(!it.hasNext()) {
+				throw new NoItemWithThisNameException("No item is present in the restaurant with this name");
+				
+			}
+		}catch(NoItemWithThisNameException e){
+			
+			System.out.println(e.getMessage());
+		}
+				return iserv.viewAllItemsByName(name);
 	}
 	
 }

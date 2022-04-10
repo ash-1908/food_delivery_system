@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cg.FDS.exception.ItemNotFoundException;
 import com.cg.FDS.exception.ItemNotFoundInCategoryException;
+import com.cg.FDS.exception.NoItemWithThisNameException;
 
 
 
@@ -35,8 +36,8 @@ public class ItemHandlerException {
 				return new ErrorInfo(LocalDateTime.now(),e.getMessage(),req.getRequestURI());
 				
 			}
-	@ExceptionHandler(ItemNotFoundException.class)
-	public @ResponseBody ErrorInfo viewAllItemsByNameException(ItemNotFoundException e, HttpServletRequest req) {
+	@ExceptionHandler(NoItemWithThisNameException.class)
+	public @ResponseBody ErrorInfo viewAllItemsByNameException(NoItemWithThisNameException e, HttpServletRequest req) {
 			
 			return new ErrorInfo(LocalDateTime.now(),e.getMessage(),req.getRequestURI());
 			
