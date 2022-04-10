@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cg.FDS.exception.AlreadyExistInCartException;
-import com.cg.FDS.exception.ItemCannotRemoved;
-import com.cg.FDS.exception.ItemIdNotExistException;
-import com.cg.FDS.exception.QuantityIsNullException;
+import com.cg.FDS.exception.cart.AlreadyExistInCartException;
+import com.cg.FDS.exception.item.ItemCannotRemoved;
+import com.cg.FDS.exception.item.ItemIdNotExistException;
+import com.cg.FDS.exception.item.QuantityIsNullException;
 
 @Controller
 @ControllerAdvice

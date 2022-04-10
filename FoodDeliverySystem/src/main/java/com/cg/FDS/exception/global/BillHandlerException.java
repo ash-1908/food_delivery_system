@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cg.FDS.exception.BillAlreadyExists;
-import com.cg.FDS.exception.BillNotFoundException;
-import com.cg.FDS.exception.InvalidBillCustomerIdException;
-import com.cg.FDS.exception.InvalidBillDateException;
+import com.cg.FDS.exception.bill.BillAlreadyExists;
+import com.cg.FDS.exception.bill.BillNotFoundException;
+import com.cg.FDS.exception.bill.InvalidBillCustomerIdException;
+import com.cg.FDS.exception.bill.InvalidBillDateException;
 
 @ControllerAdvice
 public class BillHandlerException {

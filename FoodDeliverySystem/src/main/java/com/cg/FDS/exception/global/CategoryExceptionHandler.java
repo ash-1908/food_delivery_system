@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cg.FDS.exception.CategoryNotFoundException;
-import com.cg.FDS.exception.NullCategoryException;
-import com.cg.FDS.exception.CategoryAlreadyExists;
+import com.cg.FDS.exception.category.CategoryAlreadyExists;
+import com.cg.FDS.exception.category.CategoryNotFoundException;
+import com.cg.FDS.exception.category.NullCategoryException;
 
 @ControllerAdvice
 public class CategoryExceptionHandler {

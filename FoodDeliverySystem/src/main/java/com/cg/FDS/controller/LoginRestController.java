@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.FDS.dao.ILoginRepository;
-import com.cg.FDS.exception.CustomerAlreadyExistsException;
-import com.cg.FDS.exception.LoginAlreadyExistsException;
-import com.cg.FDS.exception.LoginNotFoundException;
+import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
+import com.cg.FDS.exception.login.LoginAlreadyExistsException;
+import com.cg.FDS.exception.login.LoginNotFoundException;
 import com.cg.FDS.model.Login;
 import com.cg.FDS.service.ILoginServiceImpl;
 

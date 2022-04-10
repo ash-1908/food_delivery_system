@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cg.FDS.exception.CustomerAlreadyExistsException;
-import com.cg.FDS.exception.NullOrderException;
-import com.cg.FDS.exception.OrderAlreadyExistsException;
-import com.cg.FDS.exception.OrderNotFoundException;
+import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
+import com.cg.FDS.exception.order.NullOrderException;
+import com.cg.FDS.exception.order.OrderAlreadyExistsException;
+import com.cg.FDS.exception.order.OrderNotFoundException;
 
 @ControllerAdvice
 public class OrderHandlerException {

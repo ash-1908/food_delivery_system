@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.FDS.dao.IOrderRepository;
-import com.cg.FDS.exception.CustomerAlreadyExistsException;
-import com.cg.FDS.exception.CustomerNotFoundException;
-import com.cg.FDS.exception.NullCustomerException;
-import com.cg.FDS.exception.NullOrderException;
-import com.cg.FDS.exception.OrderAlreadyExistsException;
-import com.cg.FDS.exception.OrderNotFoundException;
+import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
+import com.cg.FDS.exception.customer.CustomerNotFoundException;
+import com.cg.FDS.exception.customer.NullCustomerException;
+import com.cg.FDS.exception.order.NullOrderException;
+import com.cg.FDS.exception.order.OrderAlreadyExistsException;
+import com.cg.FDS.exception.order.OrderNotFoundException;
 import com.cg.FDS.model.Bill;
 import com.cg.FDS.model.Customer;
 import com.cg.FDS.model.OrderDetails;

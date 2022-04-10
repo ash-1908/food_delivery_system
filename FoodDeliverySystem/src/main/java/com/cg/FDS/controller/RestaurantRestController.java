@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.FDS.dao.IRestaurantRepository;
-import com.cg.FDS.exception.CategoryAlreadyExists;
-import com.cg.FDS.exception.CategoryNotFoundException;
-import com.cg.FDS.exception.NullRestaurantException;
-import com.cg.FDS.exception.RestaurantAlreadyExists;
-import com.cg.FDS.exception.RestaurantNotFoundException;
+import com.cg.FDS.exception.category.CategoryAlreadyExists;
+import com.cg.FDS.exception.category.CategoryNotFoundException;
+import com.cg.FDS.exception.restaurant.NullRestaurantException;
+import com.cg.FDS.exception.restaurant.RestaurantAlreadyExists;
+import com.cg.FDS.exception.restaurant.RestaurantNotFoundException;
 import com.cg.FDS.model.Restaurant;
 import com.cg.FDS.service.IRestaurantServiceImpl;
 

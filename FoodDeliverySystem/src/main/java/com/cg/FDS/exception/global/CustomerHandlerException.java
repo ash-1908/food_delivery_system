@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cg.FDS.exception.CustomerAlreadyExistsException;
-import com.cg.FDS.exception.CustomerNotFoundException;
-import com.cg.FDS.exception.NullCustomerException;
+import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
+import com.cg.FDS.exception.customer.CustomerNotFoundException;
+import com.cg.FDS.exception.customer.NullCustomerException;
 
 @ControllerAdvice
 public class CustomerHandlerException {

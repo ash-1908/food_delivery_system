@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.FDS.dao.IItemRepository;
-import com.cg.FDS.exception.ItemNotExistInRestaurant;
-import com.cg.FDS.exception.ItemNotFoundException;
-import com.cg.FDS.exception.ItemNotFoundInCategoryException;
-import com.cg.FDS.exception.NoItemWithThisNameException;
+import com.cg.FDS.exception.item.ItemNotExistInRestaurant;
+import com.cg.FDS.exception.item.ItemNotFoundException;
+import com.cg.FDS.exception.item.ItemNotFoundInCategoryException;
+import com.cg.FDS.exception.item.NoItemWithThisNameException;
 import com.cg.FDS.model.Category;
 import com.cg.FDS.model.Item;
 import com.cg.FDS.model.Restaurant;

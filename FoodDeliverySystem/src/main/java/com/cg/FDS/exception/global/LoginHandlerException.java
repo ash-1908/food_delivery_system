@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cg.FDS.exception.CustomerAlreadyExistsException;
-import com.cg.FDS.exception.LoginAlreadyExistsException;
-import com.cg.FDS.exception.LoginNotFoundException;
+import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
+import com.cg.FDS.exception.login.LoginAlreadyExistsException;
+import com.cg.FDS.exception.login.LoginNotFoundException;
 
 @ControllerAdvice
 public class LoginHandlerException {

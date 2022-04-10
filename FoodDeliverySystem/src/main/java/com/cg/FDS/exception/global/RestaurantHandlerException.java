@@ -7,9 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.cg.FDS.exception.RestaurantNotFoundException;
-import com.cg.FDS.exception.NullRestaurantException;
-import com.cg.FDS.exception.RestaurantAlreadyExists;
+
+import com.cg.FDS.exception.restaurant.NullRestaurantException;
+import com.cg.FDS.exception.restaurant.RestaurantAlreadyExists;
+import com.cg.FDS.exception.restaurant.RestaurantNotFoundException;
 @ControllerAdvice
 public class RestaurantHandlerException {
 	

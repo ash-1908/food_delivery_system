@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cg.FDS.exception.ItemNotFoundException;
-import com.cg.FDS.exception.ItemNotFoundInCategoryException;
-import com.cg.FDS.exception.NoItemWithThisNameException;
+import com.cg.FDS.exception.item.ItemNotFoundException;
+import com.cg.FDS.exception.item.ItemNotFoundInCategoryException;
+import com.cg.FDS.exception.item.NoItemWithThisNameException;
 
 
 

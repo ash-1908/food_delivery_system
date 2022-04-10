@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.FDS.dao.ICustomerRepository;
-import com.cg.FDS.exception.CustomerAlreadyExistsException;
-import com.cg.FDS.exception.CustomerNotFoundException;
-import com.cg.FDS.exception.NullCustomerException;
+import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
+import com.cg.FDS.exception.customer.CustomerNotFoundException;
+import com.cg.FDS.exception.customer.NullCustomerException;
 import com.cg.FDS.model.Customer;
 import com.cg.FDS.model.Restaurant;
 import com.cg.FDS.service.ICustomerServiceImpl;

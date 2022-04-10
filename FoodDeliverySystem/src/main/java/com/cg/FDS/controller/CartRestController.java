@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.FDS.dao.ICartRepository;
-import com.cg.FDS.exception.AlreadyExistInCartException;
-import com.cg.FDS.exception.ItemCannotRemoved;
-import com.cg.FDS.exception.ItemIdNotExistException;
-import com.cg.FDS.exception.QuantityIsNullException;
+import com.cg.FDS.exception.cart.AlreadyExistInCartException;
+import com.cg.FDS.exception.item.ItemCannotRemoved;
+import com.cg.FDS.exception.item.ItemIdNotExistException;
+import com.cg.FDS.exception.item.QuantityIsNullException;
 import com.cg.FDS.model.FoodCart;
 import com.cg.FDS.model.Item;
 import com.cg.FDS.service.ICartServiceImpl;
