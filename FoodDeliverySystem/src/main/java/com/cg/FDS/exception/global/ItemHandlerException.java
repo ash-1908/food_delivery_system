@@ -8,28 +8,36 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cg.FDS.exception.ItemException;
+import com.cg.FDS.exception.ItemNotFoundException;
+import com.cg.FDS.exception.ItemNotFoundInCategoryException;
+import com.cg.FDS.exception.NoItemWithThisNameException;
 
 
 
 
 @ControllerAdvice
 public class ItemHandlerException {
-	@ExceptionHandler(ItemException.class)
-	public @ResponseBody ErrorInfo updateException(ItemException e, HttpServletRequest req) {
+	@ExceptionHandler(ItemNotFoundException.class)
+	public @ResponseBody ErrorInfo updateException(ItemNotFoundException e, HttpServletRequest req) {
 		
 			return new ErrorInfo(LocalDateTime.now(),e.getMessage(),req.getRequestURI());
 			
 		}
 
-		@ExceptionHandler(ItemException.class)
-		public @ResponseBody ErrorInfo removeItemException(ItemException e, HttpServletRequest req) {
+		@ExceptionHandler(ItemNotFoundException.class)
+		public @ResponseBody ErrorInfo removeItemException(ItemNotFoundException e, HttpServletRequest req) {
 				
 				return new ErrorInfo(LocalDateTime.now(),e.getMessage(),req.getRequestURI());
 				
 			}
-	@ExceptionHandler(ItemException.class)
-	public @ResponseBody ErrorInfo viewAllItemsByNameException(ItemException e, HttpServletRequest req) {
+		@ExceptionHandler(ItemNotFoundInCategoryException.class)
+		public @ResponseBody ErrorInfo viewAllItemsException(ItemNotFoundInCategoryException e, HttpServletRequest req) {
+				
+				return new ErrorInfo(LocalDateTime.now(),e.getMessage(),req.getRequestURI());
+				
+			}
+	@ExceptionHandler(NoItemWithThisNameException.class)
+	public @ResponseBody ErrorInfo viewAllItemsByNameException(NoItemWithThisNameException e, HttpServletRequest req) {
 			
 			return new ErrorInfo(LocalDateTime.now(),e.getMessage(),req.getRequestURI());
 			
