@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -12,7 +14,6 @@ import com.cg.FDS.exception.bill.BillAlreadyExists;
 import com.cg.FDS.exception.bill.BillNotFoundException;
 import com.cg.FDS.exception.bill.InvalidBillCustomerIdException;
 import com.cg.FDS.exception.bill.InvalidBillDateException;
-import com.cg.FDS.exception.cart.AlreadyExistInCartException;
 import com.cg.FDS.exception.category.CategoryAlreadyExists;
 import com.cg.FDS.exception.category.CategoryNotFoundException;
 import com.cg.FDS.exception.category.NullCategoryException;
@@ -39,161 +40,171 @@ public class GlobalExceptionHandler {
 	// Bill exceptions
 
 	@ExceptionHandler(BillAlreadyExists.class)
-	public @ResponseBody ErrorInfo addBillException(BillAlreadyExists e, HttpServletRequest req) {
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+	public @ResponseBody ResponseEntity<ErrorInfo> addBillException(BillAlreadyExists e, HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(BillNotFoundException.class)
-	public @ResponseBody ErrorInfo billNotFound(BillNotFoundException e, HttpServletRequest req) {
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+	public @ResponseBody ResponseEntity<ErrorInfo> billNotFound(BillNotFoundException e, HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.NOT_FOUND);
+
 	}
 
 	@ExceptionHandler(InvalidBillDateException.class)
-	public @ResponseBody ErrorInfo viewBillbyDateException(BillNotFoundException e, HttpServletRequest req) {
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+	public @ResponseBody ResponseEntity<ErrorInfo> viewBillbyDateException(InvalidBillDateException e,
+			HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.NOT_FOUND);
+
 	}
 
 	@ExceptionHandler(InvalidBillCustomerIdException.class)
-	public @ResponseBody ErrorInfo viewBillbyCustomerIdException(BillNotFoundException e, HttpServletRequest req) {
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+	public @ResponseBody ResponseEntity<ErrorInfo> viewBillbyCustomerIdException(InvalidBillCustomerIdException e,
+			HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.NOT_FOUND);
+
 	}
 
 	// Category exceptions
 	@ExceptionHandler(CategoryAlreadyExists.class)
-	public @ResponseBody ErrorInfo addCategoryException(CategoryAlreadyExists e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-
+	public @ResponseBody ResponseEntity<ErrorInfo> addCategoryException(CategoryAlreadyExists e,
+			HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(CategoryNotFoundException.class)
-	public @ResponseBody ErrorInfo categoryNotFound(CategoryNotFoundException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-
+	public @ResponseBody ResponseEntity<ErrorInfo> categoryNotFound(CategoryNotFoundException e,
+			HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(NullCategoryException.class)
-	public @ResponseBody ErrorInfo viewCategoryException(NullCategoryException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-
+	public @ResponseBody ResponseEntity<ErrorInfo> viewCategoryException(NullCategoryException e,
+			HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	// Customer exceptions
 	@ExceptionHandler(CustomerAlreadyExistsException.class)
-	public @ResponseBody ErrorInfo addException(CustomerAlreadyExistsException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+	public @ResponseBody ResponseEntity<ErrorInfo> addException(CustomerAlreadyExistsException e,
+			HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(CustomerNotFoundException.class)
-	public @ResponseBody ErrorInfo customerNotFound(CustomerNotFoundException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+	public @ResponseBody ResponseEntity<ErrorInfo> customerNotFound(CustomerNotFoundException e,
+			HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(NullCustomerException.class)
-	public @ResponseBody ErrorInfo viewException(NullCustomerException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+	public @ResponseBody ResponseEntity<ErrorInfo> viewException(NullCustomerException e, HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	// FoodCart exceptions
 	@ExceptionHandler(ItemIdNotExistException.class)
-	public @ResponseBody ErrorInfo increaseQuantityException(ItemIdNotExistException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-
+	public @ResponseBody ResponseEntity<ErrorInfo> increaseQuantityException(ItemIdNotExistException e,
+			HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(QuantityIsNullException.class)
-	public @ResponseBody ErrorInfo reduceQuantityException(QuantityIsNullException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-
+	public @ResponseBody ResponseEntity<ErrorInfo> reduceQuantityException(QuantityIsNullException e,
+			HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(ItemCannotRemoved.class)
-	public @ResponseBody ErrorInfo removeItemException(AlreadyExistInCartException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-
+	public @ResponseBody ResponseEntity<ErrorInfo> removeItemException(ItemCannotRemoved e, HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	// Item exceptions
 	@ExceptionHandler(ItemNotFoundException.class)
-	public @ResponseBody ErrorInfo itemNotFound(ItemNotFoundException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-
+	public @ResponseBody ResponseEntity<ErrorInfo> itemNotFound(ItemNotFoundException e, HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(ItemNotFoundInCategoryException.class)
-	public @ResponseBody ErrorInfo viewAllItemsException(ItemNotFoundInCategoryException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-
+	public @ResponseBody ResponseEntity<ErrorInfo> viewAllItemsException(ItemNotFoundInCategoryException e,
+			HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(NoItemWithThisNameException.class)
-	public @ResponseBody ErrorInfo viewAllItemsByNameException(NoItemWithThisNameException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-
+	public @ResponseBody ResponseEntity<ErrorInfo> viewAllItemsByNameException(NoItemWithThisNameException e,
+			HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	// Login exceptions
 	@ExceptionHandler(LoginAlreadyExistsException.class)
-	public @ResponseBody ErrorInfo addException(LoginAlreadyExistsException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+	public @ResponseBody ResponseEntity<ErrorInfo> addException(LoginAlreadyExistsException e, HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(LoginNotFoundException.class)
-	public @ResponseBody ErrorInfo signOut(LoginNotFoundException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+	public @ResponseBody ResponseEntity<ErrorInfo> signOut(LoginNotFoundException e, HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	// Order exceptions
 	@ExceptionHandler(OrderAlreadyExistsException.class)
-	public @ResponseBody ErrorInfo addException(OrderAlreadyExistsException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+	public @ResponseBody ResponseEntity<ErrorInfo> addException(OrderAlreadyExistsException e, HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(OrderNotFoundException.class)
-	public @ResponseBody ErrorInfo orderNotFound(OrderNotFoundException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+	public @ResponseBody ResponseEntity<ErrorInfo> orderNotFound(OrderNotFoundException e, HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(NullOrderException.class)
-	public @ResponseBody ErrorInfo orderWithNullValues(NullOrderException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+	public @ResponseBody ResponseEntity<ErrorInfo> orderWithNullValues(NullOrderException e, HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	// Restaurant exceptions
 	@ExceptionHandler(RestaurantAlreadyExists.class)
-	public @ResponseBody ErrorInfo addRestaurantException(RestaurantAlreadyExists e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-
+	public @ResponseBody ResponseEntity<ErrorInfo> addRestaurantException(RestaurantAlreadyExists e,
+			HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(RestaurantNotFoundException.class)
-	public @ResponseBody ErrorInfo restaurantNotFound(RestaurantNotFoundException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-
+	public @ResponseBody ResponseEntity<ErrorInfo> restaurantNotFound(RestaurantNotFoundException e,
+			HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(NullRestaurantException.class)
-	public @ResponseBody ErrorInfo restaurantWithNullValues(NullRestaurantException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+	public @ResponseBody ResponseEntity<ErrorInfo> restaurantWithNullValues(NullRestaurantException e,
+			HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
 }

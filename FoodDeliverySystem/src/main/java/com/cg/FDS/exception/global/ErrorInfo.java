@@ -4,45 +4,48 @@ import java.time.LocalDateTime;
 
 public class ErrorInfo {
 
-	LocalDateTime now;
+	LocalDateTime time;
 	String msg;
 	String url;
-	
+
 	public ErrorInfo() {
 		super();
 	}
-	
-	
-	public ErrorInfo(LocalDateTime now, String msg, String url) {
+
+	public ErrorInfo(LocalDateTime time, String msg, String url) {
 		super();
-		this.now = now;
+		this.time = time;
 		this.msg = msg;
 		this.url = url;
 	}
 
-
 	public LocalDateTime getNow() {
-		return now;
+		return time;
 	}
-	public void setNow(LocalDateTime now) {
-		this.now = now;
+
+	public void setNow(LocalDateTime time) {
+		this.time = time;
 	}
+
 	public String getMsg() {
 		return msg;
 	}
+
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
+
 	public String getUrl() {
 		return url;
 	}
+
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "ErrorInfo [now=" + now + ", msg=" + msg + ", url=" + url + "]";
+		return "ErrorInfo [time=" + time + ", msg=" + msg + ", url=" + url + "]";
 	}
-	
+
 }
