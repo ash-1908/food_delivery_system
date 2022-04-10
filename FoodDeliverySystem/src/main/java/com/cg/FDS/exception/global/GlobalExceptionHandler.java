@@ -44,17 +44,7 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(BillNotFoundException.class)
-	public @ResponseBody ErrorInfo updateBillException(BillNotFoundException e, HttpServletRequest req) {
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-	}
-
-	@ExceptionHandler(BillNotFoundException.class)
-	public @ResponseBody ErrorInfo removeBillException(BillNotFoundException e, HttpServletRequest req) {
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-	}
-
-	@ExceptionHandler(BillNotFoundException.class)
-	public @ResponseBody ErrorInfo viewBillException(BillNotFoundException e, HttpServletRequest req) {
+	public @ResponseBody ErrorInfo billNotFound(BillNotFoundException e, HttpServletRequest req) {
 		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 	}
 
@@ -77,14 +67,7 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(CategoryNotFoundException.class)
-	public @ResponseBody ErrorInfo updateCategoryException(CategoryNotFoundException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-
-	}
-
-	@ExceptionHandler(CategoryNotFoundException.class)
-	public @ResponseBody ErrorInfo removeCategoryException(CategoryNotFoundException e, HttpServletRequest req) {
+	public @ResponseBody ErrorInfo categoryNotFound(CategoryNotFoundException e, HttpServletRequest req) {
 
 		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 
@@ -105,25 +88,13 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(CustomerNotFoundException.class)
-	public @ResponseBody ErrorInfo updateException(CustomerNotFoundException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-	}
-
-	@ExceptionHandler(CustomerNotFoundException.class)
-	public @ResponseBody ErrorInfo removeException(CustomerNotFoundException e, HttpServletRequest req) {
+	public @ResponseBody ErrorInfo customerNotFound(CustomerNotFoundException e, HttpServletRequest req) {
 
 		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 	}
 
 	@ExceptionHandler(NullCustomerException.class)
 	public @ResponseBody ErrorInfo viewException(NullCustomerException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-	}
-
-	@ExceptionHandler(CustomerNotFoundException.class)
-	public @ResponseBody ErrorInfo viewAllException(CustomerNotFoundException e, HttpServletRequest req) {
 
 		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 	}
@@ -152,14 +123,7 @@ public class GlobalExceptionHandler {
 
 	// Item exceptions
 	@ExceptionHandler(ItemNotFoundException.class)
-	public @ResponseBody ErrorInfo updateException(ItemNotFoundException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-
-	}
-
-	@ExceptionHandler(ItemNotFoundException.class)
-	public @ResponseBody ErrorInfo removeItemException(ItemNotFoundException e, HttpServletRequest req) {
+	public @ResponseBody ErrorInfo itemNotFound(ItemNotFoundException e, HttpServletRequest req) {
 
 		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 
@@ -200,31 +164,13 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(OrderNotFoundException.class)
-	public @ResponseBody ErrorInfo updateException(OrderNotFoundException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-	}
-
-	@ExceptionHandler(OrderNotFoundException.class)
-	public @ResponseBody ErrorInfo removeException(OrderNotFoundException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-	}
-
-	@ExceptionHandler(OrderNotFoundException.class)
-	public @ResponseBody ErrorInfo viewException(OrderNotFoundException e, HttpServletRequest req) {
+	public @ResponseBody ErrorInfo orderNotFound(OrderNotFoundException e, HttpServletRequest req) {
 
 		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 	}
 
 	@ExceptionHandler(NullOrderException.class)
-	public @ResponseBody ErrorInfo viewAllByRestException(NullOrderException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-	}
-
-	@ExceptionHandler(NullOrderException.class)
-	public @ResponseBody ErrorInfo viewAllByCustException(NullOrderException e, HttpServletRequest req) {
+	public @ResponseBody ErrorInfo orderWithNullValues(NullOrderException e, HttpServletRequest req) {
 
 		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 	}
@@ -238,34 +184,16 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(RestaurantNotFoundException.class)
-	public @ResponseBody ErrorInfo updateRestaurantException(RestaurantNotFoundException e, HttpServletRequest req) {
+	public @ResponseBody ErrorInfo restaurantNotFound(RestaurantNotFoundException e, HttpServletRequest req) {
 
 		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 
-	}
-
-	@ExceptionHandler(RestaurantNotFoundException.class)
-	public @ResponseBody ErrorInfo removeRestaurantException(RestaurantNotFoundException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 	}
 
 	@ExceptionHandler(NullRestaurantException.class)
-	public @ResponseBody ErrorInfo viewRestaurantException(NullRestaurantException e, HttpServletRequest req) {
+	public @ResponseBody ErrorInfo restaurantWithNullValues(NullRestaurantException e, HttpServletRequest req) {
 
 		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 	}
 
-	@ExceptionHandler(NullRestaurantException.class)
-	public @ResponseBody ErrorInfo viewNearByRestaurantException(NullRestaurantException e, HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-	}
-
-	@ExceptionHandler(NullRestaurantException.class)
-	public @ResponseBody ErrorInfo viewRestaurantByItemNameException(NullRestaurantException e,
-			HttpServletRequest req) {
-
-		return new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-	}
 }
