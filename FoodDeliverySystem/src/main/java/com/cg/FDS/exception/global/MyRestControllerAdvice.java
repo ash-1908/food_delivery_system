@@ -18,7 +18,6 @@ import com.cg.FDS.exception.category.CategoryAlreadyExistsException;
 import com.cg.FDS.exception.category.CategoryNotFoundException;
 import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
 import com.cg.FDS.exception.customer.CustomerNotFoundException;
-import com.cg.FDS.exception.customer.NullCustomerException;
 import com.cg.FDS.exception.item.ItemCannotRemoved;
 import com.cg.FDS.exception.item.ItemIdNotExistException;
 import com.cg.FDS.exception.item.ItemNotFoundException;
@@ -84,12 +83,6 @@ public class MyRestControllerAdvice extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(CustomerNotFoundException.class)
 	public @ResponseBody ResponseEntity<ErrorInfo> customerNotFound(CustomerNotFoundException e,
 			HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
-	}
-
-	@ExceptionHandler(NullCustomerException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> viewException(NullCustomerException e, HttpServletRequest req) {
 		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}

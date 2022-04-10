@@ -1,10 +1,10 @@
 package com.cg.FDS.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.FDS.dao.ICustomerRepository;
-import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
-import com.cg.FDS.exception.customer.CustomerNotFoundException;
-import com.cg.FDS.exception.customer.NullCustomerException;
 import com.cg.FDS.model.Customer;
 import com.cg.FDS.model.Restaurant;
 import com.cg.FDS.service.ICustomerServiceImpl;
@@ -28,81 +24,35 @@ import com.cg.FDS.service.ICustomerServiceImpl;
 public class CustomerRestController {
 
 	@Autowired
-	ICustomerServiceImpl custserv;
-	ICustomerRepository customerRepo;
-	
+	ICustomerServiceImpl custServ;
+
 	@GetMapping("/customer/view")
-	public Customer viewCustomer(@RequestBody Customer customer) {
-		
-		try {
-			if(!customerRepo.existsById(customer.getCustomerId())){
-				throw new CustomerNotFoundException("This customer is not found.");
-			}
-		}
-		catch(CustomerNotFoundException e) {
-			System.out.println(e.getMessage());
-		}
-		return custserv.viewCustomer(customer);
+	public ResponseEntity<Customer> viewCustomer(@RequestBody Customer customer) {
+
+		return new ResponseEntity<Customer>(custServ.viewCustomer(customer), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/customer/view/restaurant")
-	public List<Customer> viewAllcustomer(@RequestBody Restaurant rest){
-		
-		 List<Customer> custList=custserv.viewAllCustomer(rest);
-		 ListIterator<Customer> itr = custList.listIterator(); 
-		 try {
-		 while(!itr.hasNext()){ 
-			 throw  new NullCustomerException("The List is EMPTY!!");
-		 }
-		 }
-		 catch(NullCustomerException e) {
-			 System.out.println(e.getMessage());
-		 }
-		return custserv.viewAllCustomer(rest);
+	public ResponseEntity<List<Customer>> viewAllCustomer(@RequestBody Restaurant rest) {
+
+		return new ResponseEntity<List<Customer>>(custServ.viewAllCustomer(rest), HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/customer/new")
-	public Customer addCustomer(@RequestBody Customer customer) {
-		try {
-			if(customerRepo.existsById(customer.getCustomerId())) {
-				throw new CustomerAlreadyExistsException("This Customer Already Exsists.");
-			}	
-		}
-		catch(CustomerAlreadyExistsException e) {
-			System.out.println(e.getMessage());
-		}
-		return custserv.addCustomer(customer);
+	public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
+
+		return new ResponseEntity<Customer>(custServ.addCustomer(customer), HttpStatus.OK);
 	}
-	
+
 	@PutMapping("/customer/update")
-	public Customer updateCustomer(@RequestBody Customer customer) {
-		Customer c;
-		try {
-			if(customerRepo.existsById(customer.getCustomerId())) {
-				c =custserv.updateCustomer(customer);
-				return c;
-			}
-			else {
-				throw new CustomerNotFoundException("Wrong Customer Id inserted.");
-			}
-		}
-		catch(CustomerNotFoundException e) {
-			System.out.println(e.getMessage());
-		}
-		return customer;
+	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer) {
+
+		return new ResponseEntity<Customer>(custServ.updateCustomer(customer), HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/customer/remove")
-	public Customer removeCustomer(@RequestBody Customer customer) {
-		
-		try {
-			if(!customerRepo.existsById(customer.getCustomerId())) {
-				throw new CustomerNotFoundException("Customer Doesn't exist to be deleted");
-			}
-		}
-		catch(CustomerNotFoundException e) {
-			System.out.println(e.getMessage());
-		}	
-		return custserv.removeCustomer(customer);
+	public ResponseEntity<Customer> removeCustomer(@RequestBody Customer customer) {
+
+		return new ResponseEntity<Customer>(custServ.removeCustomer(customer), HttpStatus.OK);
 	}
 }
