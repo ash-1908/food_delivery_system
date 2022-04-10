@@ -14,9 +14,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.cg.FDS.exception.EmptyValuesException;
 import com.cg.FDS.exception.bill.BillAlreadyExistsException;
 import com.cg.FDS.exception.bill.BillNotFoundException;
-import com.cg.FDS.exception.category.CategoryAlreadyExists;
+import com.cg.FDS.exception.category.CategoryAlreadyExistsException;
 import com.cg.FDS.exception.category.CategoryNotFoundException;
-import com.cg.FDS.exception.category.NullCategoryException;
 import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
 import com.cg.FDS.exception.customer.CustomerNotFoundException;
 import com.cg.FDS.exception.customer.NullCustomerException;
@@ -60,8 +59,8 @@ public class MyRestControllerAdvice extends ResponseEntityExceptionHandler {
 	}
 
 	// Category exceptions
-	@ExceptionHandler(CategoryAlreadyExists.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> addCategoryException(CategoryAlreadyExists e,
+	@ExceptionHandler(CategoryAlreadyExistsException.class)
+	public @ResponseBody ResponseEntity<ErrorInfo> addCategoryException(CategoryAlreadyExistsException e,
 			HttpServletRequest req) {
 		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
@@ -69,13 +68,6 @@ public class MyRestControllerAdvice extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(CategoryNotFoundException.class)
 	public @ResponseBody ResponseEntity<ErrorInfo> categoryNotFound(CategoryNotFoundException e,
-			HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
-	}
-
-	@ExceptionHandler(NullCategoryException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> viewCategoryException(NullCategoryException e,
 			HttpServletRequest req) {
 		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
