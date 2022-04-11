@@ -14,21 +14,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.cg.FDS.exception.EmptyValuesException;
 import com.cg.FDS.exception.bill.BillAlreadyExistsException;
 import com.cg.FDS.exception.bill.BillNotFoundException;
-import com.cg.FDS.exception.category.CategoryAlreadyExists;
+import com.cg.FDS.exception.category.CategoryAlreadyExistsException;
 import com.cg.FDS.exception.category.CategoryNotFoundException;
-import com.cg.FDS.exception.category.NullCategoryException;
 import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
 import com.cg.FDS.exception.customer.CustomerNotFoundException;
-import com.cg.FDS.exception.customer.NullCustomerException;
-import com.cg.FDS.exception.item.ItemCannotRemoved;
-import com.cg.FDS.exception.item.ItemIdNotExistException;
 import com.cg.FDS.exception.item.ItemNotFoundException;
-import com.cg.FDS.exception.item.ItemNotFoundInCategoryException;
-import com.cg.FDS.exception.item.NoItemWithThisNameException;
-import com.cg.FDS.exception.item.QuantityIsNullException;
-import com.cg.FDS.exception.login.LoginAlreadyExistsException;
-import com.cg.FDS.exception.login.LoginNotFoundException;
-import com.cg.FDS.exception.order.NullOrderException;
+import com.cg.FDS.exception.login.UserAlreadyExistsException;
+import com.cg.FDS.exception.login.UserNotFoundException;
 import com.cg.FDS.exception.order.OrderAlreadyExistsException;
 import com.cg.FDS.exception.order.OrderNotFoundException;
 import com.cg.FDS.exception.restaurant.RestaurantAlreadyExistsException;
@@ -60,8 +52,8 @@ public class MyRestControllerAdvice extends ResponseEntityExceptionHandler {
 	}
 
 	// Category exceptions
-	@ExceptionHandler(CategoryAlreadyExists.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> addCategoryException(CategoryAlreadyExists e,
+	@ExceptionHandler(CategoryAlreadyExistsException.class)
+	public @ResponseBody ResponseEntity<ErrorInfo> addCategoryException(CategoryAlreadyExistsException e,
 			HttpServletRequest req) {
 		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
@@ -69,13 +61,6 @@ public class MyRestControllerAdvice extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(CategoryNotFoundException.class)
 	public @ResponseBody ResponseEntity<ErrorInfo> categoryNotFound(CategoryNotFoundException e,
-			HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
-	}
-
-	@ExceptionHandler(NullCategoryException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> viewCategoryException(NullCategoryException e,
 			HttpServletRequest req) {
 		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
@@ -96,32 +81,7 @@ public class MyRestControllerAdvice extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
-	@ExceptionHandler(NullCustomerException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> viewException(NullCustomerException e, HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
-	}
-
 	// FoodCart exceptions
-	@ExceptionHandler(ItemIdNotExistException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> increaseQuantityException(ItemIdNotExistException e,
-			HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
-	}
-
-	@ExceptionHandler(QuantityIsNullException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> reduceQuantityException(QuantityIsNullException e,
-			HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
-	}
-
-	@ExceptionHandler(ItemCannotRemoved.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> removeItemException(ItemCannotRemoved e, HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
-	}
 
 	// Item exceptions
 	@ExceptionHandler(ItemNotFoundException.class)
@@ -130,29 +90,15 @@ public class MyRestControllerAdvice extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
-	@ExceptionHandler(ItemNotFoundInCategoryException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> viewAllItemsException(ItemNotFoundInCategoryException e,
-			HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
-	}
-
-	@ExceptionHandler(NoItemWithThisNameException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> viewAllItemsByNameException(NoItemWithThisNameException e,
-			HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
-	}
-
 	// Login exceptions
-	@ExceptionHandler(LoginAlreadyExistsException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> addException(LoginAlreadyExistsException e, HttpServletRequest req) {
+	@ExceptionHandler(UserAlreadyExistsException.class)
+	public @ResponseBody ResponseEntity<ErrorInfo> addException(UserAlreadyExistsException e, HttpServletRequest req) {
 		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
-	@ExceptionHandler(LoginNotFoundException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> signOut(LoginNotFoundException e, HttpServletRequest req) {
+	@ExceptionHandler(UserNotFoundException.class)
+	public @ResponseBody ResponseEntity<ErrorInfo> signOut(UserNotFoundException e, HttpServletRequest req) {
 		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
@@ -166,12 +112,6 @@ public class MyRestControllerAdvice extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(OrderNotFoundException.class)
 	public @ResponseBody ResponseEntity<ErrorInfo> orderNotFound(OrderNotFoundException e, HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
-	}
-
-	@ExceptionHandler(NullOrderException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> orderWithNullValues(NullOrderException e, HttpServletRequest req) {
 		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}

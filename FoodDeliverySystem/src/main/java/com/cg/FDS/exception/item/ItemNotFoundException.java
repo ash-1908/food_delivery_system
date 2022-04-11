@@ -1,6 +1,6 @@
 package com.cg.FDS.exception.item;
 
-public class ItemNotFoundException extends Exception {
+public class ItemNotFoundException extends RuntimeException {
 	public ItemNotFoundException() {
 	}
 

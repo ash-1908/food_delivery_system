@@ -1,6 +1,6 @@
 package com.cg.FDS.exception.customer;
 
-public class CustomerNotFoundException extends Exception {
+public class CustomerNotFoundException extends RuntimeException {
 	public CustomerNotFoundException() {
 	}
 
