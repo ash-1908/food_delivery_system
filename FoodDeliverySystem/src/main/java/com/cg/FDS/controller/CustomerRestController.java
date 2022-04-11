@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.FDS.model.Customer;
@@ -19,7 +18,6 @@ import com.cg.FDS.model.Restaurant;
 import com.cg.FDS.service.ICustomerServiceImpl;
 
 @RestController
-@RequestMapping("/rest")
 @CrossOrigin("*")
 public class CustomerRestController {
 
@@ -36,6 +34,12 @@ public class CustomerRestController {
 	public ResponseEntity<List<Customer>> viewAllCustomer(@RequestBody Restaurant rest) {
 
 		return new ResponseEntity<List<Customer>>(custServ.viewAllCustomer(rest), HttpStatus.OK);
+	}
+
+	@GetMapping("/customer/all")
+	public ResponseEntity<List<Customer>> viewAllCustomers() {
+
+		return new ResponseEntity<List<Customer>>(custServ.viewAllCustomers(), HttpStatus.OK);
 	}
 
 	@PostMapping("/customer/new")

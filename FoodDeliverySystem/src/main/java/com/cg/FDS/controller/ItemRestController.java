@@ -26,28 +26,10 @@ public class ItemRestController {
 	@Autowired
 	IItemServiceImpl itemServ;
 
-	@PostMapping("/item/new")
-	public ResponseEntity<Item> addItem(@RequestBody Item item) {
-
-		return new ResponseEntity<Item>(itemServ.addItem(item), HttpStatus.OK);
-	}
-
-	@PutMapping("/item/update")
-	public ResponseEntity<Item> updateItem(@RequestBody Item item) {
-
-		return new ResponseEntity<Item>(itemServ.updateItem(item), HttpStatus.OK);
-	}
-
 	@GetMapping("/item/view")
 	public ResponseEntity<Item> viewItem(@RequestBody Item item) {
 
 		return new ResponseEntity<Item>(itemServ.viewItem(item), HttpStatus.OK);
-	}
-
-	@DeleteMapping("/item/remove")
-	public ResponseEntity<Item> removeItem(@RequestBody Item item) {
-
-		return new ResponseEntity<Item>(itemServ.removeItem(item), HttpStatus.OK);
 	}
 
 	@GetMapping("/item/view/category")
@@ -66,6 +48,30 @@ public class ItemRestController {
 	public ResponseEntity<List<Item>> viewAllItemsByName(@PathVariable("name") String name) {
 
 		return new ResponseEntity<List<Item>>(itemServ.viewAllItemsByName(name), HttpStatus.OK);
+	}
+
+	@GetMapping("/item/all")
+	public ResponseEntity<List<Item>> viewAllItems() {
+
+		return new ResponseEntity<List<Item>>(itemServ.viewAllItems(), HttpStatus.OK);
+	}
+
+	@PostMapping("/item/new")
+	public ResponseEntity<Item> addItem(@RequestBody Item item) {
+
+		return new ResponseEntity<Item>(itemServ.addItem(item), HttpStatus.OK);
+	}
+
+	@PutMapping("/item/update")
+	public ResponseEntity<Item> updateItem(@RequestBody Item item) {
+
+		return new ResponseEntity<Item>(itemServ.updateItem(item), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/item/remove")
+	public ResponseEntity<Item> removeItem(@RequestBody Item item) {
+
+		return new ResponseEntity<Item>(itemServ.removeItem(item), HttpStatus.OK);
 	}
 
 }
