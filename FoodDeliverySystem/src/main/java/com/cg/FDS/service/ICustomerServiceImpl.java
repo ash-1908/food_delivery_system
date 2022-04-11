@@ -48,16 +48,21 @@ public class ICustomerServiceImpl implements ICustomerService {
 		if (customer.getFirstName() == null || customer.getFirstName().length() == 0)
 			throw new EmptyValuesException("Customer name cannot be empty.");
 
-		if (customer.getAddress() == null || customer.getAddress().getAddressId().length() == 0)
-			throw new EmptyValuesException("Customer address cannot be empty.");
-
 		if (!custRepo.existsById(customer.getCustomerId()))
 			throw new CustomerNotFoundException("Customer does not exist.");
 
-		addrServ.updateAddress(customer.getAddress());
+		Customer oldCust = custRepo.getById(customer.getCustomerId());
+		// address is null -> dont update address of customer
+		if (customer.getAddress() == null || customer.getAddress().getAddressId() == null
+				|| customer.getAddress().getAddressId().length() == 0)
+			customer.setAddress(oldCust.getAddress());
+		// address id is new
+		else {
+			addrServ.deleteAddress(oldCust.getAddress().getAddressId());
+			addrServ.addAddress(customer.getAddress());
+		}
 		custRepo.save(customer);
 		return customer;
-
 	}
 
 	@Override
@@ -77,7 +82,10 @@ public class ICustomerServiceImpl implements ICustomerService {
 	public Customer viewCustomer(Customer customer) {
 		if (customer.getCustomerId() == null || customer.getCustomerId().length() == 0)
 			throw new EmptyValuesException("Customer Id cannot be empty.");
+		if (!custRepo.existsById(customer.getCustomerId()))
+			throw new CustomerNotFoundException("Customer does not exist.");
 
+		customer = custRepo.findById(customer.getCustomerId()).get();
 		return customer;
 	}
 
@@ -90,4 +98,9 @@ public class ICustomerServiceImpl implements ICustomerService {
 		return customerList;
 	}
 
+	public List<Customer> viewAllCustomers() {
+
+		List<Customer> customerList = custRepo.findAll();
+		return customerList;
+	}
 }
