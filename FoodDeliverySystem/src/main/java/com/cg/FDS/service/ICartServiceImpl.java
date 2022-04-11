@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.FDS.dao.ICartRepository;
+import com.cg.FDS.exception.EmptyValuesException;
+import com.cg.FDS.exception.cart.AlreadyExistInCartException;
 import com.cg.FDS.model.FoodCart;
 import com.cg.FDS.model.Item;
 
@@ -19,14 +21,30 @@ public class ICartServiceImpl implements ICartService {
 
 	@Override
 	public FoodCart addItemToCart(FoodCart cart, Item item) {
-		// TODO Auto-generated method stub
+		if (cart.getCartId() == null || cart.getCartId().length() == 0)
+			throw new EmptyValuesException("Cart Id cannot be empty.");
+		if (cart.getCustomer() == null || cart.getCustomer().getCustomerId().length() == 0)
+			throw new EmptyValuesException("Customer Id cannot be empty.");
+		if (item == null || item.getItemId() == null || item.getItemId().length() == 0)
+			throw new EmptyValuesException("Item to add in food cart cannot be empty.");
+		if (cartRepo.existsById(item.getItemId()))
+			throw new AlreadyExistInCartException("Food cart already consists the current item.");
+
 		cart.getItemList().add(item);
 		return cart;
 	}
 
 	@Override
 	public FoodCart increaseQuantity(FoodCart cart, Item item, int quantity) {
-		// TODO Auto-generated method stub
+		if (cart.getCartId() == null || cart.getCartId().length() == 0)
+			throw new EmptyValuesException("Cart Id cannot be empty.");
+		if (cart.getCustomer() == null || cart.getCustomer().getCustomerId().length() == 0)
+			throw new EmptyValuesException("Customer Id cannot be empty.");
+		if (item == null || item.getItemId() == null || item.getItemId().length() == 0)
+			throw new EmptyValuesException("Item to add in food cart cannot be empty.");
+		if (quantity == 0)
+			throw new EmptyValuesException("Item quantity cannot be zero.");
+
 		for (Item i : cart.getItemList()) {
 			if (i.getItemId() == item.getItemId()) {
 				i.setQuantity(i.getQuantity() + quantity);
@@ -37,7 +55,15 @@ public class ICartServiceImpl implements ICartService {
 
 	@Override
 	public FoodCart reduceQuantity(FoodCart cart, Item item, int quantity) {
-		// TODO Auto-generated method stub
+		if (cart.getCartId() == null || cart.getCartId().length() == 0)
+			throw new EmptyValuesException("Cart Id cannot be empty.");
+		if (cart.getCustomer() == null || cart.getCustomer().getCustomerId().length() == 0)
+			throw new EmptyValuesException("Customer Id cannot be empty.");
+		if (item == null || item.getItemId() == null || item.getItemId().length() == 0)
+			throw new EmptyValuesException("Item to reduce in food cart cannot be empty.");
+		if (quantity == 0)
+			throw new EmptyValuesException("Item quantity cannot be zero.");
+
 		for (Item i : cart.getItemList()) {
 			if (i.getItemId() == item.getItemId()) {
 				int existingQuantity = i.getQuantity();
@@ -52,7 +78,12 @@ public class ICartServiceImpl implements ICartService {
 
 	@Override
 	public FoodCart removeItem(FoodCart cart, Item item) {
-		// TODO Auto-generated method stub
+		if (cart.getCartId() == null || cart.getCartId().length() == 0)
+			throw new EmptyValuesException("Cart Id cannot be empty.");
+		if (cart.getCustomer() == null || cart.getCustomer().getCustomerId().length() == 0)
+			throw new EmptyValuesException("Customer Id cannot be empty.");
+		if (item == null || item.getItemId() == null || item.getItemId().length() == 0)
+			throw new EmptyValuesException("Item to remove in food cart cannot be empty.");
 
 		List<Item> itemList = cart.getItemList();
 		itemList = itemList.stream().filter((i) -> i.getItemId() != item.getItemId()).collect(Collectors.toList());
@@ -61,7 +92,11 @@ public class ICartServiceImpl implements ICartService {
 
 	@Override
 	public FoodCart clearCart(FoodCart cart) {
-		// TODO Auto-generated method stub
+		if (cart.getCartId() == null || cart.getCartId().length() == 0)
+			throw new EmptyValuesException("Cart Id cannot be empty.");
+		if (cart.getCustomer() == null || cart.getCustomer().getCustomerId().length() == 0)
+			throw new EmptyValuesException("Customer Id cannot be empty.");
+
 		cart.setItemList(new ArrayList<Item>());
 		return cart;
 	}
