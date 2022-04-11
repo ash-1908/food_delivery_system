@@ -18,12 +18,7 @@ import com.cg.FDS.exception.category.CategoryAlreadyExistsException;
 import com.cg.FDS.exception.category.CategoryNotFoundException;
 import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
 import com.cg.FDS.exception.customer.CustomerNotFoundException;
-import com.cg.FDS.exception.item.ItemCannotRemoved;
-import com.cg.FDS.exception.item.ItemIdNotExistException;
 import com.cg.FDS.exception.item.ItemNotFoundException;
-import com.cg.FDS.exception.item.ItemNotFoundInCategoryException;
-import com.cg.FDS.exception.item.NoItemWithThisNameException;
-import com.cg.FDS.exception.item.QuantityIsNullException;
 import com.cg.FDS.exception.login.LoginAlreadyExistsException;
 import com.cg.FDS.exception.login.LoginNotFoundException;
 import com.cg.FDS.exception.order.NullOrderException;
@@ -88,43 +83,10 @@ public class MyRestControllerAdvice extends ResponseEntityExceptionHandler {
 	}
 
 	// FoodCart exceptions
-	@ExceptionHandler(ItemIdNotExistException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> increaseQuantityException(ItemIdNotExistException e,
-			HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
-	}
-
-	@ExceptionHandler(QuantityIsNullException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> reduceQuantityException(QuantityIsNullException e,
-			HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
-	}
-
-	@ExceptionHandler(ItemCannotRemoved.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> removeItemException(ItemCannotRemoved e, HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
-	}
 
 	// Item exceptions
 	@ExceptionHandler(ItemNotFoundException.class)
 	public @ResponseBody ResponseEntity<ErrorInfo> itemNotFound(ItemNotFoundException e, HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
-	}
-
-	@ExceptionHandler(ItemNotFoundInCategoryException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> viewAllItemsException(ItemNotFoundInCategoryException e,
-			HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
-	}
-
-	@ExceptionHandler(NoItemWithThisNameException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> viewAllItemsByNameException(NoItemWithThisNameException e,
-			HttpServletRequest req) {
 		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
