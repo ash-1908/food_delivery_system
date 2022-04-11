@@ -19,8 +19,8 @@ import com.cg.FDS.exception.category.CategoryNotFoundException;
 import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
 import com.cg.FDS.exception.customer.CustomerNotFoundException;
 import com.cg.FDS.exception.item.ItemNotFoundException;
-import com.cg.FDS.exception.login.LoginAlreadyExistsException;
-import com.cg.FDS.exception.login.LoginNotFoundException;
+import com.cg.FDS.exception.login.UserAlreadyExistsException;
+import com.cg.FDS.exception.login.UserNotFoundException;
 import com.cg.FDS.exception.order.OrderAlreadyExistsException;
 import com.cg.FDS.exception.order.OrderNotFoundException;
 import com.cg.FDS.exception.restaurant.RestaurantAlreadyExistsException;
@@ -91,14 +91,14 @@ public class MyRestControllerAdvice extends ResponseEntityExceptionHandler {
 	}
 
 	// Login exceptions
-	@ExceptionHandler(LoginAlreadyExistsException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> addException(LoginAlreadyExistsException e, HttpServletRequest req) {
+	@ExceptionHandler(UserAlreadyExistsException.class)
+	public @ResponseBody ResponseEntity<ErrorInfo> addException(UserAlreadyExistsException e, HttpServletRequest req) {
 		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
 
-	@ExceptionHandler(LoginNotFoundException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> signOut(LoginNotFoundException e, HttpServletRequest req) {
+	@ExceptionHandler(UserNotFoundException.class)
+	public @ResponseBody ResponseEntity<ErrorInfo> signOut(UserNotFoundException e, HttpServletRequest req) {
 		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
