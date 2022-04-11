@@ -21,7 +21,6 @@ import com.cg.FDS.exception.customer.CustomerNotFoundException;
 import com.cg.FDS.exception.item.ItemNotFoundException;
 import com.cg.FDS.exception.login.LoginAlreadyExistsException;
 import com.cg.FDS.exception.login.LoginNotFoundException;
-import com.cg.FDS.exception.order.NullOrderException;
 import com.cg.FDS.exception.order.OrderAlreadyExistsException;
 import com.cg.FDS.exception.order.OrderNotFoundException;
 import com.cg.FDS.exception.restaurant.RestaurantAlreadyExistsException;
@@ -113,12 +112,6 @@ public class MyRestControllerAdvice extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(OrderNotFoundException.class)
 	public @ResponseBody ResponseEntity<ErrorInfo> orderNotFound(OrderNotFoundException e, HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
-	}
-
-	@ExceptionHandler(NullOrderException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> orderWithNullValues(NullOrderException e, HttpServletRequest req) {
 		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.CONFLICT);
 	}
