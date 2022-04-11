@@ -24,14 +24,8 @@ public class IItemServiceImpl implements IItemService {
 	@Autowired
 	ICategoryRepository catRepo;
 
-	public Item getItem(String itemId) {
-		if (itemId == null || itemId.length() == 0)
-			throw new EmptyValuesException("Item Id cannot be empty.");
-
-		if (!itemRepo.existsById(itemId))
-			throw new ItemNotFoundException("Item does not exist.");
-
-		return itemRepo.findById(itemId).get();
+	public List<Item> viewAllItems() {
+		return itemRepo.findAll();
 	}
 
 	@Override
@@ -76,8 +70,11 @@ public class IItemServiceImpl implements IItemService {
 	public Item viewItem(Item item) {
 		if (item.getItemId() == null || item.getItemId().length() == 0)
 			throw new EmptyValuesException("Item Id cannot be empty.");
+		if (!itemRepo.existsById(item.getItemId()))
+			throw new ItemNotFoundException("Item does not exist.");
 
-		return item;
+		return itemRepo.findById(item.getItemId()).get();
+
 	}
 
 	@Override
@@ -117,6 +114,23 @@ public class IItemServiceImpl implements IItemService {
 
 		List<Item> itemList = itemRepo.viewAllItemsByName(name);
 		return itemList;
+	}
+
+	public Item updateRestaurantItem(Item item) {
+		if (item.getItemId() == null || item.getItemId().length() == 0)
+			throw new EmptyValuesException("Item Id cannot be empty.");
+
+		if (item.getItemName() == null || item.getItemName().length() == 0)
+			throw new EmptyValuesException("Item name cannot be empty.");
+
+		if (item.getCategory() == null || item.getCategory().getCatId().length() == 0)
+			throw new EmptyValuesException("Item category cannot be empty.");
+
+		if (!itemRepo.existsById(item.getItemId())) {
+			itemRepo.save(item);
+			return item;
+		}
+		return itemRepo.getById(item.getItemId());
 	}
 
 }

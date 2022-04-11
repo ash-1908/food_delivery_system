@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cg.FDS.dao.ICartRepository;
 import com.cg.FDS.dao.IOrderRepository;
 import com.cg.FDS.exception.EmptyValuesException;
 import com.cg.FDS.exception.order.OrderAlreadyExistsException;
@@ -20,7 +19,7 @@ public class IOrderServiceImpl implements IOrderService {
 	@Autowired
 	IOrderRepository orderRepo;
 	@Autowired
-	ICartRepository cartRepo;
+	ICartServiceImpl cartServ;
 
 	@Override
 	public OrderDetails addOrder(OrderDetails order) {
@@ -31,7 +30,7 @@ public class IOrderServiceImpl implements IOrderService {
 		if (orderRepo.existsById(order.getOrderId()))
 			throw new OrderAlreadyExistsException("Order already exists.");
 
-		cartRepo.save(order.getCart());
+		cartServ.addCart(order.getCart());
 		orderRepo.save(order);
 		return order;
 	}
@@ -45,7 +44,7 @@ public class IOrderServiceImpl implements IOrderService {
 		if (!orderRepo.existsById(order.getOrderId()))
 			throw new OrderNotFoundException("Order does not exist.");
 
-		cartRepo.save(order.getCart());
+		cartServ.addCart(order.getCart());
 		orderRepo.save(order);
 		return order;
 	}
@@ -59,7 +58,8 @@ public class IOrderServiceImpl implements IOrderService {
 		if (!orderRepo.existsById(order.getOrderId()))
 			throw new OrderNotFoundException("Order does not exist.");
 
-		cartRepo.deleteById(order.getCart().getCartId());
+		order = orderRepo.findById(order.getOrderId()).get();
+		cartServ.deleteCart(order.getCart().getCartId());
 		orderRepo.deleteById(order.getOrderId());
 		return order;
 	}

@@ -26,6 +26,30 @@ public class RestaurantRestController {
 	@Autowired
 	IRestaurantRepository resRepo;
 
+	@GetMapping("/restaurant/view")
+	public ResponseEntity<Restaurant> viewRestaurant(@RequestBody Restaurant res) {
+
+		return new ResponseEntity<Restaurant>(rserv.viewRestaurant(res), HttpStatus.OK);
+	}
+
+	@GetMapping("/restaurant/view/{location}")
+	public ResponseEntity<List<Restaurant>> viewNearByRestaurant(@PathVariable("location") String location) {
+
+		return new ResponseEntity<List<Restaurant>>(rserv.viewNearByRestaurant(location), HttpStatus.OK);
+	}
+
+	@GetMapping("/restaurant/view/item/{itemName}")
+	public ResponseEntity<List<Restaurant>> viewRestaurantByItemName(@PathVariable("itemName") String itemName) {
+
+		return new ResponseEntity<List<Restaurant>>(rserv.viewRestaurantByItemName(itemName), HttpStatus.OK);
+	}
+
+	@GetMapping("/restaurant/all")
+	public ResponseEntity<List<Restaurant>> viewAllRestaurants() {
+
+		return new ResponseEntity<List<Restaurant>>(rserv.viewAllRestaurants(), HttpStatus.OK);
+	}
+
 	@PostMapping("/restaurant/new")
 	public ResponseEntity<Restaurant> addRestaurant(@RequestBody Restaurant res) {
 		return new ResponseEntity<Restaurant>(rserv.addRestaurant(res), HttpStatus.OK);
@@ -41,24 +65,6 @@ public class RestaurantRestController {
 	public ResponseEntity<Restaurant> removeRestaurant(@RequestBody Restaurant res) {
 
 		return new ResponseEntity<Restaurant>(rserv.removeRestaurant(res), HttpStatus.OK);
-	}
-
-	@GetMapping("/restaurant/view")
-	public ResponseEntity<Restaurant> viewRestaurant(@RequestBody Restaurant res) {
-
-		return new ResponseEntity<Restaurant>(rserv.viewRestaurant(res), HttpStatus.OK);
-	}
-
-	@GetMapping("/restaurant/view/{location}")
-	public ResponseEntity<List<Restaurant>> viewNearByRestaurant(@PathVariable("location") String location) {
-
-		return new ResponseEntity<List<Restaurant>>(rserv.viewNearByRestaurant(location), HttpStatus.OK);
-	}
-
-	@GetMapping("/restaurant/view/{item}")
-	public ResponseEntity<List<Restaurant>> viewRestaurantByItemName(@PathVariable("item") String name) {
-
-		return new ResponseEntity<List<Restaurant>>(rserv.viewRestaurantByItemName(name), HttpStatus.OK);
 	}
 
 }

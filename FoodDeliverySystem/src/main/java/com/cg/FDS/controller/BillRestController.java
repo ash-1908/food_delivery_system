@@ -1,6 +1,5 @@
 package com.cg.FDS.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.FDS.dao.IBillRepository;
 import com.cg.FDS.model.Bill;
 import com.cg.FDS.service.IBillServiceImpl;
 
@@ -24,26 +22,30 @@ import com.cg.FDS.service.IBillServiceImpl;
 public class BillRestController {
 	@Autowired
 	IBillServiceImpl bserv;
-	IBillRepository brepo;
 
 	@GetMapping("/bill/view")
 	public ResponseEntity<Bill> viewBill(@RequestBody Bill bill) {
-		return new ResponseEntity<Bill>(bill, HttpStatus.OK);
+		return new ResponseEntity<Bill>(bserv.viewBill(bill), HttpStatus.OK);
 	}
 
-	@GetMapping("/bill/view/filter/date/{startDate}/{endDate}")
-	public ResponseEntity<List<Bill>> viewBill(@RequestParam("startDate") LocalDate startDate,
-			@RequestParam("endDate") LocalDate endDate) {
+	@GetMapping("/bill/view/filter/date")
+	public ResponseEntity<List<Bill>> viewBill(@RequestParam("startDate") String startDate,
+			@RequestParam("endDate") String endDate) {
 		List<Bill> billList = bserv.viewBills(startDate, endDate);
 		return new ResponseEntity<List<Bill>>(billList, HttpStatus.OK);
 	}
 
-	@GetMapping("/bill/view/filter/customer/{custId}")
+	@GetMapping("/bill/view/filter/customer")
 	public ResponseEntity<List<Bill>> viewBills(@RequestParam("custId") String custId) {
 
 		List<Bill> billList = bserv.viewBills(custId);
 		return new ResponseEntity<List<Bill>>(billList, HttpStatus.OK);
+	}
 
+	@GetMapping("/bill/all")
+	public ResponseEntity<List<Bill>> viewAllBills() {
+
+		return new ResponseEntity<List<Bill>>(bserv.viewAllBills(), HttpStatus.OK);
 	}
 
 	@PostMapping("/bill/new")

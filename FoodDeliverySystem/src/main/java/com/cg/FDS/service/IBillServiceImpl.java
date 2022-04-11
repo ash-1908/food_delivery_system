@@ -1,6 +1,7 @@
 package com.cg.FDS.service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,30 @@ public class IBillServiceImpl implements IBillService {
 	IOrderServiceImpl orderService;
 	@Autowired
 	ICustomerRepository custRepo;
+
+	@Override
+	public Bill viewBill(Bill bill) {
+		if (bill.getBillId() == null || bill.getBillId().length() == 0)
+			throw new EmptyValuesException("Bill Id cannot be empty.");
+
+		if (!billRepo.existsById(bill.getBillId()))
+			throw new BillNotFoundException("Bill does not exist.");
+
+		bill = billRepo.findById(bill.getBillId()).get();
+		return bill;
+	}
+
+	@Override
+	public List<Bill> viewBills(String startDate, String endDate) {
+		if (startDate == null || startDate.length() == 0 || endDate == null || endDate.length() == 0)
+			throw new EmptyValuesException("Date(s) cannot be empty.");
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm:ss");
+		LocalDateTime sd = LocalDateTime.parse(startDate + " 00:00:00", formatter);
+		LocalDateTime ed = LocalDateTime.parse(endDate + " 00:00:00", formatter);
+		List<Bill> billList = billRepo.viewBills(sd, ed);
+		return billList;
+	}
 
 	@Override
 	public Bill addBill(Bill bill) {
@@ -61,21 +86,8 @@ public class IBillServiceImpl implements IBillService {
 		return bill;
 	}
 
-	@Override
-	public Bill viewBill(Bill bill) {
-		if (bill.getBillId() == null || bill.getBillId().length() == 0)
-			throw new EmptyValuesException("Bill Id cannot be empty.");
-
-		return bill;
-	}
-
-	@Override
-	public List<Bill> viewBills(LocalDate startDate, LocalDate endDate) {
-		if (startDate == null || endDate == null)
-			throw new EmptyValuesException("Date(s) cannot be empty.");
-
-		List<Bill> billList = billRepo.viewBills(startDate, endDate);
-		return billList;
+	public List<Bill> viewAllBills() {
+		return billRepo.findAll();
 	}
 
 	@Override

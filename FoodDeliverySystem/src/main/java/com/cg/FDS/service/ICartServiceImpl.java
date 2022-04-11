@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.cg.FDS.dao.ICartRepository;
 import com.cg.FDS.exception.EmptyValuesException;
 import com.cg.FDS.exception.cart.AlreadyExistInCartException;
+import com.cg.FDS.exception.cart.FoodCartNotFoundException;
 import com.cg.FDS.model.FoodCart;
 import com.cg.FDS.model.Item;
 
@@ -18,6 +19,27 @@ public class ICartServiceImpl implements ICartService {
 
 	@Autowired
 	ICartRepository cartRepo;
+
+	public FoodCart addCart(FoodCart cart) {
+		if (cart.getCartId() == null || cart.getCartId().length() == 0)
+			throw new EmptyValuesException("Cart Id cannot be empty.");
+		if (cart.getCustomer() == null || cart.getCustomer().getCustomerId().length() == 0)
+			throw new EmptyValuesException("Customer Id cannot be empty.");
+
+		cartRepo.save(cart);
+		return cart;
+	}
+
+	public FoodCart deleteCart(String cartId) {
+		if (cartId == null || cartId.length() == 0)
+			throw new EmptyValuesException("Cart Id cannot be empty.");
+		if (!cartRepo.existsById(cartId))
+			throw new FoodCartNotFoundException("Cart does not exist.");
+
+		FoodCart cart = cartRepo.findById(cartId).get();
+		cartRepo.deleteById(cartId);
+		return cart;
+	}
 
 	@Override
 	public FoodCart addItemToCart(FoodCart cart, Item item) {
