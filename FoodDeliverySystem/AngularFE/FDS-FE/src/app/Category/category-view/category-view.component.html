@@ -1,0 +1,12 @@
+<h2>Show All Categories</h2>
+
+<table>
+    <tr>
+        <td>ID</td>
+        <td>Name</td>      
+    </tr>
+    <tr *ngFor="let c of categories">
+        <td>{{c.catid}}</td>
+        <td>{{c.categoryName}}</td>
+    </tr>
+</table>

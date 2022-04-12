@@ -1,0 +1,29 @@
+<h2>Delete Restaurant</h2>
+<table>
+    <tr>
+        <td>Restaurant ID</td>
+        <td><input type="text" [(ngModel)]=""></td>
+    </tr>
+    <tr>
+        <td><button (click)="deleteEmp()">Delete Restaurant</button></td>
+        <td>{{msg}}</td>
+    </tr>
+    <tbody *ngIf="showInfo">
+    <tr>
+        <td>Restaurant Name</td>
+        <td><input type="text" [(ngModel)]="res.restaurantName"></td>
+    </tr>
+    <tr>
+        <td>Manager Name</td>
+        <td><input type="text" [(ngModel)]="res.managerName"></td>
+    </tr>
+    <tr>
+        <td>Contact No</td>
+        <td><input type="text" [(ngModel)]="res.contactNumber"></td>
+    </tr>
+    <tr>
+        <td>ItemList</td>
+        <td><input type="text" [(ngModel)]="res.itemList"></td>
+    </tr>
+</tbody>
+</table>
