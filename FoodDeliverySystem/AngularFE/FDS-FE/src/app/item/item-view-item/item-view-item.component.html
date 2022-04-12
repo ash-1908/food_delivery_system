@@ -1,0 +1,12 @@
+<h2>Show All Items</h2>
+
+<table>
+    <tr>
+        <td>ID</td>
+        <td>Name</td>      
+    </tr>
+    <tr *ngFor="let i of Item">
+        <td>{{i.itemId}}</td>
+        <td>{{i.itemName}}</td>
+    </tr>
+</table>

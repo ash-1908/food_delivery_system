@@ -1,0 +1,17 @@
+<h2>Show All Restaurants</h2>
+
+<table>
+    <tr>
+        <td>Category ID</td>
+        <td>Category Name</td>
+        <td>Manager Name</td>
+        <td>Contact Number</td> 
+        <td>List of items</td>       
+    </tr>
+    <tr *ngFor="let r of restaurants">
+        <td>{{r.restaurantId}}</td>
+        <td>{{r.restaurantName}}</td>
+        <td>{{r.managerName}}</td>
+        <td>{{r.contactNumber}}</td>
+    </tr>
+</table>
