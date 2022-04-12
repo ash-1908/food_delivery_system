@@ -1,4 +1,5 @@
 package com.cg.FDS.model;
+
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
@@ -13,20 +14,27 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name="orderdetails_tbl")
+@Table(name = "orderdetails_tbl")
 public class OrderDetails {
+
 	@Id
+	@Column(name = "order_id", length = 10)
 	private Integer orderId;
+
 	@DateTimeFormat(style = "dd:MM:yy")
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss[.SSS][.SS][.S]")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss[.SSS][.SS][.S]")
+	@Column(name = "order_date", length = 20)
 	private LocalDateTime orderDate;
-	@Column(name="orderstatus", length=20)
-	private String orderStatus;
-	@OneToOne(cascade=CascadeType.ALL)
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@Column(name = "cart_id", length = 20)
 	private FoodCart cart;
-	
+
+	@Column(name = "status", length = 20)
+	private String orderStatus;
+
 	public OrderDetails() {
-		
+
 	}
 
 	public OrderDetails(Integer orderId, LocalDateTime orderDate, FoodCart cart, String orderStatus) {
@@ -73,6 +81,5 @@ public class OrderDetails {
 	public String toString() {
 		return "OrderDetails [orderId=" + orderId + ", orderDate=" + orderDate + ", orderStatus=" + orderStatus + "]";
 	}
-	
-	
+
 }

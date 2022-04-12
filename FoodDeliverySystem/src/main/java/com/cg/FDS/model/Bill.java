@@ -14,16 +14,24 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name = "bill_tbl")
 public class Bill {
+
 	@Id
-	@Column(name = "billId", length = 20)
+	@Column(name = "bill_id", length = 20)
 	private String billId;
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss[.SSS][.SS][.S]")
+	@Column(name = "bill_date")
 	private LocalDateTime billDate;
-	private Integer totalItem;
-	private Double totalCost;
 
 	@OneToOne(cascade = CascadeType.ALL)
+	@Column(name = "order_id", length = 10)
 	private OrderDetails order;
+
+	@Column(name = "total_items")
+	private Integer totalItem;
+
+	@Column(name = "total_cost")
+	private Double totalCost;
 
 	public Bill() {
 
