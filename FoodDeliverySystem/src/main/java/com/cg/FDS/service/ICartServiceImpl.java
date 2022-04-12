@@ -30,6 +30,16 @@ public class ICartServiceImpl implements ICartService {
 		return cart;
 	}
 
+	public FoodCart updateCart(FoodCart cart) {
+		if (cart.getCartId() == null || cart.getCartId().length() == 0)
+			throw new EmptyValuesException("Cart Id cannot be empty.");
+		if (!cartRepo.existsById(cart.getCartId()))
+			throw new FoodCartNotFoundException("Cart does not exist.");
+
+		cartRepo.save(cart);
+		return cart;
+	}
+
 	public FoodCart deleteCart(String cartId) {
 		if (cartId == null || cartId.length() == 0)
 			throw new EmptyValuesException("Cart Id cannot be empty.");

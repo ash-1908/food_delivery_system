@@ -11,6 +11,7 @@ import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
 import com.cg.FDS.exception.customer.CustomerNotFoundException;
 import com.cg.FDS.model.Address;
 import com.cg.FDS.model.Customer;
+import com.cg.FDS.model.FoodCart;
 import com.cg.FDS.model.Restaurant;
 
 @Service
@@ -21,6 +22,35 @@ public class ICustomerServiceImpl implements ICustomerService {
 
 	@Autowired
 	IAddressServiceImpl addrServ;
+
+	@Autowired
+	ICartServiceImpl cartServ;
+
+	@Override
+	public Customer viewCustomer(Customer customer) {
+		if (customer.getCustomerId() == null || customer.getCustomerId().length() == 0)
+			throw new EmptyValuesException("Customer Id cannot be empty.");
+		if (!custRepo.existsById(customer.getCustomerId()))
+			throw new CustomerNotFoundException("Customer does not exist.");
+
+		customer = custRepo.findById(customer.getCustomerId()).get();
+		return customer;
+	}
+
+	@Override
+	public List<Customer> viewAllCustomer(Restaurant rest) {
+		if (rest.getRestaurantId() == null || rest.getRestaurantId().length() == 0)
+			throw new EmptyValuesException("Restaurant Id cannot be empty.");
+
+		List<Customer> customerList = custRepo.viewAllCustomer(rest);
+		return customerList;
+	}
+
+	public List<Customer> viewAllCustomers() {
+
+		List<Customer> customerList = custRepo.findAll();
+		return customerList;
+	}
 
 	@Override
 	public Customer addCustomer(Customer customer) {
@@ -70,45 +100,25 @@ public class ICustomerServiceImpl implements ICustomerService {
 	public Customer removeCustomer(Customer customer) {
 		if (customer.getCustomerId() == null || customer.getCustomerId().length() == 0)
 			throw new EmptyValuesException("Customer Id cannot be empty.");
-
 		if (!custRepo.existsById(customer.getCustomerId()))
 			throw new CustomerNotFoundException("Customer does not exist.");
 
 		customer = custRepo.findById(customer.getCustomerId()).get();
+
 		Address adr = customer.getAddress();
+		if (adr != null)
+			addrServ.deleteAddress(adr.getAddressId());
 
-		customer.setAddress(null);
-		customer.setCartList(null);
-		custRepo.save(customer);
+		List<FoodCart> cartList = customer.getCartList();
+		if (cartList != null)
+			for (FoodCart cart : cartList) {
+				cart.setCustomer(null);
+				cartServ.updateCart(cart);
+				cartServ.deleteCart(cart.getCartId());
+			}
 
-		addrServ.deleteAddress(adr.getAddressId());
 		custRepo.deleteById(customer.getCustomerId());
 		return customer;
 	}
 
-	@Override
-	public Customer viewCustomer(Customer customer) {
-		if (customer.getCustomerId() == null || customer.getCustomerId().length() == 0)
-			throw new EmptyValuesException("Customer Id cannot be empty.");
-		if (!custRepo.existsById(customer.getCustomerId()))
-			throw new CustomerNotFoundException("Customer does not exist.");
-
-		customer = custRepo.findById(customer.getCustomerId()).get();
-		return customer;
-	}
-
-	@Override
-	public List<Customer> viewAllCustomer(Restaurant rest) {
-		if (rest.getRestaurantId() == null || rest.getRestaurantId().length() == 0)
-			throw new EmptyValuesException("Restaurant Id cannot be empty.");
-
-		List<Customer> customerList = custRepo.viewAllCustomer(rest);
-		return customerList;
-	}
-
-	public List<Customer> viewAllCustomers() {
-
-		List<Customer> customerList = custRepo.findAll();
-		return customerList;
-	}
 }
