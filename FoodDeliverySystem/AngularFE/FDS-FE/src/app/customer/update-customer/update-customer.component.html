@@ -1,0 +1,48 @@
+<h2>Find and Update Customer</h2>
+<table>
+    <tr>
+        <td>Customer ID:</td>
+        <td><input type="text" [(ngModel)]="customer.customerId"></td>
+    </tr>
+    <tr>
+        <td><button (click)="findEmp(cid)">Find Customer</button></td>
+        
+    </tr>
+    <tbody *ngIf="showInfo">
+        <tr>
+            <td>First Name</td>
+            <td><input type="text" [(ngModel)]="customer.firstName"></td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td><input type="text" [(ngModel)]="customer.lastName"></td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td><input type="text" [(ngModel)]="customer.age"></td>
+        </tr>
+        <tr>
+            <td>Gender</td>
+            <td><input type="text" [(ngModel)]="customer.gender"></td>
+        </tr>
+        <tr>
+            <td>Mobile Number</td>
+            <td><input type="text" [(ngModel)]="customer.mobileNumber"></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td><input type="text" [(ngModel)]="customer.email"></td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td><textarea rows="5" cols="10" [(ngModel)]="customer.address"></textarea></td>
+        </tr>
+        <tr>
+            <td>FoodCart List</td>
+            <td><textarea rows="5" cols="10" [(ngModel)]="customer.cartList"></textarea></td>
+        </tr>
+    <tr>
+        <td><button (click)="updateCustomer()">Update Employee</button></td>
+    </tr>
+</tbody>
+</table>

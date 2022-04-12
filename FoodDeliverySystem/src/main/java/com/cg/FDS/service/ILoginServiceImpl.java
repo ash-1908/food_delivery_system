@@ -12,6 +12,10 @@ public class ILoginServiceImpl implements ILoginService {
 
 	@Autowired
 	ILoginRepository loginRepo;
+<<<<<<< HEAD
+	
+	
+=======
 
 	public Login signUp(Login login) {
 		if (login.getUserName() == null || login.getUserName().length() == 0)
@@ -27,6 +31,7 @@ public class ILoginServiceImpl implements ILoginService {
 		return login;
 	}
 
+>>>>>>> 8b033545f830c9f5aba0135bea335dbda948f070
 	@Override
 	public Login signIn(Login login) {
 		if (login.getUserName() == null || login.getUserName().length() == 0)

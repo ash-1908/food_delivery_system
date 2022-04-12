@@ -1,0 +1,28 @@
+<h2>Add Restaurant</h2>
+<table>
+    <tr>
+        <td>Restaurant ID</td>
+        <td><input type="text" [(ngModel)]="res.restaurantId"></td>
+    </tr>
+    <tr>
+        <td>Restaurant Name</td>
+        <td><input type="text" [(ngModel)]="res.restaurantName"></td>
+    </tr>
+    <tr>
+        <td>Manager Name</td>
+        <td><input type="text" [(ngModel)]="res.managerName"></td>
+    </tr>
+    <tr>
+        <td>Contact Number</td>
+        <td><input type="text" [(ngModel)]="res.contactName"></td>
+    </tr>
+    <tr>
+        <td>List of items</td>
+        <td><input type="text" [(ngModel)]="res.itemlist"></td>
+    </tr>
+    <tr>
+        <td><button (click)="addRestaurant()">Add Restaurant</button></td>
+        <td>{{res.restaurantId}} {{res.restaurantName}} {res.managerName}} {{res.contactNumber}} {{res.itemlist}}</td>
+    </tr>
+</table>
+<p>{{msg}}</p>
