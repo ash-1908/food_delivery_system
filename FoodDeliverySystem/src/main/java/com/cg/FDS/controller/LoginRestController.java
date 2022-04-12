@@ -1,6 +1,8 @@
 package com.cg.FDS.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,10 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.FDS.dao.ILoginRepository;
-import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
-import com.cg.FDS.exception.login.LoginAlreadyExistsException;
-import com.cg.FDS.exception.login.LoginNotFoundException;
 import com.cg.FDS.model.Login;
 import com.cg.FDS.service.ILoginServiceImpl;
 
@@ -19,35 +17,20 @@ import com.cg.FDS.service.ILoginServiceImpl;
 @RequestMapping("/rest")
 @CrossOrigin("*")
 public class LoginRestController {
-	
+
 	@Autowired
-	ILoginServiceImpl logserve;
-	ILoginRepository loginRepo;
-	
+	ILoginServiceImpl loginServ;
+
 	@PostMapping("/signin")
-	public Login signIn(@RequestBody Login login) {
-		try {
-			if(loginRepo.existsById(login.getUserId())) {
-				throw new LoginAlreadyExistsException("Already Logged In.");
-			}	
-		}
-		catch(LoginAlreadyExistsException e) {
-			System.out.println(e.getMessage());
-		}
-		return logserve.signIn(login);
+	public ResponseEntity<Login> signIn(@RequestBody Login login) {
+
+		return new ResponseEntity<Login>(loginServ.signIn(login), HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/signout")
-	public Login signOut(@RequestBody Login login) {
-		try {
-			if(!loginRepo.existsById(login.getUserId())) {
-				throw new LoginNotFoundException("Already Logged In.");
-			}	
-		}
-		catch(LoginNotFoundException e) {
-			System.out.println(e.getMessage());
-		}
-		return logserve.signOut(login);
-	}	
+	public ResponseEntity<Login> signOut(@RequestBody Login login) {
+
+		return new ResponseEntity<Login>(loginServ.signOut(login), HttpStatus.OK);
+	}
 
 }

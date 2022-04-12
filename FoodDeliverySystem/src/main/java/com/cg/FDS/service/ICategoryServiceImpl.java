@@ -6,64 +6,67 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.FDS.dao.ICategoryRepository;
+import com.cg.FDS.exception.EmptyValuesException;
+import com.cg.FDS.exception.category.CategoryAlreadyExistsException;
+import com.cg.FDS.exception.category.CategoryNotFoundException;
 import com.cg.FDS.model.Category;
 
 @Service
-public class ICategoryServiceImpl implements  ICategoryService {
-	
+public class ICategoryServiceImpl implements ICategoryService {
+
 	@Autowired
 	ICategoryRepository catRepo;
 
-
 	@Override
 	public Category addCategory(Category cat) {
-		// TODO Auto-generated method stub
+		if (cat.getCatId() == null || cat.getCatId().length() == 0)
+			throw new EmptyValuesException("Category Id cannot be empty.");
+		if (cat.getCategoryName() == null || cat.getCategoryName().length() == 0)
+			throw new EmptyValuesException("Category name cannot be empty.");
+		if (catRepo.existsById(cat.getCatId()))
+			throw new CategoryAlreadyExistsException("Category already exists.");
+
 		catRepo.save(cat);
 		return cat;
 	}
 
 	@Override
 	public Category updateCategory(Category cat) {
-		// TODO Auto-generated method stub
-		
-		if(catRepo.existsById(cat.getCatId())) {
-			catRepo.save(cat);
-			return cat;
-			
-		}
-		return null;
+		if (cat.getCatId() == null || cat.getCatId().length() == 0)
+			throw new EmptyValuesException("Category Id cannot be empty.");
+		if (cat.getCategoryName() == null || cat.getCategoryName().length() == 0)
+			throw new EmptyValuesException("Category name cannot be empty.");
+		if (!catRepo.existsById(cat.getCatId()))
+			throw new CategoryNotFoundException("Category does not exist.");
+
+		catRepo.save(cat);
+		return cat;
 	}
 
 	@Override
 	public Category removeCategory(Category cat) {
-		// TODO Auto-generated method stub
-		if(catRepo.existsById(cat.getCatId())) {
-			catRepo.deleteById(cat.getCatId());
-			return cat;
-		}
-		
-		return null;
+		if (cat.getCatId() == null || cat.getCatId().length() == 0)
+			throw new EmptyValuesException("Category Id cannot be empty.");
+		if (!catRepo.existsById(cat.getCatId()))
+			throw new CategoryNotFoundException("Category does not exist.");
+
+		catRepo.deleteById(cat.getCatId());
+		return cat;
 	}
-	
 
 	@Override
 	public Category viewCategory(Category cat) {
-		// TODO Auto-generated method stub
-		System.out.println(cat);
+		if (cat.getCatId() == null || cat.getCatId().length() == 0)
+			throw new EmptyValuesException("Category Id cannot be empty.");
+
 		return cat;
-		
+
 	}
 
 	@Override
 	public List<Category> viewAllCategory() {
-		// TODO Auto-generated method stub
 		List<Category> categoryList = catRepo.viewAllCategory();
-		for(Category c: categoryList)
-			System.out.println(c);
 		return categoryList;
-	
 	}
-	
-	
 
 }

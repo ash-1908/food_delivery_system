@@ -9,27 +9,30 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name="bill_tbl")
+@Table(name = "bill_tbl")
 public class Bill {
 	@Id
-	@Column(name="billId", length=20)
+	@Column(name = "billId", length = 20)
 	private String billId;
+<<<<<<< HEAD
 	
 	
+=======
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss[.SSS][.SS][.S]")
+>>>>>>> 8b033545f830c9f5aba0135bea335dbda948f070
 	private LocalDateTime billDate;
 	private Integer totalItem;
 	private Double totalCost;
-	
-	@OneToOne(cascade=CascadeType.ALL)
+
+	@OneToOne(cascade = CascadeType.ALL)
 	private OrderDetails order;
-	
+
 	public Bill() {
-		
+
 	}
 
 	public Bill(String billId, LocalDateTime billDate, OrderDetails order, Integer totalItem, Double totalCost) {
@@ -86,6 +89,5 @@ public class Bill {
 		return "Bill [billId=" + billId + ", billDate=" + billDate + ", order=" + order + ", totalItem=" + totalItem
 				+ ", totalCost=" + totalCost + "]";
 	}
-	
-	
+
 }

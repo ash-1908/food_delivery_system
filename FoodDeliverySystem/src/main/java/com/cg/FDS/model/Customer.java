@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Customer_tbl")
 public class Customer {
@@ -33,7 +35,8 @@ public class Customer {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+	@JsonIgnore
 	private List<FoodCart> cartList = new ArrayList<>();
 
 	public Customer() {

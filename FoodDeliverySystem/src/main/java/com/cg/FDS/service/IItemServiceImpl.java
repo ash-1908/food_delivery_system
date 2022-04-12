@@ -7,12 +7,16 @@ import org.springframework.stereotype.Service;
 
 import com.cg.FDS.dao.ICategoryRepository;
 import com.cg.FDS.dao.IItemRepository;
+import com.cg.FDS.exception.EmptyValuesException;
+import com.cg.FDS.exception.item.ItemAlreadyExistsException;
+import com.cg.FDS.exception.item.ItemNotFoundException;
 import com.cg.FDS.model.Category;
 import com.cg.FDS.model.Item;
 import com.cg.FDS.model.Restaurant;
 
 @Service
 public class IItemServiceImpl implements IItemService {
+
 	@Autowired
 	IItemRepository itemRepo;
 	@Autowired
@@ -20,69 +24,113 @@ public class IItemServiceImpl implements IItemService {
 	@Autowired
 	ICategoryRepository catRepo;
 
+	public List<Item> viewAllItems() {
+		return itemRepo.findAll();
+	}
+
 	@Override
 	public Item addItem(Item item) {
-		// TODO Auto-generated method stub
-		if (!catRepo.existsById(item.getCategory().getCatId()))
-			catServ.addCategory(item.getCategory());
+		if (item.getItemId() == null || item.getItemId().length() == 0)
+			throw new EmptyValuesException("Item Id cannot be empty.");
+
+		if (item.getItemName() == null || item.getItemName().length() == 0)
+			throw new EmptyValuesException("Item name cannot be empty.");
+
+		if (item.getCategory() == null || item.getCategory().getCatId().length() == 0)
+			throw new EmptyValuesException("Item category cannot be empty.");
+
+		if (itemRepo.existsById(item.getItemId()))
+			throw new ItemAlreadyExistsException("Item already exists.");
+
+		catServ.addCategory(item.getCategory());
 		itemRepo.save(item);
 		return item;
 	}
 
 	@Override
 	public Item updateItem(Item item) {
-		// TODO Auto-generated method stub
-		if (itemRepo.existsById(item.getItemId())) {
-			if (!catRepo.existsById(item.getCategory().getCatId()))
-				catServ.addCategory(item.getCategory());
-			itemRepo.save(item);
-			return item;
-		}
-		return null;
-	}
+		if (item.getItemId() == null || item.getItemId().length() == 0)
+			throw new EmptyValuesException("Item Id cannot be empty.");
 
-	@Override
-	public Item viewItem(Item item) {
-		// TODO Auto-generated method stub
-		System.out.println(item);
+		if (item.getItemName() == null || item.getItemName().length() == 0)
+			throw new EmptyValuesException("Item name cannot be empty.");
+
+		if (item.getCategory() == null || item.getCategory().getCatId().length() == 0)
+			throw new EmptyValuesException("Item category cannot be empty.");
+
+		if (!itemRepo.existsById(item.getItemId()))
+			throw new ItemNotFoundException("Item does not exist.");
+
+		catServ.addCategory(item.getCategory());
+		itemRepo.save(item);
 		return item;
 	}
 
 	@Override
+	public Item viewItem(Item item) {
+		if (item.getItemId() == null || item.getItemId().length() == 0)
+			throw new EmptyValuesException("Item Id cannot be empty.");
+		if (!itemRepo.existsById(item.getItemId()))
+			throw new ItemNotFoundException("Item does not exist.");
+
+		return itemRepo.findById(item.getItemId()).get();
+
+	}
+
+	@Override
 	public Item removeItem(Item item) {
-		// TODO Auto-generated method stub
-		if (itemRepo.existsById(item.getItemId())) {
-			itemRepo.deleteById(item.getItemId());
-			return item;
-		}
-		return null;
+		if (item.getItemId() == null || item.getItemId().length() == 0)
+			throw new EmptyValuesException("Item Id cannot be empty.");
+
+		if (!itemRepo.existsById(item.getItemId()))
+			throw new ItemNotFoundException("Item does not exist.");
+
+		itemRepo.deleteById(item.getItemId());
+		return item;
 	}
 
 	@Override
 	public List<Item> viewAllItems(Category cat) {
-		// TODO Auto-generated method stub
+		if (cat.getCatId() == null || cat.getCatId().length() == 0)
+			throw new EmptyValuesException("Category Id cannot be empty.");
+
 		List<Item> itemList = itemRepo.viewAllItems(cat);
-		for (Item it : itemList)
-			System.out.println(it);
 		return itemList;
 	}
 
 	@Override
 	public List<Item> viewAllItems(Restaurant res) {
-		// TODO Auto-generated method stub
-		List<Item> itemList1 = itemRepo.viewAllItems(res);
-		for (Item it1 : itemList1)
-			System.out.println(it1);
-		return itemList1;
+		if (res.getRestaurantId() == null || res.getRestaurantId().length() == 0)
+			throw new EmptyValuesException("Restaurant Id cannot be empty.");
+
+		List<Item> itemList = itemRepo.viewAllItems(res);
+		return itemList;
 	}
 
 	@Override
 	public List<Item> viewAllItemsByName(String name) {
-		// TODO Auto-generated method stub
-		List<Item> nameList = itemRepo.viewAllItemsByName(name);
-		for (Item i : nameList)
-			System.out.println(i);
-		return nameList;
+		if (name == null || name.length() == 0)
+			throw new EmptyValuesException("Item name cannot be empty.");
+
+		List<Item> itemList = itemRepo.viewAllItemsByName(name);
+		return itemList;
+	}
+
+	public Item updateRestaurantItem(Item item) {
+		if (item.getItemId() == null || item.getItemId().length() == 0)
+			throw new EmptyValuesException("Item Id cannot be empty.");
+
+		if (item.getItemName() == null || item.getItemName().length() == 0)
+			throw new EmptyValuesException("Item name cannot be empty.");
+
+		if (item.getCategory() == null || item.getCategory().getCatId().length() == 0)
+			throw new EmptyValuesException("Item category cannot be empty.");
+
+		if (!itemRepo.existsById(item.getItemId())) {
+			itemRepo.save(item);
+			return item;
+		}
+		return itemRepo.getById(item.getItemId());
 	}
 
 }

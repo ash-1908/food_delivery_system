@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.FDS.dao.ICustomerRepository;
+import com.cg.FDS.exception.EmptyValuesException;
+import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
+import com.cg.FDS.exception.customer.CustomerNotFoundException;
 import com.cg.FDS.model.Customer;
 import com.cg.FDS.model.Restaurant;
 
@@ -13,57 +16,91 @@ import com.cg.FDS.model.Restaurant;
 public class ICustomerServiceImpl implements ICustomerService {
 
 	@Autowired
-	ICustomerRepository customerRepo;
+	ICustomerRepository custRepo;
 
 	@Autowired
 	IAddressServiceImpl addrServ;
 
 	@Override
 	public Customer addCustomer(Customer customer) {
-		// TODO Auto-generated method stub
+		if (customer.getCustomerId() == null || customer.getCustomerId().length() == 0)
+			throw new EmptyValuesException("Customer Id cannot be empty.");
+
+		if (customer.getFirstName() == null || customer.getFirstName().length() == 0)
+			throw new EmptyValuesException("Customer name cannot be empty.");
+
+		if (customer.getAddress() == null || customer.getAddress().getAddressId().length() == 0)
+			throw new EmptyValuesException("Customer address cannot be empty.");
+
+		if (custRepo.existsById(customer.getCustomerId()))
+			throw new CustomerAlreadyExistsException("Customer already exists.");
+
 		addrServ.addAddress(customer.getAddress());
-		customerRepo.save(customer);
+		custRepo.save(customer);
 		return customer;
 	}
 
 	@Override
 	public Customer updateCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		if (customerRepo.existsById(customer.getCustomerId())) {
-			addrServ.updateAddress(customer.getAddress());
-			customerRepo.save(customer);
-			return customer;
+		if (customer.getCustomerId() == null || customer.getCustomerId().length() == 0)
+			throw new EmptyValuesException("Customer Id cannot be empty.");
+
+		if (customer.getFirstName() == null || customer.getFirstName().length() == 0)
+			throw new EmptyValuesException("Customer name cannot be empty.");
+
+		if (!custRepo.existsById(customer.getCustomerId()))
+			throw new CustomerNotFoundException("Customer does not exist.");
+
+		Customer oldCust = custRepo.getById(customer.getCustomerId());
+		// address is null -> dont update address of customer
+		if (customer.getAddress() == null || customer.getAddress().getAddressId() == null
+				|| customer.getAddress().getAddressId().length() == 0)
+			customer.setAddress(oldCust.getAddress());
+		// address id is new
+		else {
+			addrServ.deleteAddress(oldCust.getAddress().getAddressId());
+			addrServ.addAddress(customer.getAddress());
 		}
-		return null;
+		custRepo.save(customer);
+		return customer;
 	}
 
 	@Override
 	public Customer removeCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		if (customerRepo.existsById(customer.getCustomerId())) {
-			addrServ.deleteAddress(customer.getAddress().getAddressId());
-			customerRepo.deleteById(customer.getCustomerId());
-			// return customer and address object
-			return customer;
-		}
-		return null;
+		if (customer.getCustomerId() == null || customer.getCustomerId().length() == 0)
+			throw new EmptyValuesException("Customer Id cannot be empty.");
+
+		if (!custRepo.existsById(customer.getCustomerId()))
+			throw new CustomerNotFoundException("Customer does not exist.");
+
+		addrServ.deleteAddress(customer.getAddress().getAddressId());
+		custRepo.deleteById(customer.getCustomerId());
+		return customer;
 	}
 
 	@Override
 	public Customer viewCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		System.out.println(customer);
+		if (customer.getCustomerId() == null || customer.getCustomerId().length() == 0)
+			throw new EmptyValuesException("Customer Id cannot be empty.");
+		if (!custRepo.existsById(customer.getCustomerId()))
+			throw new CustomerNotFoundException("Customer does not exist.");
+
+		customer = custRepo.findById(customer.getCustomerId()).get();
 		return customer;
 	}
 
 	@Override
 	public List<Customer> viewAllCustomer(Restaurant rest) {
-		// TODO Auto-generated method stub
-		List<Customer> customerList = customerRepo.viewAllCustomer(rest);
-		for (Customer c : customerList) {
-			System.out.println(c);
-		}
+		if (rest.getRestaurantId() == null || rest.getRestaurantId().length() == 0)
+			throw new EmptyValuesException("Restaurant Id cannot be empty.");
+
+		List<Customer> customerList = custRepo.viewAllCustomer(rest);
 		return customerList;
 	}
 
+	public List<Customer> viewAllCustomers() {
+
+		List<Customer> customerList = custRepo.findAll();
+		return customerList;
+	}
 }
