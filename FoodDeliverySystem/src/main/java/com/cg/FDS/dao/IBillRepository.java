@@ -15,7 +15,7 @@ public interface IBillRepository extends JpaRepository<Bill, String> {
 	@Query("FROM Bill WHERE billDate >= ?1 and billDate < ?2")
 	List<Bill> viewBills(LocalDateTime startDate, LocalDateTime endDate);
 
-	@Query("FROM Bill WHERE order.cart.customer.customerId = ?1")
+	@Query("SELECT b from Bill b WHERE b.order.cart.customer.customerId = ?1")
 	List<Bill> viewBills(String custId);
 
 }
