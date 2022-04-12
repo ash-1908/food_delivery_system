@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CustomerService } from '../customer.service';
 import { Customer } from './customer';
 
 @Component({
@@ -10,6 +11,10 @@ export class CustomerComponent {
 
   customer:Customer=new Customer;
   customers:Customer[]
-  constructor() { }
-
+  constructor(private cs:CustomerService) { 
+    
+  }
+  
+  
+  
 }

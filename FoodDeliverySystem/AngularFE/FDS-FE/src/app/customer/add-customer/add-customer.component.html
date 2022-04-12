@@ -1,0 +1,46 @@
+<h2>New Customer Form</h2>
+<table>
+    <tr>
+        <td>Customer ID:</td>
+        <td><input type="text" [(ngModel)]="customer.customerId"></td>
+    </tr>
+    <tr>
+        <td>First Name</td>
+        <td><input type="text" [(ngModel)]="customer.firstName"></td>
+    </tr>
+    <tr>
+        <td>Last Name</td>
+        <td><input type="text" [(ngModel)]="customer.lastName"></td>
+    </tr>
+    <tr>
+        <td>Age</td>
+        <td><input type="text" [(ngModel)]="customer.age"></td>
+    </tr>
+    <tr>
+        <td>Gender</td>
+        <td><input type="text" [(ngModel)]="customer.gender"></td>
+    </tr>
+    <tr>
+        <td>Mobile Number</td>
+        <td><input type="text" [(ngModel)]="customer.mobileNumber"></td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td><input type="text" [(ngModel)]="customer.email"></td>
+    </tr>
+    <tr>
+        <td>Address</td>
+        <td><textarea rows="5" cols="10" [(ngModel)]="customer.address"></textarea></td>
+    </tr>
+    <tr>
+        <td>FoodCart List</td>
+        <td><textarea rows="5" cols="10" [(ngModel)]="customer.cartList"></textarea></td>
+    </tr>
+    <tr>
+        <td><button (click)="addCustomer()">Add Customer</button></td>
+        <td>{{customer.customerId}} {{customer.firstName}} {{customer.lastName}} {{customer.age}}
+            {{customer.gender}} {{customer.mobileNumber}} {{customer.email}} {{customer.address}} {{customer.cartList}}
+        </td>
+    </tr>
+</table>
+<p>{{msg}}</p>
