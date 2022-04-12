@@ -13,6 +13,6 @@ import com.cg.FDS.model.Restaurant;
 public interface ICustomerRepository extends JpaRepository<Customer, String> {
 
 	@Query("SELECT f.customer FROM FoodCart f JOIN f.itemList fi WHERE fi IN (SELECT i FROM Restaurant r JOIN r.itemList i WHERE r = ?1)")
-	public List<Customer> viewAllCustomer(Restaurant rest);
+	List<Customer> viewAllCustomer(Restaurant rest);
 
 }

@@ -1,11 +1,18 @@
 package com.cg.FDS.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Customer_tbl")
@@ -36,6 +43,10 @@ public class Customer {
 	@OneToOne(cascade = CascadeType.ALL)
 	@Column(name = "adr_id", length = 20)
 	private Address address;
+
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
+	List<FoodCart> cartList = new ArrayList<>();
 
 	public Customer() {
 	}
@@ -115,6 +126,23 @@ public class Customer {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<FoodCart> getCartList() {
+		return cartList;
+	}
+
+	public void setCartList(List<FoodCart> cartList) {
+		this.cartList = cartList;
+	}
+
+	public void addToCartList(FoodCart cart) {
+		this.cartList.add(cart);
+	}
+
+	public void removeFromCartList(FoodCart cart) {
+		this.cartList = this.cartList.stream().filter((c) -> c.getCartId() != cart.getCartId())
+				.collect(Collectors.toList());
 	}
 
 	@Override
