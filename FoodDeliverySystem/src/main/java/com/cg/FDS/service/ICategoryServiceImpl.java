@@ -50,6 +50,7 @@ public class ICategoryServiceImpl implements ICategoryService {
 		if (!catRepo.existsById(cat.getCatId()))
 			throw new CategoryNotFoundException("Category does not exist.");
 
+		cat = catRepo.findById(cat.getCatId()).get();
 		catRepo.deleteById(cat.getCatId());
 		return cat;
 	}
@@ -59,8 +60,12 @@ public class ICategoryServiceImpl implements ICategoryService {
 		if (cat.getCatId() == null || cat.getCatId().length() == 0)
 			throw new EmptyValuesException("Category Id cannot be empty.");
 
-		return cat;
+		if (catRepo.existsById(cat.getCatId()))
+			cat = catRepo.findById(cat.getCatId()).get();
+		else
+			cat = null;
 
+		return cat;
 	}
 
 	@Override

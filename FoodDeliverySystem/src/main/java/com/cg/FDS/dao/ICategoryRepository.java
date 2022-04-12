@@ -9,12 +9,9 @@ import org.springframework.stereotype.Repository;
 import com.cg.FDS.model.Category;
 
 @Repository
-public interface ICategoryRepository extends JpaRepository<Category,String>{
-	
+public interface ICategoryRepository extends JpaRepository<Category, String> {
 
-	
-	
-	@Query("select c.categoryName from Category c ")
-	public List<Category> viewAllCategory();
+	@Query("FROM Category")
+	List<Category> viewAllCategory();
 
 }
