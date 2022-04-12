@@ -1,0 +1,24 @@
+<h2>Increase Quantity of Item</h2>
+<table>
+    <tr>
+        <td>Cart ID</td>
+        <td> <input type="text"  [(ngModel)]="cart.cartId"></td>
+    </tr>
+    <tr>
+        <td>Item ID</td>
+        <td> <input type="text"  [(ngModel)]="item.itemId"></td>
+    </tr>
+    
+    <tr>
+        <td>Item Name</td>
+        <td> <input type="text"  [(ngModel)]="item.itemName"></td>
+    </tr>
+
+    <tr>
+        <td>Quantity</td>
+        <td> <input type="text"  [(ngModel)]="item.quantity"></td>
+    </tr>
+
+        <td><button (click)="increaseQuantity()">Increase Quantity</button></td>
+        
+</table>
