@@ -61,7 +61,10 @@ public class IItemServiceImpl implements IItemService {
 		if (!itemRepo.existsById(item.getItemId()))
 			throw new ItemNotFoundException("Item does not exist.");
 
-		catServ.addCategory(item.getCategory());
+		Item oldItem = itemRepo.findById(item.getItemId()).get();
+		if (oldItem.getCategory().getCatId() != item.getCategory().getCatId())
+			if (catServ.viewCategory(item.getCategory()) == null)
+				catServ.addCategory(item.getCategory());
 		itemRepo.save(item);
 		return item;
 	}

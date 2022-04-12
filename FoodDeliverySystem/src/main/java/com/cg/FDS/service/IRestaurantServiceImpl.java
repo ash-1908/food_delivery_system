@@ -38,6 +38,12 @@ public class IRestaurantServiceImpl implements IRestaurantService {
 			throw new EmptyValuesException("Restaurant address cannot be empty.");
 
 		Address adr = addrServ.getAddress(rest.getAddress().getAddressId());
+		if (adr == null)
+			if (rest.getAddress().getBuildingName() == null && rest.getAddress().getPincode() == null)
+				throw new EmptyValuesException("Restaurant address with Id (" + rest.getAddress().getAddressId()
+						+ ") does not exist. Please enter Building name and Pincode to create new address with this Id.");
+			else
+				addrServ.addAddress(rest.getAddress());
 		if (rest.getItemList().size() != 0) {
 			List<Item> itemList = new ArrayList<>();
 			for (Item i : rest.getItemList()) {
@@ -45,7 +51,7 @@ public class IRestaurantServiceImpl implements IRestaurantService {
 			}
 			rest.setItemList(itemList);
 		}
-		rest.setAddress(adr);
+
 		resRepo.save(rest);
 		return rest;
 	}
@@ -89,14 +95,21 @@ public class IRestaurantServiceImpl implements IRestaurantService {
 
 		rest = resRepo.findById(rest.getRestaurantId()).get();
 		String resId = rest.getRestaurantId();
-		addrServ.deleteAddress(rest.getAddress().getAddressId());
-		for (Item i : rest.getItemList()) {
-			List<Restaurant> resList = i.getRestaurants().stream().filter((r) -> !r.getRestaurantId().equals(resId))
-					.collect(Collectors.toList());
-			i.setRestaurants(resList);
-		}
+		Address adr = rest.getAddress();
+		if (adr != null)
+			addrServ.deleteAddress(adr.getAddressId());
+		List<Item> itemList = rest.getItemList();
+		if (itemList != null)
+			for (Item i : itemList) {
+				List<Restaurant> resList = i.getRestaurants().stream().filter((r) -> !r.getRestaurantId().equals(resId))
+						.collect(Collectors.toList());
+				i.setRestaurants(resList);
+				itemServ.updateItem(i);
+			}
 		rest.setItemList(null);
 		resRepo.deleteById(rest.getRestaurantId());
+		rest.setItemList(itemList);
+		rest.setAddress(adr);
 		return rest;
 	}
 
