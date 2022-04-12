@@ -104,6 +104,8 @@ public class IRestaurantServiceImpl implements IRestaurantService {
 	public Restaurant viewRestaurant(Restaurant rest) {
 		if (rest.getRestaurantId() == null || rest.getRestaurantId().length() == 0)
 			throw new EmptyValuesException("Restaurant Id cannot be empty.");
+		if (!resRepo.existsById(rest.getRestaurantId()))
+			throw new RestaurantNotFoundException("Restaurant does not exist.");
 
 		rest = resRepo.findById(rest.getRestaurantId()).get();
 		return rest;
