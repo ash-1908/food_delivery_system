@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.FDS.exception.category.CategoryNotFoundException;
 import com.cg.FDS.model.Category;
 import com.cg.FDS.service.ICategoryServiceImpl;
 
@@ -43,8 +44,10 @@ public class CategoryRestController {
 
 	@GetMapping("/category/view")
 	public ResponseEntity<Category> viewCategory(@RequestBody Category cat) {
-
-		return new ResponseEntity<Category>(catServ.viewCategory(cat), HttpStatus.OK);
+		ResponseEntity<Category> res = new ResponseEntity<Category>(catServ.viewCategory(cat), HttpStatus.OK);
+		if (res.getBody() == null)
+			throw new CategoryNotFoundException("Category does not exist");
+		return res;
 	}
 
 	@GetMapping("/category/view/all")
