@@ -9,6 +9,7 @@ import com.cg.FDS.dao.ICustomerRepository;
 import com.cg.FDS.exception.EmptyValuesException;
 import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
 import com.cg.FDS.exception.customer.CustomerNotFoundException;
+import com.cg.FDS.model.Address;
 import com.cg.FDS.model.Customer;
 import com.cg.FDS.model.Restaurant;
 
@@ -73,7 +74,14 @@ public class ICustomerServiceImpl implements ICustomerService {
 		if (!custRepo.existsById(customer.getCustomerId()))
 			throw new CustomerNotFoundException("Customer does not exist.");
 
-		addrServ.deleteAddress(customer.getAddress().getAddressId());
+		customer = custRepo.findById(customer.getCustomerId()).get();
+		Address adr = customer.getAddress();
+
+		customer.setAddress(null);
+		customer.setCartList(null);
+		custRepo.save(customer);
+
+		addrServ.deleteAddress(adr.getAddressId());
 		custRepo.deleteById(customer.getCustomerId());
 		return customer;
 	}
