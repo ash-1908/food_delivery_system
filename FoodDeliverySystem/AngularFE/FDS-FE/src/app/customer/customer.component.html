@@ -1,1 +1,14 @@
-<p>customer works!</p>
+<form>
+    Customer Id:<input type="text" width="20" name="customer.customerId" [(ngModel)]="customer.customerId" /><br>
+    First Name:<input type="text" width="20" name="customer.firstName"  [(ngModel)]="customer.firstName" /><br>
+    Last Name:<input type="text" width="20" name="customer.lastName"  [(ngModel)]="customer.lastName" /><br>
+    Age:<input type="text" width="20"  name="customer.age" [(ngModel)]="customer.age" /><br>
+    Gender:<input type="text" width="20" name="customer.gender"  [(ngModel)]="customer.gender" /><br>
+    Mobile Number:<input type="text" width="20" name="customer.mobileNumber"  [(ngModel)]="customer.mobileNumber" /><br>
+    Email:<input type="text" width="20"  name="customer.email"  [(ngModel)]="customer.email" /><br>
+    Address:<textarea rows="4" cols="10" name="customer.address" [(ngModel)]="customer.address"></textarea><br>
+    
+    <button (click)="addCustomer()">Add Customer</button>
+    <button (click)="updateCustomer()">Add Customer</button>
+    <button (click)="removeCustomer()">Add Customer</button>
+</form>

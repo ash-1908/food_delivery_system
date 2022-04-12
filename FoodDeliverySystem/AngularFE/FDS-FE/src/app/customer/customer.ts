@@ -1,4 +1,5 @@
 import { Address } from "../address/address";
+import { FoodCart } from "../foodCart/foodCart";
 
 export class Customer{
 
@@ -10,5 +11,5 @@ export class Customer{
 	public  mobileNumber:string;
 	public  email:string;
 	public  address:Address;
-    public List<FoodCart> cartList:FoodCart;
+    public cartList:FoodCart[]=[];
 }

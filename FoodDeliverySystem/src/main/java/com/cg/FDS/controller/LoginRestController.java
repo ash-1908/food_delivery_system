@@ -14,7 +14,6 @@ import com.cg.FDS.model.Login;
 import com.cg.FDS.service.ILoginServiceImpl;
 
 @RestController
-@RequestMapping("/rest")
 @CrossOrigin("*")
 public class LoginRestController {
 

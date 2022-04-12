@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { CustomerComponent } from './customer/customer.component';
 import { AddressComponent } from './address/address.component';
 import { LoginComponent } from './login/login.component';
+<<<<<<< HEAD
 import { HttpClientModule} from '@angular/common/http';
 import { NewCategoryComponent } from './Category/new-category/new-category.component';
 import { CategoryAddComponent } from './Category/category-add/category-add.component';
@@ -18,6 +19,15 @@ import { RestaurantAddComponent } from './Restaurant/restaurant-add/restaurant-a
 import { RestaurantDeleteComponent } from './Restaurant/restaurant-delete/restaurant-delete.component';
 import { RestaurantUpdateComponent } from './Restaurant/restaurant-update/restaurant-update.component';
 import { RestaurantViewComponent } from './Restaurant/restaurant-view/restaurant-view.component';
+=======
+import { HttpClientModule } from '@angular/common/http';
+import { AddCustomerComponent } from './customer/add-customer/add-customer.component';
+import { UpdateCustomerComponent } from './customer/update-customer/update-customer.component';
+import { RemoveCustomerComponent } from './customer/remove-customer/remove-customer.component';
+import { ViewCustomerComponent } from './customer/view-customer/view-customer.component';
+import { SignInComponent } from './login/sign-in/sign-in.component';
+import { SignOutComponent } from './login/sign-out/sign-out.component';
+>>>>>>> f2d41931f42f73065163ffafcdde90c3a2b8d496
 
 @NgModule({
   declarations: [
@@ -25,6 +35,7 @@ import { RestaurantViewComponent } from './Restaurant/restaurant-view/restaurant
     CustomerComponent,
     AddressComponent,
     LoginComponent,
+<<<<<<< HEAD
     NewCategoryComponent,
     CategoryAddComponent,
     CategoryDeleteComponent,
@@ -35,6 +46,14 @@ import { RestaurantViewComponent } from './Restaurant/restaurant-view/restaurant
     RestaurantDeleteComponent,
     RestaurantUpdateComponent,
     RestaurantViewComponent
+=======
+    AddCustomerComponent,
+    UpdateCustomerComponent,
+    RemoveCustomerComponent,
+    ViewCustomerComponent,
+    SignInComponent,
+    SignOutComponent
+>>>>>>> f2d41931f42f73065163ffafcdde90c3a2b8d496
   ],
   imports: [
     BrowserModule,
