@@ -17,13 +17,7 @@ public class Bill {
 	@Id
 	@Column(name = "billId", length = 20)
 	private String billId;
-<<<<<<< HEAD
-	
-	
-=======
-
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss[.SSS][.SS][.S]")
->>>>>>> 8b033545f830c9f5aba0135bea335dbda948f070
 	private LocalDateTime billDate;
 	private Integer totalItem;
 	private Double totalCost;

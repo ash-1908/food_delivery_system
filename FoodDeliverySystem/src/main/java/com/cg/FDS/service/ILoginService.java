@@ -1,9 +1,18 @@
 package com.cg.FDS.service;
 
+import java.util.List;
+
 import com.cg.FDS.model.Login;
 
 public interface ILoginService {
 
-	public Login signIn(Login login);
-	public Login signOut(Login login);
+	Login signIn(Login login);
+
+	List<Login> getAllUsers();
+
+	Login delete(Login login);
+
+	public Login signUp(Login login);
+
+	public Login resetPassword(Login login);
 }
