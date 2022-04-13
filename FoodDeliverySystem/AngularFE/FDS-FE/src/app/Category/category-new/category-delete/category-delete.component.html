@@ -1,0 +1,20 @@
+<h2>Delete Category</h2>
+<div>
+<form>
+<table>
+    <tr>
+        <td>Category ID</td>
+        <td><input type="text" class="cat.categoryId" [(ngModel)]="cat.categoryId"></td>
+    </tr>
+
+    <tbody *ngIf="showInfo">
+    <tr>
+        <td>Category Name</td>
+        <td><input type="text" class="cat.categoryId" [(ngModel)]="cat.categoryId"></td>
+    </tr>
+
+    <td><button (click)="deleteCategory()">Delete Category</button></td>
+
+</table>
+</form>
+</div>
