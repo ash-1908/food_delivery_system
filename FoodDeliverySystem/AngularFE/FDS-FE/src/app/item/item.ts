@@ -1,4 +1,5 @@
 import{ Category } from "../category/category";
+import { Restaurant } from "../Restaurant/Restaurant";
 
 export class Item{
     public itemId:string;
@@ -6,7 +7,7 @@ export class Item{
     public category: Category;
     public quantity: number;
     public cost:DoubleRange;
-    public List<Restaurant> : restaurant;
+    public restaurant:Restaurant[]=[];
 
 
 }
