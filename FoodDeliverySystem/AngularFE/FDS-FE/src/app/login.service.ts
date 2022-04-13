@@ -13,8 +13,10 @@ export class LoginService {
   constructor(private h:HttpClient) {
 
    }
-   signIn(userId:string ,password:string):Observable<any>{
-     
-    return this.h.post<any>(this.loginURL+"/signin",{userId,password});
+   SignIn(userId:string ,password:string):Observable<any>{
+    return this.h.post<any>(this.loginURL+"/SignIn",{userId,password});
+   }
+   SignUp(userId:string, userName:string, password:string):Observable<any>{
+     return this.h.post<any>(this.loginURL+"/SignUp",{userId,userName,password})
    }
 }

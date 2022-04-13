@@ -23,6 +23,8 @@ import { ItemViewAllItemsComponent } from './item/item-view-all-items/item-view-
 import { ItemViewAllItemsCatComponent } from './item/item-view-all-items-cat/item-view-all-items-cat.component';
 import { ItemViewAllItemsResComponent } from './item/item-view-all-items-res/item-view-all-items-res.component';
 import { ItemViewAllItemsNameComponent } from './item/item-view-all-items-name/item-view-all-items-name.component';
+import { ForgotPasswordComponent } from './login/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './login/reset-password/reset-password.component';
 =======
 <<<<<<< HEAD
 import { HttpClientModule} from '@angular/common/http';
@@ -68,7 +70,9 @@ import { SignOutComponent } from './login/sign-out/sign-out.component';
     ItemViewAllItemsComponent,
     ItemViewAllItemsCatComponent,
     ItemViewAllItemsResComponent,
-    ItemViewAllItemsNameComponent
+    ItemViewAllItemsNameComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
 =======
 <<<<<<< HEAD
     NewCategoryComponent,
