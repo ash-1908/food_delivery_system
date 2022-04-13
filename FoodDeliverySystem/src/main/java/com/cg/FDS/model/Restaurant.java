@@ -25,7 +25,7 @@ public class Restaurant {
 	private String restaurantName;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@Column(name = "adr_id", length = 20)
+	@JoinColumn(name = "adr_id")
 	Address address;
 
 	@ManyToMany(cascade = CascadeType.ALL)

@@ -61,8 +61,20 @@ public class RestaurantRestController {
 		return new ResponseEntity<Restaurant>(rserv.updateRestaurant(res), HttpStatus.OK);
 	}
 
+	@PutMapping("/restaurant/add-items")
+	public ResponseEntity<Restaurant> addItemToRestaurant(@RequestBody Restaurant res) {
+
+		return new ResponseEntity<Restaurant>(rserv.addItemToRestaurant(res), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/restaurant/remove-items")
+	public ResponseEntity<Restaurant> removeItemFromRestaurant(@RequestBody Restaurant res) {
+
+		return new ResponseEntity<Restaurant>(rserv.removeItemFromRestaurant(res), HttpStatus.OK);
+	}
+
 	@DeleteMapping("/restaurant/remove")
-	public ResponseEntity<Restaurant> removeRestaurant(@RequestBody Restaurant res) {
+	public ResponseEntity<Restaurant> deleteRestaurant(@RequestBody Restaurant res) {
 
 		return new ResponseEntity<Restaurant>(rserv.removeRestaurant(res), HttpStatus.OK);
 	}

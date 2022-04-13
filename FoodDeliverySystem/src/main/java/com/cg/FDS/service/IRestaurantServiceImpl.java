@@ -2,13 +2,15 @@ package com.cg.FDS.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cg.FDS.dao.IAddressRepository;
+import com.cg.FDS.dao.IItemRepository;
 import com.cg.FDS.dao.IRestaurantRepository;
 import com.cg.FDS.exception.EmptyValuesException;
+import com.cg.FDS.exception.item.ItemNotFoundException;
 import com.cg.FDS.exception.restaurant.RestaurantAlreadyExistsException;
 import com.cg.FDS.exception.restaurant.RestaurantNotFoundException;
 import com.cg.FDS.model.Address;
@@ -22,10 +24,10 @@ public class IRestaurantServiceImpl implements IRestaurantService {
 	IRestaurantRepository resRepo;
 
 	@Autowired
-	IAddressServiceImpl addrServ;
+	IAddressRepository adrRepo;
 
 	@Autowired
-	IItemServiceImpl itemServ;
+	IItemRepository itemRepo;
 
 	@Override
 	public Restaurant addRestaurant(Restaurant rest) {
@@ -37,21 +39,23 @@ public class IRestaurantServiceImpl implements IRestaurantService {
 				|| rest.getAddress().getAddressId().length() == 0)
 			throw new EmptyValuesException("Restaurant address cannot be empty.");
 
-		Address adr = addrServ.getAddress(rest.getAddress().getAddressId());
-		if (adr == null)
-			if (rest.getAddress().getBuildingName() == null && rest.getAddress().getPincode() == null)
-				throw new EmptyValuesException("Restaurant address with Id (" + rest.getAddress().getAddressId()
-						+ ") does not exist. Please enter Building name and Pincode to create new address with this Id.");
-			else
-				addrServ.addAddress(rest.getAddress());
+		Address adr;
+		if (adrRepo.existsById(rest.getAddress().getAddressId()))
+			adr = adrRepo.findById(rest.getAddress().getAddressId()).get();
+		else if (rest.getAddress().getBuildingName() == null && rest.getAddress().getPincode() == null)
+			throw new EmptyValuesException("Restaurant address with Id (" + rest.getAddress().getAddressId()
+					+ ") does not exist. Please enter Building name and Pincode to create new address with this Id.");
+		else
+			adr = adrRepo.save(rest.getAddress());
 		if (rest.getItemList().size() != 0) {
 			List<Item> itemList = new ArrayList<>();
 			for (Item i : rest.getItemList()) {
-				itemList.add(itemServ.viewItem(i));
+				if (!itemRepo.existsById(i.getItemId()))
+					throw new ItemNotFoundException("Item does not exist.");
+				itemList.add(itemRepo.findById(i.getItemId()).get());
 			}
 			rest.setItemList(itemList);
 		}
-
 		resRepo.save(rest);
 		return rest;
 	}
@@ -64,24 +68,17 @@ public class IRestaurantServiceImpl implements IRestaurantService {
 			throw new RestaurantNotFoundException("Restaurant does not exist.");
 
 		Restaurant oldRes = resRepo.getById(rest.getRestaurantId());
-		// address is null -> dont update address of customer
-		if (rest.getAddress() == null || rest.getAddress().getAddressId() == null
-				|| rest.getAddress().getAddressId().length() == 0)
+		if (rest.getRestaurantName() == null)
+			rest.setRestaurantName(oldRes.getRestaurantName());
+		if (rest.getAddress() == null)
 			rest.setAddress(oldRes.getAddress());
-		// address id is new
-		else {
-			addrServ.deleteAddress(oldRes.getAddress().getAddressId());
-			addrServ.addAddress(rest.getAddress());
-		}
-		// if item list is empty copy old item list
-		if (rest.getItemList() == null || rest.getItemList().size() == 0) {
-			List<Item> itemList = oldRes.getItemList();
-			rest.setItemList(itemList);
-		} else {
-			for (Item i : rest.getItemList()) {
-				itemServ.updateRestaurantItem(i);
-			}
-		}
+		if (rest.getContactNumber() == null)
+			rest.setContactNumber(oldRes.getContactNumber());
+		if (rest.getItemList() == null)
+			rest.setItemList(oldRes.getItemList());
+		if (rest.getManagerName() == null)
+			rest.setManagerName(oldRes.getManagerName());
+
 		resRepo.save(rest);
 		return rest;
 	}
@@ -97,18 +94,8 @@ public class IRestaurantServiceImpl implements IRestaurantService {
 		String resId = rest.getRestaurantId();
 		Address adr = rest.getAddress();
 		if (adr != null)
-			addrServ.deleteAddress(adr.getAddressId());
-		List<Item> itemList = rest.getItemList();
-		if (itemList != null)
-			for (Item i : itemList) {
-				List<Restaurant> resList = i.getRestaurants().stream().filter((r) -> !r.getRestaurantId().equals(resId))
-						.collect(Collectors.toList());
-				i.setRestaurants(resList);
-				itemServ.updateItem(i);
-			}
-		rest.setItemList(null);
+			adrRepo.deleteById(adr.getAddressId());
 		resRepo.deleteById(rest.getRestaurantId());
-		rest.setItemList(itemList);
 		rest.setAddress(adr);
 		return rest;
 	}
@@ -144,5 +131,45 @@ public class IRestaurantServiceImpl implements IRestaurantService {
 
 	public List<Restaurant> viewAllRestaurants() {
 		return resRepo.findAll();
+	}
+
+	public Restaurant addItemToRestaurant(Restaurant res) {
+		List<Item> items = res.getItemList();
+		res = resRepo.findById(res.getRestaurantId()).get();
+
+		for (Item item : items) {
+
+			if (!itemRepo.existsById(item.getItemId()))
+				throw new ItemNotFoundException("Item does not exist.");
+			item = itemRepo.findById(item.getItemId()).get();
+
+			res.getItemList().add(item);
+			item.getRestaurants().add(res);
+		}
+		resRepo.save(res);
+		return res;
+	}
+
+	public Restaurant removeItemFromRestaurant(Restaurant res) {
+		List<Item> items = res.getItemList();
+		res = resRepo.findById(res.getRestaurantId()).get();
+
+		for (Item item : items) {
+			if (!itemRepo.existsById(item.getItemId()))
+				throw new ItemNotFoundException("Item does not exist.");
+			item = itemRepo.findById(item.getItemId()).get();
+
+			res.getItemList().remove(item);
+			item.getRestaurants().remove(res);
+		}
+		resRepo.save(res);
+		return res;
+	}
+
+	public Restaurant updateItemList(Restaurant res) {
+		Restaurant oldRes = resRepo.findById(res.getRestaurantId()).get();
+		oldRes.setItemList(res.getItemList());
+		resRepo.save(oldRes);
+		return oldRes;
 	}
 }
