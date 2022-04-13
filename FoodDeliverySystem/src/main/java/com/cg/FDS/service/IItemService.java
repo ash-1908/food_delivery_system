@@ -7,14 +7,19 @@ import com.cg.FDS.model.Item;
 import com.cg.FDS.model.Restaurant;
 
 public interface IItemService {
-	public Item addItem(Item item);
-	public Item updateItem(Item item);
-	public Item viewItem(Item item);
-	public Item removeItem(Item item);
-	public List<Item> viewAllItems( Category cat);
-	public List<Item> viewAllItems(Restaurant res);
-	public List<Item> viewAllItemsByName(String name);
-	
-	
+
+	Item addItem(Item item);
+
+	Item updateItem(Item item);
+
+	Item removeItem(Item item);
+
+	Item viewItem(Item item);
+
+	List<Item> viewAllItems(Category cat);
+
+	List<Item> viewAllItems(Restaurant res);
+
+	List<Item> viewAllItemsByName(String name);
 
 }

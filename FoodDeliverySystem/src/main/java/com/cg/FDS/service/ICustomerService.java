@@ -7,9 +7,13 @@ import com.cg.FDS.model.Restaurant;
 
 public interface ICustomerService {
 
-	public Customer addCustomer(Customer customer);
-	public Customer updateCustomer(Customer customer);
-	public Customer removeCustomer(Customer customer);
-	public Customer viewCustomer(Customer customer);
-	public List<Customer> viewAllCustomer(Restaurant rest);
+	Customer addCustomer(Customer customer);
+
+	Customer updateCustomer(Customer customer);
+
+	Customer removeCustomer(Customer customer);
+
+	Customer viewCustomer(Customer customer);
+
+	List<Customer> viewAllCustomer(Restaurant rest);
 }

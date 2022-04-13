@@ -24,6 +24,30 @@ public class OrderRestController {
 	@Autowired
 	IOrderServiceImpl orderServ;
 
+	@GetMapping("/order/view")
+	public ResponseEntity<OrderDetails> viewOrder(@RequestBody OrderDetails order) {
+
+		return new ResponseEntity<OrderDetails>(orderServ.viewOrder(order), HttpStatus.OK);
+	}
+
+	@GetMapping("/order/all")
+	public ResponseEntity<List<OrderDetails>> viewAllOrders() {
+
+		return new ResponseEntity<List<OrderDetails>>(orderServ.viewAllOrders(), HttpStatus.OK);
+	}
+
+	@GetMapping("/order/view/restaurant")
+	public ResponseEntity<List<OrderDetails>> viewAllOrder(@RequestBody Restaurant res) {
+
+		return new ResponseEntity<List<OrderDetails>>(orderServ.viewAllOrder(res), HttpStatus.OK);
+	}
+
+	@GetMapping("/order/view/customer")
+	public ResponseEntity<List<OrderDetails>> viewAllOrder(@RequestBody Customer customer) {
+
+		return new ResponseEntity<List<OrderDetails>>(orderServ.viewAllOrder(customer), HttpStatus.OK);
+	}
+
 	@PostMapping("/order/new")
 	public ResponseEntity<OrderDetails> addOrder(@RequestBody OrderDetails order) {
 
@@ -42,21 +66,4 @@ public class OrderRestController {
 		return new ResponseEntity<OrderDetails>(orderServ.removeOrder(order), HttpStatus.OK);
 	}
 
-	@GetMapping("/order/view")
-	public ResponseEntity<OrderDetails> viewOrder(@RequestBody OrderDetails order) {
-
-		return new ResponseEntity<OrderDetails>(orderServ.viewOrder(order), HttpStatus.OK);
-	}
-
-	@GetMapping("/order/view/restaurant")
-	public ResponseEntity<List<OrderDetails>> viewAllOrder(@RequestBody Restaurant res) {
-
-		return new ResponseEntity<List<OrderDetails>>(orderServ.viewAllOrder(res), HttpStatus.OK);
-	}
-
-	@GetMapping("/order/view/customer")
-	public ResponseEntity<List<OrderDetails>> viewAllOrder(@RequestBody Customer customer) {
-
-		return new ResponseEntity<List<OrderDetails>>(orderServ.viewAllOrder(customer), HttpStatus.OK);
-	}
 }

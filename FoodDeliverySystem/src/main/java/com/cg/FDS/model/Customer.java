@@ -2,12 +2,12 @@ package com.cg.FDS.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -41,7 +41,7 @@ public class Customer {
 	private String email;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@Column(name = "adr_id", length = 20)
+	@JoinColumn(name = "adr_id")
 	private Address address;
 
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -141,8 +141,7 @@ public class Customer {
 	}
 
 	public void removeFromCartList(FoodCart cart) {
-		this.cartList = this.cartList.stream().filter((c) -> c.getCartId() != cart.getCartId())
-				.collect(Collectors.toList());
+		this.cartList.remove(cart);
 	}
 
 	@Override

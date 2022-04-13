@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.FDS.dao.ICustomerRepository;
+import com.cg.FDS.dao.IRestaurantRepository;
 import com.cg.FDS.exception.EmptyValuesException;
 import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
 import com.cg.FDS.exception.customer.CustomerNotFoundException;
+import com.cg.FDS.exception.restaurant.RestaurantNotFoundException;
 import com.cg.FDS.model.Address;
 import com.cg.FDS.model.Customer;
-import com.cg.FDS.model.FoodCart;
 import com.cg.FDS.model.Restaurant;
 
 @Service
@@ -24,7 +25,7 @@ public class ICustomerServiceImpl implements ICustomerService {
 	IAddressServiceImpl addrServ;
 
 	@Autowired
-	ICartServiceImpl cartServ;
+	IRestaurantRepository resRepo;
 
 	@Override
 	public Customer viewCustomer(Customer customer) {
@@ -41,6 +42,8 @@ public class ICustomerServiceImpl implements ICustomerService {
 	public List<Customer> viewAllCustomer(Restaurant rest) {
 		if (rest.getRestaurantId() == null || rest.getRestaurantId().length() == 0)
 			throw new EmptyValuesException("Restaurant Id cannot be empty.");
+		if (!resRepo.existsById(rest.getRestaurantId()))
+			throw new RestaurantNotFoundException("Restaurant does not exist.");
 
 		List<Customer> customerList = custRepo.viewAllCustomer(rest);
 		return customerList;
@@ -76,22 +79,22 @@ public class ICustomerServiceImpl implements ICustomerService {
 		if (customer.getCustomerId() == null || customer.getCustomerId().length() == 0)
 			throw new EmptyValuesException("Customer Id cannot be empty.");
 
-		if (customer.getFirstName() == null || customer.getFirstName().length() == 0)
-			throw new EmptyValuesException("Customer name cannot be empty.");
-
 		if (!custRepo.existsById(customer.getCustomerId()))
 			throw new CustomerNotFoundException("Customer does not exist.");
 
 		Customer oldCust = custRepo.getById(customer.getCustomerId());
+
 		// address is null -> dont update address of customer
 		if (customer.getAddress() == null || customer.getAddress().getAddressId() == null
 				|| customer.getAddress().getAddressId().length() == 0)
 			customer.setAddress(oldCust.getAddress());
+
 		// address id is new
 		else {
-			addrServ.deleteAddress(oldCust.getAddress().getAddressId());
+			addrServ.removeAddress(oldCust.getAddress().getAddressId());
 			addrServ.addAddress(customer.getAddress());
 		}
+
 		custRepo.save(customer);
 		return customer;
 	}
@@ -107,18 +110,9 @@ public class ICustomerServiceImpl implements ICustomerService {
 
 		Address adr = customer.getAddress();
 		if (adr != null)
-			addrServ.deleteAddress(adr.getAddressId());
-
-		List<FoodCart> cartList = customer.getCartList();
-		if (cartList != null)
-			for (FoodCart cart : cartList) {
-				cart.setCustomer(null);
-				cartServ.updateCart(cart);
-				cartServ.deleteCart(cart.getCartId());
-			}
+			addrServ.removeAddress(adr.getAddressId());
 
 		custRepo.deleteById(customer.getCustomerId());
 		return customer;
 	}
-
 }

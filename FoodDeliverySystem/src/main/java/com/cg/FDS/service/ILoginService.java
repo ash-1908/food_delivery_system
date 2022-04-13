@@ -12,7 +12,7 @@ public interface ILoginService {
 
 	Login delete(Login login);
 
-	public Login signUp(Login login);
+	Login signUp(Login login);
 
-	public Login resetPassword(Login login);
+	Login resetPassword(Login login);
 }

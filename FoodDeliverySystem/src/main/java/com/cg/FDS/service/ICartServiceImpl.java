@@ -11,6 +11,9 @@ import com.cg.FDS.dao.ICartRepository;
 import com.cg.FDS.exception.EmptyValuesException;
 import com.cg.FDS.exception.cart.AlreadyExistInCartException;
 import com.cg.FDS.exception.cart.FoodCartNotFoundException;
+import com.cg.FDS.exception.cart.QuantityTooLargeException;
+import com.cg.FDS.exception.item.ItemNotFoundException;
+import com.cg.FDS.model.Customer;
 import com.cg.FDS.model.FoodCart;
 import com.cg.FDS.model.Item;
 
@@ -20,22 +23,37 @@ public class ICartServiceImpl implements ICartService {
 	@Autowired
 	ICartRepository cartRepo;
 
+	@Autowired
+	ICustomerServiceImpl custServ;
+
+	@Autowired
+	IItemServiceImpl itemServ;
+
+	public List<FoodCart> viewAllCarts() {
+		return cartRepo.findAll();
+	}
+
+	public FoodCart viewCart(FoodCart cart) {
+		return cartRepo.findById(cart.getCartId()).get();
+	}
+
 	public FoodCart addCart(FoodCart cart) {
 		if (cart.getCartId() == null || cart.getCartId().length() == 0)
 			throw new EmptyValuesException("Cart Id cannot be empty.");
-		if (cart.getCustomer() == null || cart.getCustomer().getCustomerId().length() == 0)
+		if (cart.getCustomer().getCustomerId() == null || cart.getCustomer().getCustomerId().length() == 0)
 			throw new EmptyValuesException("Customer Id cannot be empty.");
 
-		cartRepo.save(cart);
-		return cart;
-	}
+		Customer customer = cart.getCustomer();
+		customer = custServ.viewCustomer(customer);
+		List<Item> itemList = new ArrayList<>();
+		for (Item i : cart.getItemList()) {
+			i = itemServ.viewItem(i);
+			i.setQuantity(1);
+			itemList.add(i);
+		}
 
-	public FoodCart updateCart(FoodCart cart) {
-		if (cart.getCartId() == null || cart.getCartId().length() == 0)
-			throw new EmptyValuesException("Cart Id cannot be empty.");
-		if (!cartRepo.existsById(cart.getCartId()))
-			throw new FoodCartNotFoundException("Cart does not exist.");
-
+		cart.setCustomer(customer);
+		cart.setItemList(itemList);
 		cartRepo.save(cart);
 		return cart;
 	}
@@ -47,22 +65,54 @@ public class ICartServiceImpl implements ICartService {
 			throw new FoodCartNotFoundException("Cart does not exist.");
 
 		FoodCart cart = cartRepo.findById(cartId).get();
+
+		List<Item> itemList = cart.getItemList();
+		Customer customer = cart.getCustomer();
+
+		if (itemList != null)
+			for (Item i : itemList) {
+				i.setRestaurants(null);
+			}
+		if (customer != null) {
+			customer.removeFromCartList(cart);
+			custServ.updateCustomer(customer);
+		}
+		cart.setItemList(null);
+		cart.setCustomer(null);
+		cartRepo.save(cart);
 		cartRepo.deleteById(cartId);
+
+		cart.setCustomer(customer);
+		cart.setItemList(itemList);
 		return cart;
 	}
 
 	@Override
-	public FoodCart addItemToCart(FoodCart cart, Item item) {
+	public FoodCart addItemToCart(FoodCart cart, String itemId) {
 		if (cart.getCartId() == null || cart.getCartId().length() == 0)
 			throw new EmptyValuesException("Cart Id cannot be empty.");
-		if (cart.getCustomer() == null || cart.getCustomer().getCustomerId().length() == 0)
-			throw new EmptyValuesException("Customer Id cannot be empty.");
-		if (item == null || item.getItemId() == null || item.getItemId().length() == 0)
+		if (itemId == null || itemId.length() == 0)
 			throw new EmptyValuesException("Item to add in food cart cannot be empty.");
-		if (cartRepo.existsById(item.getItemId()))
+		if (cartRepo.existsById(itemId))
 			throw new AlreadyExistInCartException("Food cart already consists the current item.");
 
-		cart.getItemList().add(item);
+		cart = cartRepo.findById(cart.getCartId()).get();
+		Boolean flag = false;
+		for (Item i : cart.getItemList()) {
+			if (i.getItemId().equals(itemId)) {
+				i.setQuantity(i.getQuantity() + 1);
+				flag = true;
+				break;
+			}
+		}
+		if (flag == false) {
+			Item item = new Item();
+			item.setItemId(itemId);
+			item = itemServ.viewItem(item);
+			item.setQuantity(1);
+			cart.getItemList().add(item);
+		}
+		cartRepo.save(cart);
 		return cart;
 	}
 
@@ -70,8 +120,6 @@ public class ICartServiceImpl implements ICartService {
 	public FoodCart increaseQuantity(FoodCart cart, Item item, int quantity) {
 		if (cart.getCartId() == null || cart.getCartId().length() == 0)
 			throw new EmptyValuesException("Cart Id cannot be empty.");
-		if (cart.getCustomer() == null || cart.getCustomer().getCustomerId().length() == 0)
-			throw new EmptyValuesException("Customer Id cannot be empty.");
 		if (item == null || item.getItemId() == null || item.getItemId().length() == 0)
 			throw new EmptyValuesException("Item to add in food cart cannot be empty.");
 		if (quantity == 0)
@@ -82,29 +130,48 @@ public class ICartServiceImpl implements ICartService {
 				i.setQuantity(i.getQuantity() + quantity);
 			}
 		}
+		cartRepo.save(cart);
 		return cart;
 	}
 
 	@Override
-	public FoodCart reduceQuantity(FoodCart cart, Item item, int quantity) {
+	public FoodCart reduceQuantity(FoodCart cart, String itemId, int quantity) {
 		if (cart.getCartId() == null || cart.getCartId().length() == 0)
 			throw new EmptyValuesException("Cart Id cannot be empty.");
-		if (cart.getCustomer() == null || cart.getCustomer().getCustomerId().length() == 0)
-			throw new EmptyValuesException("Customer Id cannot be empty.");
-		if (item == null || item.getItemId() == null || item.getItemId().length() == 0)
+		if (itemId == null || itemId.length() == 0)
 			throw new EmptyValuesException("Item to reduce in food cart cannot be empty.");
 		if (quantity == 0)
 			throw new EmptyValuesException("Item quantity cannot be zero.");
 
+		cart = cartRepo.findById(cart.getCartId()).get();
+		Item item = new Item();
+		item.setItemId(itemId);
+		item = itemServ.viewItem(item);
+		Boolean itemFound = false;
+		Boolean itemZero = false;
 		for (Item i : cart.getItemList()) {
-			if (i.getItemId() == item.getItemId()) {
+			if (i.getItemId().equals(itemId)) {
+				itemFound = true;
 				int existingQuantity = i.getQuantity();
-				if (existingQuantity - quantity <= 0)
-					i.setQuantity(0);
+				if (existingQuantity - quantity < 0)
+					throw new QuantityTooLargeException(
+							"Cannot reduce quantity. Removing " + quantity + " from " + existingQuantity + " value.");
+				else if (existingQuantity - quantity == 0)
+					itemZero = true;
 				else
 					i.setQuantity(existingQuantity - quantity);
+				break;
 			}
 		}
+		if (itemFound == false)
+			throw new ItemNotFoundException("Item to reduce is not found.");
+
+		if (itemZero) {
+			List<Item> itemList = cart.getItemList();
+			itemList.remove(item);
+			cart.setItemList(itemList);
+		}
+		cartRepo.save(cart);
 		return cart;
 	}
 
@@ -112,13 +179,15 @@ public class ICartServiceImpl implements ICartService {
 	public FoodCart removeItem(FoodCart cart, Item item) {
 		if (cart.getCartId() == null || cart.getCartId().length() == 0)
 			throw new EmptyValuesException("Cart Id cannot be empty.");
-		if (cart.getCustomer() == null || cart.getCustomer().getCustomerId().length() == 0)
-			throw new EmptyValuesException("Customer Id cannot be empty.");
 		if (item == null || item.getItemId() == null || item.getItemId().length() == 0)
 			throw new EmptyValuesException("Item to remove in food cart cannot be empty.");
 
+		cart = cartRepo.findById(cart.getCartId()).get();
 		List<Item> itemList = cart.getItemList();
-		itemList = itemList.stream().filter((i) -> i.getItemId() != item.getItemId()).collect(Collectors.toList());
+		itemList = itemList.stream().filter((i) -> !i.getItemId().equals(item.getItemId()))
+				.collect(Collectors.toList());
+		cart.setItemList(itemList);
+		cartRepo.save(cart);
 		return cart;
 	}
 
@@ -126,10 +195,10 @@ public class ICartServiceImpl implements ICartService {
 	public FoodCart clearCart(FoodCart cart) {
 		if (cart.getCartId() == null || cart.getCartId().length() == 0)
 			throw new EmptyValuesException("Cart Id cannot be empty.");
-		if (cart.getCustomer() == null || cart.getCustomer().getCustomerId().length() == 0)
-			throw new EmptyValuesException("Customer Id cannot be empty.");
 
-		cart.setItemList(new ArrayList<Item>());
+		cart = cartRepo.findById(cart.getCartId()).get();
+		cart.setItemList(null);
+		cartRepo.save(cart);
 		return cart;
 	}
 

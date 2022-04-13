@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -25,7 +26,7 @@ public class Item {
 	private String itemName;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@Column(name = "cat_id", length = 20)
+	@JoinColumn(name = "cat_id")
 	private Category category;
 
 	@Column(name = "quantity", length = 2)
@@ -34,7 +35,7 @@ public class Item {
 	@Column(name = "cost", length = 10)
 	private double cost;
 
-	@ManyToMany(mappedBy = "itemList", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "itemList")
 	@JsonIgnore
 	List<Restaurant> restaurants = new ArrayList<Restaurant>();
 

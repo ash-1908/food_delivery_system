@@ -60,18 +60,18 @@ public class ICategoryServiceImpl implements ICategoryService {
 		if (cat.getCatId() == null || cat.getCatId().length() == 0)
 			throw new EmptyValuesException("Category Id cannot be empty.");
 
-		if (catRepo.existsById(cat.getCatId()))
-			cat = catRepo.findById(cat.getCatId()).get();
-		else
-			cat = null;
+		if (!catRepo.existsById(cat.getCatId()))
+			throw new CategoryNotFoundException("Category does not exist");
+
+		cat = catRepo.findById(cat.getCatId()).get();
 
 		return cat;
 	}
 
 	@Override
 	public List<Category> viewAllCategory() {
-		List<Category> categoryList = catRepo.viewAllCategory();
-		return categoryList;
+
+		return catRepo.findAll();
 	}
 
 }

@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -24,7 +25,7 @@ public class Bill {
 	private LocalDateTime billDate;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@Column(name = "order_id", length = 10)
+	@JoinColumn(name = "order_id")
 	private OrderDetails order;
 
 	@Column(name = "total_items")

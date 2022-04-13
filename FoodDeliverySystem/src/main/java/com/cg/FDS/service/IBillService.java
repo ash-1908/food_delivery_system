@@ -5,6 +5,7 @@ import java.util.List;
 import com.cg.FDS.model.Bill;
 
 public interface IBillService {
+
 	Bill addBill(Bill bill);
 
 	Bill updateBill(Bill bill);
