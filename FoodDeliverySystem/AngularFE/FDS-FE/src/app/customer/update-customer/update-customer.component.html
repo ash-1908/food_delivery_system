@@ -5,7 +5,7 @@
         <td><input type="text" [(ngModel)]="customer.customerId"></td>
     </tr>
     <tr>
-        <td><button (click)="findEmp(cid)">Find Customer</button></td>
+        <td><button>Find Customer</button></td>
         
     </tr>
     <tbody *ngIf="showInfo">
@@ -42,7 +42,7 @@
             <td><textarea rows="5" cols="10" [(ngModel)]="customer.cartList"></textarea></td>
         </tr>
     <tr>
-        <td><button (click)="updateCustomer()">Update Employee</button></td>
+        <td><button>Update Employee</button></td>
     </tr>
 </tbody>
 </table>

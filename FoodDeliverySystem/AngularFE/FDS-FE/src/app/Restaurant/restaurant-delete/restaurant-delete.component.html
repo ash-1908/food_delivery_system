@@ -1,29 +1,31 @@
 <h2>Delete Restaurant</h2>
+<form>
 <table>
     <tr>
         <td>Restaurant ID</td>
-        <td><input type="text" [(ngModel)]=""></td>
+        <td><input type="text" class="res.restaurantName" [(ngModel)]="res.restaurantName"></td>
     </tr>
     <tr>
-        <td><button (click)="deleteEmp()">Delete Restaurant</button></td>
-        <td>{{msg}}</td>
+        <td><button (click)="deleteRestaurant()">Delete Restaurant</button></td>
     </tr>
     <tbody *ngIf="showInfo">
     <tr>
         <td>Restaurant Name</td>
-        <td><input type="text" [(ngModel)]="res.restaurantName"></td>
+        <td><input type="text" class="res.restaurantName" [(ngModel)]="res.restaurantName"></td>
     </tr>
     <tr>
         <td>Manager Name</td>
-        <td><input type="text" [(ngModel)]="res.managerName"></td>
+        <td><input type="text" class="res.managerName"[(ngModel)]="res.managerName"></td>
     </tr>
     <tr>
         <td>Contact No</td>
-        <td><input type="text" [(ngModel)]="res.contactNumber"></td>
+        <td><input type="text" class="res.contactNumber" [(ngModel)]="res.contactNumber"></td>
     </tr>
     <tr>
         <td>ItemList</td>
-        <td><input type="text" [(ngModel)]="res.itemList"></td>
+        <td><input type="text" class="res.itemList" [(ngModel)]="res.itemList"></td>
     </tr>
+    
 </tbody>
 </table>
+</form>

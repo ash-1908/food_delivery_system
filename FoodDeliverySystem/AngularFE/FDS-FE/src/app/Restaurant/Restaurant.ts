@@ -1,3 +1,5 @@
+import { Item } from "../item/item";
+
 export class Restaurant{
 	public  restaurantId:String;
 	
