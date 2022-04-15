@@ -1,17 +1,26 @@
-<h2>Delete Category</h2>
-<table>
-    <tr>
-        <td>Category ID</td>
-        <td><input type="text" [(ngModel)]="cat.catId"></td>
-    </tr>
-    <tr>
-        <td><button (click)="deleteCategory()">Delete Category</button></td>
-        <td>{{msg}}</td>
-    </tr>
-    <tbody *ngIf="showInfo">
-    <tr>
-        <td>Category Name</td>
-        <td><input type="text" [(ngModel)]="cat.categoryName"></td>
-    </tr>
-</tbody>
-</table>
+<center>
+
+    <body>
+       <h2 >Delete Category </h2>
+       <div class="container">
+           <table >
+               <tr>
+                   <td>Category Id</td>
+                   <td><input type="text" class="cat.categoryName" [(ngModel)]="cat.categoryName" ></td>
+               </tr>
+               <tr>
+                   <td>Category Name</td>
+                   <td><input type="text" class="cat.categoryName" [(ngModel)]="cat.categoryName"></td>
+               </tr>
+           </table>
+           <br>
+           <br>
+           <button class="btn btn-info" (click)="deleteCategory()">Delete Category</button>
+       </div>
+       
+    
+       
+   </body>
+</center>
+
+

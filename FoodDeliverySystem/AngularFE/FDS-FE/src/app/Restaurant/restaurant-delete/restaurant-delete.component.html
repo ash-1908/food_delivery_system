@@ -1,31 +1,14 @@
+<center>
 <h2>Delete Restaurant</h2>
-<form>
+<div class="container">
 <table>
     <tr>
         <td>Restaurant ID</td>
         <td><input type="text" class="res.restaurantName" [(ngModel)]="res.restaurantName"></td>
     </tr>
     <tr>
-        <td><button (click)="deleteRestaurant()">Delete Restaurant</button></td>
+        <td><button class="btn btn-info" (click)="deleteRestaurant()">Delete Restaurant</button></td>
     </tr>
-    <tbody *ngIf="showInfo">
-    <tr>
-        <td>Restaurant Name</td>
-        <td><input type="text" class="res.restaurantName" [(ngModel)]="res.restaurantName"></td>
-    </tr>
-    <tr>
-        <td>Manager Name</td>
-        <td><input type="text" class="res.managerName"[(ngModel)]="res.managerName"></td>
-    </tr>
-    <tr>
-        <td>Contact No</td>
-        <td><input type="text" class="res.contactNumber" [(ngModel)]="res.contactNumber"></td>
-    </tr>
-    <tr>
-        <td>ItemList</td>
-        <td><input type="text" class="res.itemList" [(ngModel)]="res.itemList"></td>
-    </tr>
-    
-</tbody>
 </table>
-</form>
+</div>
+</center>

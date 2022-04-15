@@ -1,16 +1,26 @@
-<h2>Update Category</h2>
-<table>
-    <tr>
-        <td>Category ID</td>
-        <td><input type="text" [(ngModel)]="cat.catId"></td>
-    </tr>
-    <tr>
-        <td>Category Name</td>
-        <td><input type="text" [(ngModel)]="cat.categoryName"></td>
-    </tr>
-    <tr>
-        <td><button (click)="updateEmp()">Update Category</button></td>
-        
-    </tr>
+<center>
 
-</table>
+    <body>
+       <h2 >Update Category </h2>
+       <div class="container">
+           <table >
+               <tr>
+                   <td>Category Id</td>
+                   <td><input type="text"class="cat.categoryName" [(ngModel)]="cat.categoryName" ></td>
+               </tr>
+               <tr>
+                   <td>Category Name</td>
+                   <td><input type="text" class="cat.categoryName" [(ngModel)]="cat.categoryName"></td>
+               </tr>
+           </table>
+           <br>
+           <br>
+           <button  class="btn btn-info" (click)="updateCategory()">Add Category</button>
+       </div>
+       
+    
+       
+   </body>
+</center>
+
+

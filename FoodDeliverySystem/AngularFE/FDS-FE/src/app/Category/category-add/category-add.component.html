@@ -1,17 +1,18 @@
-<h2>Add </h2>
-<table>
-    <tr>
-        <td>Category Id</td>
-        <td><input type="text" [(ngModel)]="cat.catId"></td>
-    </tr>
-    <tr>
-        <td>Category Name</td>
-        <td><input type="text" [(ngModel)]="cat.categoryName"></td>
-    </tr>
-
-    <tr>
-        <td><button (click)="addCategory()">Add Category</button></td>
-        <td>{{cat.catId}} {{cat.categoryName}} </td>
-    </tr>
-</table>
-<p>{{msg}}</p>
+<center>
+       <h2 >Add Category</h2>
+       <div class="container">
+           <table >
+               <tr>
+                   <td>Category Id</td>
+                   <td><input type="text" class="cat.categoryId" [(ngModel)]="cat.categoryId" ></td>
+               </tr>
+               <tr>
+                   <td>Category Name</td>
+                   <td><input type="text" class="cat.categoryName" [(ngModel)]="cat.categoryName"></td>
+               </tr>
+           </table>
+           <br>
+           <br>
+           <button class="btn btn-info" (click)="addCategory()">Add Category </button>
+       </div>
+</center>
