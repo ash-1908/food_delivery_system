@@ -6,7 +6,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -15,24 +14,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name = "bill_tbl")
 public class Bill {
-
 	@Id
-	@Column(name = "bill_id", length = 20)
+	@Column(name = "billId", length = 20)
 	private String billId;
-
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss[.SSS][.SS][.S]")
-	@Column(name = "bill_date")
 	private LocalDateTime billDate;
+	private Integer totalItem;
+	private Double totalCost;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "order_id")
 	private OrderDetails order;
-
-	@Column(name = "total_items")
-	private Integer totalItem;
-
-	@Column(name = "total_cost")
-	private Double totalCost;
 
 	public Bill() {
 

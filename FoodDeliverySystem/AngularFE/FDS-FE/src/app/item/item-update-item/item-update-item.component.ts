@@ -9,7 +9,7 @@ import { itemService } from '../itemService';
 })
 export class ItemUpdateItemComponent implements OnInit {
   public  itemId: number;
-    public it: Item = new Item();
+    public item: Item = new Item();
     public showInfo: boolean=false;
     public msg="";
 
@@ -18,11 +18,11 @@ export class ItemUpdateItemComponent implements OnInit {
   ngOnInit(): void {
   }
   find(itemId:number): void{
-    this.i.find(itemId).subscribe((it)=> this.it=it);
+    this.i.find(itemId).subscribe((item)=> this.item=item);
 this.showInfo=true;
 }
 updateItem(): void{
-    this.i.updateItem(this.it).subscribe((it)=> this.it=it);
+    this.i.updateItem(this.item).subscribe((item)=> this.item=item);
     this.msg=" Item updated Successfully!";
 }
 

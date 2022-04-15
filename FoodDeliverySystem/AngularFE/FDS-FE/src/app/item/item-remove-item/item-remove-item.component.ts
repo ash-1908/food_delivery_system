@@ -8,8 +8,8 @@ import { itemService } from '../itemService';
   styleUrls: ['./item-remove-item.component.css']
 })
 export class ItemRemoveItemComponent implements OnInit {
-  public  itemId: number;
-  public it: Item = new Item();
+  
+  public item: Item = new Item();
   public showInfo: boolean=false;
   public msg="";
   constructor(private i:itemService) { }
@@ -17,11 +17,11 @@ export class ItemRemoveItemComponent implements OnInit {
   ngOnInit(): void {
   }
   find(itemId:number): void{
-    this.i.find(itemId).subscribe((it)=> this.it=it);
+    this.i.find(itemId).subscribe((item)=> this.item=item);
 this.showInfo=true;
 }
 removeItem(): void{
-    this.i.removeItem(this.it).subscribe((it)=> this.it=it);
+    this.i.removeItem(this.item).subscribe((item)=> this.item=item);
     this.msg=" Item Removed Successfully!";
 }
 }

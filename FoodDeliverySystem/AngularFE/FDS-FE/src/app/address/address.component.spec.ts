@@ -13,7 +13,7 @@ describe('AddressComponent', () => {
     .compileComponents();
   });
 
-  beforeEach(() => {
+  beforeEach( async ()=> {
     fixture = TestBed.createComponent(AddressComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -23,3 +23,7 @@ describe('AddressComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+function beforeEach(arg0: () => Promise<void>) {
+  throw new Error('Function not implemented.');
+}
+
