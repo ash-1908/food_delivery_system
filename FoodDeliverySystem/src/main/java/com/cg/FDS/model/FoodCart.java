@@ -3,10 +3,11 @@ package com.cg.FDS.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -16,12 +17,17 @@ import javax.persistence.Table;
 public class FoodCart {
 
 	@Id
-	@Column(name = "cartId", length = 30)
+	@Column(name = "cart_id", length = 20)
 	private String cartId;
-	@OneToMany(cascade = CascadeType.ALL)
+
+	@OneToOne
+	@JoinColumn(name = "cust_id")
+	Customer customer;
+
+	@OneToMany
+	@JoinTable(name = "foodcart_items", joinColumns = { @JoinColumn(name = "cartId") }, inverseJoinColumns = {
+			@JoinColumn(name = "itemId") })
 	private List<Item> itemList = new ArrayList<Item>();
-	@OneToOne(cascade = CascadeType.ALL)
-	private Customer customer;
 
 	public FoodCart() {
 		super();
