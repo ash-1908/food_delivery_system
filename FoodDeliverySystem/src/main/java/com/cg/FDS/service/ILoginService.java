@@ -10,7 +10,7 @@ public interface ILoginService {
 
 	List<Login> getAllUsers();
 
-	Login delete(Login login);
+	Login delete(String userId);
 
 	public Login signUp(Login login);
 

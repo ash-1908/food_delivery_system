@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.FDS.model.Customer;
-import com.cg.FDS.model.Restaurant;
 import com.cg.FDS.service.ICustomerServiceImpl;
 
 @RestController
@@ -25,15 +25,15 @@ public class CustomerRestController {
 	ICustomerServiceImpl custServ;
 
 	@GetMapping("/customer/view")
-	public ResponseEntity<Customer> viewCustomer(@RequestBody Customer customer) {
+	public ResponseEntity<Customer> viewCustomer(@RequestParam String custId) {
 
-		return new ResponseEntity<Customer>(custServ.viewCustomer(customer), HttpStatus.OK);
+		return new ResponseEntity<Customer>(custServ.viewCustomer(custId), HttpStatus.OK);
 	}
 
 	@GetMapping("/customer/view/restaurant")
-	public ResponseEntity<List<Customer>> viewAllCustomer(@RequestBody Restaurant rest) {
+	public ResponseEntity<List<Customer>> viewAllCustomer(@RequestParam String resId) {
 
-		return new ResponseEntity<List<Customer>>(custServ.viewAllCustomer(rest), HttpStatus.OK);
+		return new ResponseEntity<List<Customer>>(custServ.viewAllCustomer(resId), HttpStatus.OK);
 	}
 
 	@GetMapping("/customer/all")
@@ -55,8 +55,8 @@ public class CustomerRestController {
 	}
 
 	@DeleteMapping("/customer/remove")
-	public ResponseEntity<Customer> removeCustomer(@RequestBody Customer customer) {
+	public ResponseEntity<Customer> removeCustomer(@RequestParam String custId) {
 
-		return new ResponseEntity<Customer>(custServ.removeCustomer(customer), HttpStatus.OK);
+		return new ResponseEntity<Customer>(custServ.removeCustomer(custId), HttpStatus.OK);
 	}
 }

@@ -69,14 +69,14 @@ public class ILoginServiceImpl implements ILoginService {
 	}
 
 	@Override
-	public Login delete(Login login) {
-		if (login.getUserId() == null || login.getUserId().length() == 0)
+	public Login delete(String userId) {
+		if (userId == null || userId.length() == 0)
 			throw new EmptyValuesException("User Id cannot be empty.");
-		if (!loginRepo.existsById(login.getUserId()))
+		if (!loginRepo.existsById(userId))
 			throw new UserNotFoundException("User does not exist.");
 
-		login = loginRepo.findById(login.getUserId()).get();
-		loginRepo.deleteById(login.getUserId());
+		Login login = loginRepo.findById(userId).get();
+		loginRepo.deleteById(userId);
 		return login;
 	}
 

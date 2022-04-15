@@ -11,7 +11,6 @@ import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
 import com.cg.FDS.exception.customer.CustomerNotFoundException;
 import com.cg.FDS.model.Address;
 import com.cg.FDS.model.Customer;
-import com.cg.FDS.model.Restaurant;
 
 @Service
 public class ICustomerServiceImpl implements ICustomerService {
@@ -67,14 +66,14 @@ public class ICustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public Customer removeCustomer(Customer customer) {
-		if (customer.getCustomerId() == null || customer.getCustomerId().length() == 0)
+	public Customer removeCustomer(String custId) {
+		if (custId == null || custId.length() == 0)
 			throw new EmptyValuesException("Customer Id cannot be empty.");
 
-		if (!custRepo.existsById(customer.getCustomerId()))
+		if (!custRepo.existsById(custId))
 			throw new CustomerNotFoundException("Customer does not exist.");
 
-		customer = custRepo.findById(customer.getCustomerId()).get();
+		Customer customer = custRepo.findById(custId).get();
 		Address adr = customer.getAddress();
 
 		customer.setAddress(null);
@@ -87,22 +86,22 @@ public class ICustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public Customer viewCustomer(Customer customer) {
-		if (customer.getCustomerId() == null || customer.getCustomerId().length() == 0)
+	public Customer viewCustomer(String custId) {
+		if (custId == null || custId.length() == 0)
 			throw new EmptyValuesException("Customer Id cannot be empty.");
-		if (!custRepo.existsById(customer.getCustomerId()))
+		if (!custRepo.existsById(custId))
 			throw new CustomerNotFoundException("Customer does not exist.");
 
-		customer = custRepo.findById(customer.getCustomerId()).get();
+		Customer customer = custRepo.findById(custId).get();
 		return customer;
 	}
 
 	@Override
-	public List<Customer> viewAllCustomer(Restaurant rest) {
-		if (rest.getRestaurantId() == null || rest.getRestaurantId().length() == 0)
+	public List<Customer> viewAllCustomer(String resId) {
+		if (resId == null || resId.length() == 0)
 			throw new EmptyValuesException("Restaurant Id cannot be empty.");
 
-		List<Customer> customerList = custRepo.viewAllCustomer(rest);
+		List<Customer> customerList = custRepo.viewAllCustomer(resId);
 		return customerList;
 	}
 
