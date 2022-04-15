@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { LoginService } from 'src/app/login.service';
 import { Login } from '../login';
 @Component({
-  selector: 'app-sign-out',
-  templateUrl: './sign-out.component.html',
-  styleUrls: ['./sign-out.component.css']
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
   public login: Login = new Login();
