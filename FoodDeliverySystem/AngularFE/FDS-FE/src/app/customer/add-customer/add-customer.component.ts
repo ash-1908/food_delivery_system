@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Address } from 'src/app/address/address';
 import { CustomerService } from '../../customer.service';
 import { Customer } from '../customer';
 
@@ -8,7 +9,8 @@ import { Customer } from '../customer';
   styleUrls: ['./add-customer.component.css']
 })
 export class AddCustomerComponent implements OnInit {
-  customer:Customer=new Customer;
+  customer:Customer=new Customer();
+  address:Address=new Address();
   public msg: string = "";
   constructor(private cs:CustomerService) { 
     
@@ -19,6 +21,6 @@ export class AddCustomerComponent implements OnInit {
 
   addCustomer(): void{
     this.cs.addCustomer(this.customer).subscribe((cust) => this.customer = cust);
-    this.msg = "Customer added successfully!"
+    alert("Customer added successfully!");
   }
 }

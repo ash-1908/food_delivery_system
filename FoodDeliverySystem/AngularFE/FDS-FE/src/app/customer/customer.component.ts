@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../customer.service';
 import { Customer } from './customer';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer',
@@ -9,12 +10,25 @@ import { Customer } from './customer';
 })
 export class CustomerComponent {
 
-  customer:Customer=new Customer;
-  customers:Customer[]
-  constructor(private cs:CustomerService) { 
+  constructor(private r: Router) { 
     
   }
   
+  ngOnInit(): void {
+  }
+
+  viewCust():void{
+    this.r.navigate(['/view-customer']);
+  }
+  addCust():void{
+    this.r.navigate(['/add-customer']);
+  }
+  updateCust():void{
+    this.r.navigate(['/update-customer']);
+  }
+  removeCust():void{
+    this.r.navigate(['/remove-customer']);
+  }
   
   
 }

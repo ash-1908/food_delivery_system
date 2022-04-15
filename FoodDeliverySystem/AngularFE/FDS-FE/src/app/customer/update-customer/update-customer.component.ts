@@ -9,7 +9,6 @@ import { Customer } from '../customer';
 })
 export class UpdateCustomerComponent implements OnInit {
   public customer: Customer = new Customer();
-  public msg: string = "";
   public showInfo: boolean = false;
 
   constructor(private cs: CustomerService) { }
@@ -22,7 +21,7 @@ export class UpdateCustomerComponent implements OnInit {
   }
   updateCustomer(): void{
     this.cs.updateCustomer(this.customer).subscribe((cust) => this.customer = cust);
-    this.msg = "Customer updated successfully!"
+    alert("Customer updated successfully!");
   }
 
 }

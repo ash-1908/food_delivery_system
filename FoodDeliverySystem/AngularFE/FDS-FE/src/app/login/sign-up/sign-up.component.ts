@@ -14,8 +14,8 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  SignUp():void{
-    this.ls.SignUp(this.login.userId,this.login.userName,this.login.password).subscribe((up) => this.login = up);
-    this.msg = "Signed Up Successfully!"
+  signUp():void{
+    this.ls.signUp(this.login).subscribe((up) => this.login = up);
+    alert("Signed Up Successfully!")
   }
 }
