@@ -21,7 +21,6 @@ import com.cg.FDS.exception.customer.CustomerNotFoundException;
 import com.cg.FDS.exception.item.ItemNotFoundException;
 import com.cg.FDS.exception.login.UserAlreadyExistsException;
 import com.cg.FDS.exception.login.UserNotFoundException;
-import com.cg.FDS.exception.login.WrongPasswordException;
 import com.cg.FDS.exception.order.OrderAlreadyExistsException;
 import com.cg.FDS.exception.order.OrderNotFoundException;
 import com.cg.FDS.exception.restaurant.RestaurantAlreadyExistsException;
@@ -36,13 +35,6 @@ public class MyRestControllerAdvice extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.BAD_REQUEST);
 	}
 
-	// Login exceptions
-	@ExceptionHandler(WrongPasswordException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo> handleWrongPasswordException(WrongPasswordException e,
-			HttpServletRequest req) {
-		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
-		return new ResponseEntity<ErrorInfo>(err, HttpStatus.BAD_REQUEST);
-	}
 	// Bill exceptions
 
 	@ExceptionHandler(BillAlreadyExistsException.class)

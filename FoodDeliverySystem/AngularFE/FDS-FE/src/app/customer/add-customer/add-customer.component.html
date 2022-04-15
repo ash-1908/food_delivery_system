@@ -1,5 +1,7 @@
-<h2>New Customer Form</h2>
-<table>
+<body class="jumbotron">
+    <h2 style="text-align: center;">New Customer Form</h2>
+    <form><br>
+    <table border="3" style="margin: auto;">
     <tr>
         <td>Customer ID:</td>
         <td><input type="text" [(ngModel)]="customer.customerId"></td>
@@ -30,17 +32,19 @@
     </tr>
     <tr>
         <td>Address</td>
-        <td><textarea rows="5" cols="10" [(ngModel)]="customer.address"></textarea></td>
+        <td><br>
+            Address Id:<input type="text" [(ngModel)]="customer.adress.adressId" ><br>
+            City<input type="text" [(ngModel)]="customer.adress.city"><br>
+            Pincode<input type="text" [(ngModel)]="customer.adress.pincode"><br><br>
+    
+    </td>
     </tr>
     <tr>
-        <td>FoodCart List</td>
-        <td><textarea rows="5" cols="10" [(ngModel)]="customer.cartList"></textarea></td>
-    </tr>
-    <tr>
-        <td><button (click)="addCustomer()">Add Customer</button></td>
+        <td colspan="2" style="text-align: center;"><button (click)="addCustomer()" class="btn-success">Add Customer</button></td>
         <td>{{customer.customerId}} {{customer.firstName}} {{customer.lastName}} {{customer.age}}
             {{customer.gender}} {{customer.mobileNumber}} {{customer.email}} {{customer.address}} {{customer.cartList}}
         </td>
     </tr>
 </table>
-<p>{{msg}}</p>
+</form>
+</body>

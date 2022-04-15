@@ -7,7 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -19,40 +18,32 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Customer {
 
 	@Id
-	@Column(name = "cust_id", length = 20)
 	private String customerId;
-
-	@Column(name = "f_name", length = 20)
+	@Column(name = "firstName", length = 30)
 	private String firstName;
-
-	@Column(name = "l_name", length = 20)
+	@Column(name = "lastName", length = 30)
 	private String lastName;
-
-	@Column(name = "age", length = 3)
+	@Column(name = "age", length = 30)
 	private int age;
-
-	@Column(name = "gender", length = 6)
+	@Column(name = "gender", length = 30)
 	private String gender;
-
-	@Column(name = "mobile", length = 10)
+	@Column(name = "mobileNumber", length = 30)
 	private String mobileNumber;
-
 	@Column(name = "email", length = 30)
 	private String email;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "adr_id")
 	private Address address;
 
-	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
 	@JsonIgnore
-	List<FoodCart> cartList = new ArrayList<>();
+	private List<FoodCart> cartList = new ArrayList<>();
 
 	public Customer() {
 	}
 
 	public Customer(String customerId, String firstName, String lastName, int age, String gender, String mobileNumber,
-			String email, Address address) {
+			String email, Address address, List<FoodCart> cartList) {
 		super();
 		this.customerId = customerId;
 		this.firstName = firstName;
@@ -62,6 +53,15 @@ public class Customer {
 		this.mobileNumber = mobileNumber;
 		this.email = email;
 		this.address = address;
+		this.cartList = cartList;
+	}
+
+	public List<FoodCart> getCartList() {
+		return cartList;
+	}
+
+	public void setCartList(List<FoodCart> cartList) {
+		this.cartList = cartList;
 	}
 
 	public String getCustomerId() {
@@ -128,27 +128,11 @@ public class Customer {
 		this.email = email;
 	}
 
-	public List<FoodCart> getCartList() {
-		return cartList;
-	}
-
-	public void setCartList(List<FoodCart> cartList) {
-		this.cartList = cartList;
-	}
-
-	public void addToCartList(FoodCart cart) {
-		this.cartList.add(cart);
-	}
-
-	public void removeFromCartList(FoodCart cart) {
-		this.cartList.remove(cart);
-	}
-
 	@Override
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", firstName=" + firstName + ", lastName=" + lastName + ", age="
 				+ age + ", gender=" + gender + ", mobileNumber=" + mobileNumber + ", email=" + email + ", address="
-				+ address + "]";
+				+ address + ", cartList=" + cartList + "]";
 	}
 
 }

@@ -4,9 +4,15 @@ import { LoginService } from 'src/app/login.service';
 import { Login } from '../login';
 
 @Component({
+<<<<<<< HEAD
   selector: 'app-sign-out',
   templateUrl:[ './sign-out.component.html'],
   styleUrls: ['./sign-out.component.css']
+=======
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.css']
+>>>>>>> e5bfe8109f1e616337ceb2022f9614f1db7544c5
 })
 export class SignUpComponent implements OnInit {
   public login: Login = new Login();
@@ -15,8 +21,8 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  SignUp():void{
-    this.ls.SignUp(this.login.userId,this.login.userName,this.login.password).subscribe((up) => this.login = up);
-    this.msg = "Signed Up Successfully!"
+  signUp():void{
+    this.ls.signUp(this.login).subscribe((up) => this.login = up);
+    alert("Signed Up Successfully!")
   }
 }
