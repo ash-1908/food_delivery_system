@@ -6,38 +6,30 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "address_tbl")
+@Table(name="Address_tbl")
 public class Address {
-
+	
 	@Id
-	@Column(name = "adr_id", length = 20)
 	private String addressId;
-
-	@Column(name = "building_name", length = 30)
+	@Column(name="buildingName", length=30)
 	private String buildingName;
-
-	@Column(name = "street_no", length = 30)
+	@Column(name="streetNo", length=30)
 	private String streetNo;
-
-	@Column(name = "area", length = 30)
+	@Column(name="area", length=30)
 	private String area;
-
-	@Column(name = "city", length = 30)
+	@Column(name="city", length=30)
 	private String city;
-
-	@Column(name = "state", length = 30)
+	@Column(name="state", length=30)
 	private String state;
-
-	@Column(name = "country", length = 30)
+	@Column(name="country", length=30)
 	private String country;
-
-	@Column(name = "pincode", length = 30)
+	@Column(name="pincode", length=30)
 	private String pincode;
-
+	
 	public Address() {
 		super();
 	}
-
+	
 	public Address(String addressId, String buildingName, String streetNo, String area, String city, String state,
 			String country, String pincode) {
 		super();
@@ -49,7 +41,7 @@ public class Address {
 		this.state = state;
 		this.country = country;
 		this.pincode = pincode;
-
+		
 	}
 
 	public String getAddressId() {
@@ -115,7 +107,8 @@ public class Address {
 	public void setPincode(String pincode) {
 		this.pincode = pincode;
 	}
-
+	
+	
 	@Override
 	public String toString() {
 		return "Address [addressId=" + addressId + ", buildingName=" + buildingName + ", streetNo=" + streetNo
@@ -189,5 +182,8 @@ public class Address {
 			return false;
 		return true;
 	}
+
+	
+	
 
 }

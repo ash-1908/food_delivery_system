@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.cg.FDS.dao.ICategoryRepository;
 import com.cg.FDS.dao.IItemRepository;
 import com.cg.FDS.exception.EmptyValuesException;
-import com.cg.FDS.exception.category.CategoryNotFoundException;
 import com.cg.FDS.exception.item.ItemAlreadyExistsException;
 import com.cg.FDS.exception.item.ItemNotFoundException;
 import com.cg.FDS.model.Category;
@@ -24,8 +23,6 @@ public class IItemServiceImpl implements IItemService {
 	ICategoryServiceImpl catServ;
 	@Autowired
 	ICategoryRepository catRepo;
-	@Autowired
-	IRestaurantServiceImpl resServ;
 
 	public List<Item> viewAllItems() {
 		return itemRepo.findAll();
@@ -45,11 +42,7 @@ public class IItemServiceImpl implements IItemService {
 		if (itemRepo.existsById(item.getItemId()))
 			throw new ItemAlreadyExistsException("Item already exists.");
 
-		try {
-			item.setCategory(catServ.viewCategory(item.getCategory()));
-		} catch (CategoryNotFoundException e) {
-			item.setCategory(catServ.addCategory(item.getCategory()));
-		}
+		catServ.addCategory(item.getCategory());
 		itemRepo.save(item);
 		return item;
 	}
@@ -58,24 +51,17 @@ public class IItemServiceImpl implements IItemService {
 	public Item updateItem(Item item) {
 		if (item.getItemId() == null || item.getItemId().length() == 0)
 			throw new EmptyValuesException("Item Id cannot be empty.");
+
+		if (item.getItemName() == null || item.getItemName().length() == 0)
+			throw new EmptyValuesException("Item name cannot be empty.");
+
+		if (item.getCategory() == null || item.getCategory().getCatId().length() == 0)
+			throw new EmptyValuesException("Item category cannot be empty.");
+
 		if (!itemRepo.existsById(item.getItemId()))
 			throw new ItemNotFoundException("Item does not exist.");
 
-		Item oldItem = itemRepo.findById(item.getItemId()).get();
-
-		if (item.getItemName() == null && oldItem.getItemName() == null)
-			throw new EmptyValuesException("Item name cannot be empty.");
-
-		if (item.getCategory() == null)
-			item.setCategory(oldItem.getCategory());
-		else {
-			try {
-				item.setCategory(catServ.viewCategory(item.getCategory()));
-			} catch (CategoryNotFoundException e) {
-				item.setCategory(catServ.addCategory(item.getCategory()));
-			}
-		}
-
+		catServ.addCategory(item.getCategory());
 		itemRepo.save(item);
 		return item;
 	}
@@ -99,12 +85,6 @@ public class IItemServiceImpl implements IItemService {
 		if (!itemRepo.existsById(item.getItemId()))
 			throw new ItemNotFoundException("Item does not exist.");
 
-		item = itemRepo.findById(item.getItemId()).get();
-		for (Restaurant r : item.getRestaurants()) {
-			r = resServ.viewRestaurant(r);
-			r.getItemList().remove(item);
-			resServ.updateItemList(r);
-		}
 		itemRepo.deleteById(item.getItemId());
 		return item;
 	}

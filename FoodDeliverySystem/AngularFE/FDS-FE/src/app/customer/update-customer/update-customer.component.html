@@ -1,12 +1,12 @@
-<h2>Find and Update Customer</h2>
-<table>
+<body class="jumbotron">
+    <h2 >Find and Update Customer</h2>
+<table border="3" style="margin: auto;">
     <tr>
         <td>Customer ID:</td>
         <td><input type="text" [(ngModel)]="customer.customerId"></td>
     </tr>
     <tr>
-        <td><button>Find Customer</button></td>
-        
+        <td colspan="2" style="text-align: center;"><br><button class="btn btn-primary">Find Customer</button></td>        
     </tr>
     <tbody *ngIf="showInfo">
         <tr>
@@ -35,14 +35,17 @@
         </tr>
         <tr>
             <td>Address</td>
-            <td><textarea rows="5" cols="10" [(ngModel)]="customer.address"></textarea></td>
+            <td><br>
+                area<input type="text" ><br>
+                city<input type="text" ><br>
+                pincode<input type="text" ><br><br>
+        
+        </td>
         </tr>
-        <tr>
-            <td>FoodCart List</td>
-            <td><textarea rows="5" cols="10" [(ngModel)]="customer.cartList"></textarea></td>
-        </tr>
+        
     <tr>
-        <td><button>Update Employee</button></td>
+        <td colspan="2"><button class="btn btn-primary">Update Employee</button></td>
     </tr>
 </tbody>
 </table>
+</body>

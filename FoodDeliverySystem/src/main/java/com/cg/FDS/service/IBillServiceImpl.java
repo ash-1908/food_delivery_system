@@ -15,7 +15,6 @@ import com.cg.FDS.exception.bill.BillNotFoundException;
 import com.cg.FDS.exception.customer.CustomerNotFoundException;
 import com.cg.FDS.model.Bill;
 import com.cg.FDS.model.Item;
-import com.cg.FDS.model.OrderDetails;
 
 @Service
 public class IBillServiceImpl implements IBillService {
@@ -57,11 +56,8 @@ public class IBillServiceImpl implements IBillService {
 			throw new EmptyValuesException("Bill Id cannot be empty.");
 		if (billRepo.existsById(bill.getBillId()))
 			throw new BillAlreadyExistsException("Bill already exists.");
-		if (bill.getBillDate() == null)
-			throw new EmptyValuesException("Bill date cannot be empty.");
 
-		OrderDetails o = orderService.viewOrder(bill.getOrder());
-		bill.setOrder(o);
+		orderService.addOrder(bill.getOrder());
 		billRepo.save(bill);
 		return bill;
 	}
@@ -85,10 +81,8 @@ public class IBillServiceImpl implements IBillService {
 		if (!billRepo.existsById(bill.getBillId()))
 			throw new BillNotFoundException("Bill does not exist.");
 
-		bill = billRepo.findById(bill.getBillId()).get();
+		orderService.removeOrder(bill.getOrder());
 		billRepo.deleteById(bill.getBillId());
-
-		bill.getOrder().getCart().setItemList(null);
 		return bill;
 	}
 

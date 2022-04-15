@@ -1,13 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { CustomerComponent } from './customer/customer.component';
 import { AddressComponent } from './address/address.component';
 import { LoginComponent } from './login/login.component';
-
+import { NewFoodCartComponent } from './foodCart/new-food-cart/new-food-cart.component';
+import { NewItemComponent } from './foodCart/new-item/new-item.component';
 import { FoodCartAddComponent } from './foodCart/food-cart-add/food-cart-add.component';
 import { FoodCartIncreaseQuantityComponent } from './foodCart/food-cart-increase-quantity/food-cart-increase-quantity.component';
 import { FoodCartReduceQuantityComponent } from './foodCart/food-cart-reduce-quantity/food-cart-reduce-quantity.component';
@@ -20,10 +20,14 @@ import { ItemRemoveItemComponent } from './item/item-remove-item/item-remove-ite
 import { ItemViewAllItemsCatComponent } from './item/item-view-all-items-cat/item-view-all-items-cat.component';
 import { ItemViewAllItemsResComponent } from './item/item-view-all-items-res/item-view-all-items-res.component';
 import { ItemViewAllItemsNameComponent } from './item/item-view-all-items-name/item-view-all-items-name.component';
+
 import { ForgotPasswordComponent } from './login/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './login/reset-password/reset-password.component';
+import { HttpClientModule } from '@angular/common/http';
+import { NewCategoryComponent } from './Category/new-category/new-category.component';
 
-import { HttpClientModule} from '@angular/common/http';
+
+
 import { CategoryAddComponent } from './Category/category-add/category-add.component';
 import { CategoryUpdateComponent } from './Category/category-update/category-update.component';
 import { RestaurantAddComponent } from './Restaurant/restaurant-add/restaurant-add.component';
@@ -36,7 +40,9 @@ import { UpdateCustomerComponent } from './customer/update-customer/update-custo
 import { RemoveCustomerComponent } from './customer/remove-customer/remove-customer.component';
 import { ViewCustomerComponent } from './customer/view-customer/view-customer.component';
 import { SignInComponent } from './login/sign-in/sign-in.component';
-import { SignOutComponent } from './login/sign-out/sign-out.component';
+import { SignUpComponent } from './login/sign-up/sign-up.component';
+
+
 
 @NgModule({
   declarations: [
@@ -68,7 +74,7 @@ import { SignOutComponent } from './login/sign-out/sign-out.component';
     RemoveCustomerComponent,
     ViewCustomerComponent,
     SignInComponent,
-    SignOutComponent
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -79,4 +85,6 @@ import { SignOutComponent } from './login/sign-out/sign-out.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+
+}

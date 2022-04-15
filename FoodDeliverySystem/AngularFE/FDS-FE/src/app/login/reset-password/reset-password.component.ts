@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from 'src/app/login.service';
+import { Login } from '../login';
 
 @Component({
   selector: 'app-reset-password',
@@ -6,12 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./reset-password.component.css']
 })
 export class ResetPasswordComponent implements OnInit {
-
-  constructor() { }
+  public login:Login,
+  constructor(private ls:LoginService) { }
 
   ngOnInit(): void {
   }
-  ResetP():void{
-    
+  resetPassword():void{
+    this.ls.resetPassword(this.login).subscribe((log) => this.login = log);
+    alert("Customer updated successfully!");
   }
 }

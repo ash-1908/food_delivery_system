@@ -1,27 +1,27 @@
-<center>
+
     <form>
     <body class="jumbotron" style="margin-top: auto;">
        
-        <h1 class="alert-primary"><b>Sign-Up</b></h1>
+        <h1 class="alert-primary" style="text-align: center;"><b>Sign-Up</b></h1><br><br>
     
-<table border="2">
+<table border="2" style="margin: auto;">
     <tr>
         <td style="color:salmon"><b>User Id: </b></td>
-        <td><input type="text" width="10"></td>
+        <td><input type="text" width="10" [(ngModel)]="login.userId"></td>
     </tr>
     <tr>
         <td style="color:salmon"><b>User Name: </b></td>
-        <td><input type="text" width="10"></td>
+        <td><input type="text" width="10" [(ngModel)]="login.userName"></td>
     </tr>
     <tr>
         <td style="color:salmon"><b>Password:</b> </td>
-        <td><input type="text" width="10"></td>
+        <td><input type="text" width="10" [(ngModel)]="login.password"></td>
     </tr>
     <tr>
-        <td colspan="2" style="text-align: center;"><br><button (click)="SignUp()" class="btn btn-info">Sign-Up</button></td><br>
+        <td colspan="2" style="text-align: center;"><br><button (click)="signUp()" class="btn btn-info">Sign-Up</button></td><br>
     </tr>
 </table>
                 
 </body>
 </form>
-</center>
+

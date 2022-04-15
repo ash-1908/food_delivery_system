@@ -20,6 +20,6 @@ export class RemoveCustomerComponent implements OnInit {
   removeCustomer(): void{
     this.cs.removeCustomer(this.customer).subscribe((cust) => this.customer = cust);
     this.showInfo = true;
-    this.msg = "Customer removed successfully"
+    alert("Customer removed successfully");
   }
 }
