@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Item } from './item';
+import { Category } from '../category/category';
+import { Restaurant } from '../Restaurant/Restaurant';
 
 
 
@@ -23,19 +25,19 @@ import { Item } from './item';
         return this.h.put(this.url + "update", item, {responseType: 'text'});
       }
       viewItem(item:Item):Observable<any> {
-        return this.h.get(this.url + "view", item, {responseType: 'text'});
+        return this.h.get<any[]>(this.url + "view");
       }
       removeItem(item:Item):Observable<any> {
-        return this.h.delete(this.url + "remove", item, {responseType: 'text'});
+        return this.h.delete(this.url + "remove");
       }
-      viewAllItems(cat:Category):Observable<any> {
-          return this.get<any[]>(this.url+ cat +"allItems");
+      viewAllItemsOfCat(cat:Category):Observable<any> {
+          return this.h.get<any[]>(this.url+"allitems");
       }
-      viewAllItems(res:Restaurant):Observable<any> {
-        return this.get<any[]>(this.url+ res +"allItems");
+      viewAllItemsOfRes(res:Restaurant):Observable<any> {
+        return this.h.get<any[]>(this.url+ res +"allItems");
         
       }
       viewAllItemsByName(name:String):Observable<any> {
-        return this.get<any[]>(this.url+ name);
+        return this.h.get<any[]>(this.url+ name);
     }
-        
+  }

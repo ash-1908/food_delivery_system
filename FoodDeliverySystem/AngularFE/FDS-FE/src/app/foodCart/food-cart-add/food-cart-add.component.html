@@ -2,27 +2,23 @@
 <table>
     <tr>
         <td>Item ID</td>
-        <td> <input type="text"  [(ngModel)]="item.itemId"></td>
+        <td> <input type="text"  [(ngModel) ]="item.itemId"></td>
     </tr>
     
     <tr>
         <td>Item Name</td>
-        <td> <input type="text"  [(ngModel)]="item.itemName"></td>
+        <td> <input type="text"  [(ngModel) ]="item.itemName"></td>
     </tr>
 
-    <tr>
-        <td>Category</td>
-        <td> <input type="text"  [(ngModel)]=item.cat></td>
-
-    </tr>
+   
     <tr>
         <td>Item Cost</td>
-        <td> <input type="text"  [(ngModel)]="item.cost"></td>
+        <td> <input type="text"  class="item.cost" [(ngModel) ]="item.cost"></td>
     </tr>
     
     <tr>
-        <td><button (click)="addItemTOCart()">Add Item to Cart</button></td>
-        <td>{{item.itemId}} {{item.itemName}} {{item.cat}} {{item.cost}}</td>
+        <td><button (click)="addItemToCart()">Add Item to Cart</button></td>
+        <td>{{item.itemId}} {{item.itemName}} {{item.cost}}</td>
     </tr>
 </table>
 <p>{{msg}}</p>

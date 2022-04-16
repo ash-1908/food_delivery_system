@@ -8,12 +8,13 @@ import { Item } from '../item';
   styleUrls: ['./item-view-item.component.css']
 })
 export class ItemViewItemComponent implements OnInit {
-  public items: Item[]=[];
+  public item: Item[]=[];
+  public name:string
 
   constructor(private i: itemService) { }
 
   ngOnInit(): void {
-    this.i.viewItem().subscribe((item)=>this.items=item)
+    this.i.viewAllItems(this.item).subscribe((item)=>this.item=item)
   }
 
 }

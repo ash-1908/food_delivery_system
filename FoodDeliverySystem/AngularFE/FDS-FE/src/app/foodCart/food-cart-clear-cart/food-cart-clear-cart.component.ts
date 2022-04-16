@@ -9,7 +9,7 @@ import { FoodCart } from '../foodCart';
   styleUrls: ['./food-cart-clear-cart.component.css']
 })
 export class FoodCartClearCartComponent implements OnInit {
-  public fc :FoodCart=new FoodCart();
+  public cart :FoodCart=new FoodCart();
   public cartId:number;
   public msg:string="";
  public showInfo:boolean=false;
@@ -19,7 +19,7 @@ export class FoodCartClearCartComponent implements OnInit {
   ngOnInit(): void {
   }
   clearCart(cartId:number): void{
-    this.f.clearCart(cartId).subscribe((fc)=> this.fc=fc);
+    this.f.clearCart(this.cart).subscribe ((cart) => this.cart=cart);
     this.showInfo=true;
     this.msg="Cart is Cleared Successfully!"
 }

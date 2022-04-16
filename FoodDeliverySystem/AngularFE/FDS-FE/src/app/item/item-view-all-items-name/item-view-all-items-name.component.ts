@@ -8,10 +8,10 @@ import { itemService } from '../itemService';
   styleUrls: ['./item-view-all-items-name.component.css']
 })
 export class ItemViewAllItemsNameComponent implements OnInit {
-  public items: Item[]=[];
+  public item: Item[]=[];
   public name:string;
   constructor(private i: itemService) {
-    this.i.viewAllItemsByName(this.name).subscribe((item)=>this.items=item)
+    this.i.viewAllItemsByName(this.name).subscribe((item)=>this.item=item)
    }
 
   ngOnInit(): void {

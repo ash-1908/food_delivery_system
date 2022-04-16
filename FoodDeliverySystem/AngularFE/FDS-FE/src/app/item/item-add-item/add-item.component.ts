@@ -8,14 +8,14 @@ import { itemService } from '../itemService';
   styleUrls: ['./add-item.component.css']
 })
 export class AddItemComponent implements OnInit {
-  public i : Item =new Item();
+  public item : Item =new Item();
   public msg : string="";
   constructor(private it: itemService ) { }
 
   ngOnInit(): void {
   }
   addItem(): void{
-    this.it.addItem(this.i).subscribe((i) => this.i=i);
+    this.it.addItem(this.item).subscribe((item) => this.item=item);
     this.msg="Item successfully Added "
 }
 }

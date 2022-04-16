@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Restaurant } from 'src/app/Restaurant/Restaurant';
 import { Item } from '../item';
 import { itemService } from '../itemService';
 
@@ -8,11 +9,11 @@ import { itemService } from '../itemService';
   styleUrls: ['./item-view-all-items-res.component.css']
 })
 export class ItemViewAllItemsResComponent implements OnInit {
-  public items: Item[]=[];
+  public item: Item[]=[];
   public res:Restaurant[]=[];
 
   constructor(private i: itemService) { 
-    this.i.viewAllItemRes(res).subscribe((item)=>this.items=item)
+    this.i.viewAllItemsOfRes(this.res[Restaurant.name]).subscribe((item)=>this.item=item)
   }
 
   ngOnInit(): void {
