@@ -41,7 +41,7 @@ public class IRestaurantServiceImpl implements IRestaurantService {
 		if (rest.getItemList().size() != 0) {
 			List<Item> itemList = new ArrayList<>();
 			for (Item i : rest.getItemList()) {
-				itemList.add(itemServ.viewItem(i));
+				itemList.add(itemServ.viewItem(i.getItemId()));
 			}
 			rest.setItemList(itemList);
 		}

@@ -82,7 +82,7 @@ public class IBillServiceImpl implements IBillService {
 			throw new BillNotFoundException("Bill does not exist.");
 
 		Bill bill = billRepo.findById(billId).get();
-		orderService.removeOrder(bill.getOrder());
+		orderService.removeOrder(bill.getOrder().getOrderId());
 		billRepo.deleteById(bill.getBillId());
 		return bill;
 	}
