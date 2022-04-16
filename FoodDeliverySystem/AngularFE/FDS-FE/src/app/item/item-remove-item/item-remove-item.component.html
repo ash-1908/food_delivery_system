@@ -1,17 +1,19 @@
 <h2>Remove Item</h2>
+<div class="container">
 <table>
     <tr>
         <td>Item ID</td>
-        <td><input type="text" [(ngModel) ]="item.itemId"></td>
+        <td><input type="text" class="item.itemId" [(ngModel) ]="item.itemId"></td>
     </tr>
     <tr>
-        <td><button (click)="removeItem()">Remove Item</button></td>
+        <td><button class="btn btn-danger" (click)="removeItem()">Remove Item</button></td>
         <td>{{msg}}</td>
     </tr>
     <tbody *ngIf="showInfo">
     <tr>
         <td>Item Name</td>
-        <td><input type="text" [(ngModel)]="item.itemName"></td>
+        <td><input type="text" class="item.itemName" [(ngModel)]="item.itemName"></td>
     </tr>
 </tbody>
 </table>
+</div>

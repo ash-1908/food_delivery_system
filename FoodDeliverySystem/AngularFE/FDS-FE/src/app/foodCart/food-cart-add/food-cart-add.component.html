@@ -1,13 +1,14 @@
 <h3>Add to Cart</h3>
+<div class="container">
 <table>
     <tr>
         <td>Item ID</td>
-        <td> <input type="text"  [(ngModel) ]="item.itemId"></td>
+        <td> <input type="text"  class="item.itemId" [(ngModel) ]="item.itemId"></td>
     </tr>
     
     <tr>
         <td>Item Name</td>
-        <td> <input type="text"  [(ngModel) ]="item.itemName"></td>
+        <td> <input type="text"  class="item.itemName" [(ngModel) ]="item.itemName"></td>
     </tr>
 
    
@@ -17,9 +18,11 @@
     </tr>
     
     <tr>
-        <td><button (click)="addItemToCart()">Add Item to Cart</button></td>
+        <td><button class="btn btn-info" (click)="addItemToCart()">Add Item to Cart</button></td>
         <td>{{item.itemId}} {{item.itemName}} {{item.cost}}</td>
     </tr>
 </table>
+
 <p>{{msg}}</p>
+</div>
 

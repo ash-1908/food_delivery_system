@@ -1,4 +1,5 @@
 <h2>Increase Quantity of Item</h2>
+<div class="container">
 <table>
     <tr>
         <td>Cart ID</td>
@@ -19,6 +20,7 @@
         <td> <input type="text"   class="item.quantity" [(ngModel) ]="item.quantity"></td>
     </tr>
 
-        <td><button (click)="increaseQuantity()">Increase Quantity</button></td>
+        <td><button class="btn btn-primary" (click)="increaseQuantity()">Increase Quantity</button></td>
         
 </table>
+</div>

@@ -1,4 +1,5 @@
 <h2>Clear cart</h2>
+<div class="container">
 <table>
     <tr>
         <td> Cart ID</td>
@@ -9,8 +10,8 @@
             <td> C</td>
             <td><input type="text" [(ngModel) ]="Cart.cartId"></td>
         </tr>
-        <td><button (click)="clearCart(this.cartId)">Clear Cart</button></td>
+        <td><button class="btn btn-danger"  (click)="clearCart(this.cartId)">Clear Cart</button></td>
         <td>{{msg}}</td>
     
 </table>
-
+</div>>
