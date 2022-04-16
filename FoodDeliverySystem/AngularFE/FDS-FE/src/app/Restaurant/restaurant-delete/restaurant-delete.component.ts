@@ -5,9 +5,9 @@ import { RestaurantServiceService } from '../restaurant-service.service';
 
 
 @Component({
-    selector: 'app-Restaurant-add',
-    templateUrl: './Restaurant-add.component.html',
-    styleUrls: ['./Restaurant-add.component.css']
+    selector: 'app-Restaurant-delete',
+    templateUrl: './Restaurant-delete.component.html',
+    styleUrls: ['./Restaurant-delete.component.css']
   })
   export class RestaurantDeleteComponent implements OnInit {
     

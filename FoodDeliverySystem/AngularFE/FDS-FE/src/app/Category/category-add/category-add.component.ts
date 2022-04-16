@@ -12,13 +12,13 @@ export class CategoryAddComponent implements OnInit{
   public cat: Category = new Category();
   public msg: string = "";
 
-  constructor(private rs: CategoryService) { }
+  constructor(private cs: CategoryService) { }
   ngOnInit(): void {
 
   }
   addCategory(): void{
-      this.rs.addCategory(this.cat).subscribe((cat) => this.cat = cat);
-      this.msg = "Category added successfully!"
+      this.cs.addCategory(this.cat).subscribe((cat) => this.cat = cat);
+      alert("Category added successfully!");
     }
 }
 
