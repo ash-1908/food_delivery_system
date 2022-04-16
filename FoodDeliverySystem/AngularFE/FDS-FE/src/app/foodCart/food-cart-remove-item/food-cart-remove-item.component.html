@@ -3,7 +3,7 @@
 <table>
     <tr>
         <td>Item ID</td>
-        <td><input type="text" [(ngModel)]="item.itemId"></td>
+        <td><input type="text" [(ngModel) ]="item.itemId"></td>
     </tr>
     <tr>
         <td><button (click)="removeItem()">Delete Item</button></td>
@@ -12,7 +12,7 @@
     <tbody *ngIf="showInfo">
     <tr>
         <td>Item Name</td>
-        <td><input type="text" [(ngModel)]="item.itemName"></td>
+        <td><input type="text" [(ngModel) ]="item.itemName"></td>
     </tr>
 </tbody>
 </table>

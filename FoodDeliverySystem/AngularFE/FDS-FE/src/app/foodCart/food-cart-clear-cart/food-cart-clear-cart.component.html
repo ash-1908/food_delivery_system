@@ -2,16 +2,15 @@
 <table>
     <tr>
         <td> Cart ID</td>
-        <td><input type="text" [(ngModel)]="Cart.cartId"></td>
+        <td><input type="text" class="Cart.cartId" [(ngModel) ]="Cart.cartId"></td>
     </tr>
     <tr>
         <tr>
             <td> C</td>
-            <td><input type="text" [(ngModel)]="Cart.cartId"></td>
+            <td><input type="text" [(ngModel) ]="Cart.cartId"></td>
         </tr>
-        <td><button (click)="clearCart()">Clear Cart</button></td>
+        <td><button (click)="clearCart(this.cartId)">Clear Cart</button></td>
         <td>{{msg}}</td>
-    </tr>
     
 </table>
 

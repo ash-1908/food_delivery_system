@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { foodcartService } from '../foodcartService';
 import { FoodCart } from '../foodCart';
+import { Item } from 'src/app/item/item';
 
 
 @Component({
@@ -11,7 +12,8 @@ import { FoodCart } from '../foodCart';
 export class FoodCartAddComponent implements OnInit{
 
     
-  public fc : FoodCart =new FoodCart();
+  public cart : FoodCart =new FoodCart();
+  public item : Item =new Item();
   public msg : string="";
 
   constructor(private f: foodcartService){}
@@ -20,7 +22,7 @@ export class FoodCartAddComponent implements OnInit{
   }
 
   addItemToCart(): void{
-      this.f.addItemToCart(this.fc).subscribe((fc) => this.fc=fc);
+      this.f.addItemToCart(this.cart,this.item).subscribe((cart) => this.cart=cart);
       this.msg="Item successfully Added to the Cart!"
   }
 }

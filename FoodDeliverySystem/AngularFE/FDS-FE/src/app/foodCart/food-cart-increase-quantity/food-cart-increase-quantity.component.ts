@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Item } from 'src/app/item/item';
 import { FoodCart } from '../foodCart';
 import { foodcartService } from '../foodcartService';
 
@@ -9,7 +10,11 @@ import { foodcartService } from '../foodcartService';
 })
 export class FoodCartIncreaseQuantityComponent implements OnInit {
   public  cartId: number;
-  public fc: FoodCart = new FoodCart();
+  public cart: FoodCart = new FoodCart();
+  public item: Item = new Item();
+  public quantity:number;
+  
+
   public showInfo: boolean=false;
   public msg="";
 
@@ -18,12 +23,9 @@ export class FoodCartIncreaseQuantityComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  find(cartId:number): void{
-    this.f.find(cartId).subscribe((fc)=> this.fc=fc);
-    this.showInfo=true;
-}
+  
 increaseQuantity(): void{
-    this.f.increaseQuantity(this.fc).subscribe((fc)=> this.fc=fc);
+    this.f.increaseQuantity(this.cart,this.item,this.quantity).subscribe((cart)=> this.cart=cart);
     this.msg=" Item increased Successfully!";
 }
 
