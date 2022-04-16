@@ -8,10 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.FDS.dao.IRestaurantRepository;
@@ -27,21 +27,21 @@ public class RestaurantRestController {
 	IRestaurantRepository resRepo;
 
 	@GetMapping("/restaurant/view")
-	public ResponseEntity<Restaurant> viewRestaurant(@RequestBody Restaurant res) {
+	public ResponseEntity<Restaurant> viewRestaurant(@RequestParam String resId) {
 
-		return new ResponseEntity<Restaurant>(rserv.viewRestaurant(res), HttpStatus.OK);
+		return new ResponseEntity<Restaurant>(rserv.viewRestaurant(resId), HttpStatus.OK);
 	}
 
-	@GetMapping("/restaurant/view/{location}")
-	public ResponseEntity<List<Restaurant>> viewNearByRestaurant(@PathVariable("location") String location) {
+	@GetMapping("/restaurant/view")
+	public ResponseEntity<List<Restaurant>> viewNearByRestaurant(@RequestParam String location) {
 
 		return new ResponseEntity<List<Restaurant>>(rserv.viewNearByRestaurant(location), HttpStatus.OK);
 	}
 
-	@GetMapping("/restaurant/view/item/{itemName}")
-	public ResponseEntity<List<Restaurant>> viewRestaurantByItemName(@PathVariable("itemName") String itemName) {
+	@GetMapping("/restaurant/view/item")
+	public ResponseEntity<List<Restaurant>> viewRestaurantByItemName(@RequestParam String name) {
 
-		return new ResponseEntity<List<Restaurant>>(rserv.viewRestaurantByItemName(itemName), HttpStatus.OK);
+		return new ResponseEntity<List<Restaurant>>(rserv.viewRestaurantByItemName(name), HttpStatus.OK);
 	}
 
 	@GetMapping("/restaurant/all")
@@ -62,9 +62,9 @@ public class RestaurantRestController {
 	}
 
 	@DeleteMapping("/restaurant/remove")
-	public ResponseEntity<Restaurant> removeRestaurant(@RequestBody Restaurant res) {
+	public ResponseEntity<Restaurant> removeRestaurant(@RequestParam String resId) {
 
-		return new ResponseEntity<Restaurant>(rserv.removeRestaurant(res), HttpStatus.OK);
+		return new ResponseEntity<Restaurant>(rserv.removeRestaurant(resId), HttpStatus.OK);
 	}
 
 }

@@ -24,8 +24,8 @@ public class BillRestController {
 	IBillServiceImpl bserv;
 
 	@GetMapping("/bill/view")
-	public ResponseEntity<Bill> viewBill(@RequestBody Bill bill) {
-		return new ResponseEntity<Bill>(bserv.viewBill(bill), HttpStatus.OK);
+	public ResponseEntity<Bill> viewBill(@RequestParam String billId) {
+		return new ResponseEntity<Bill>(bserv.viewBill(billId), HttpStatus.OK);
 	}
 
 	@GetMapping("/bill/view/filter/date")
@@ -61,8 +61,8 @@ public class BillRestController {
 	}
 
 	@DeleteMapping("/bill/remove")
-	public ResponseEntity<Bill> removeBill(@RequestBody Bill bill) {
-		bill = bserv.removeBill(bill);
-		return new ResponseEntity<Bill>(bill, HttpStatus.OK);
+	public ResponseEntity<Bill> removeBill(@RequestParam String billId) {
+
+		return new ResponseEntity<Bill>(bserv.removeBill(billId), HttpStatus.OK);
 	}
 }

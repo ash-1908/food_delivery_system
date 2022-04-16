@@ -10,9 +10,7 @@ import com.cg.FDS.dao.IItemRepository;
 import com.cg.FDS.exception.EmptyValuesException;
 import com.cg.FDS.exception.item.ItemAlreadyExistsException;
 import com.cg.FDS.exception.item.ItemNotFoundException;
-import com.cg.FDS.model.Category;
 import com.cg.FDS.model.Item;
-import com.cg.FDS.model.Restaurant;
 
 @Service
 public class IItemServiceImpl implements IItemService {
@@ -67,43 +65,44 @@ public class IItemServiceImpl implements IItemService {
 	}
 
 	@Override
-	public Item viewItem(Item item) {
-		if (item.getItemId() == null || item.getItemId().length() == 0)
+	public Item viewItem(String itemId) {
+		if (itemId == null || itemId.length() == 0)
 			throw new EmptyValuesException("Item Id cannot be empty.");
-		if (!itemRepo.existsById(item.getItemId()))
+		if (!itemRepo.existsById(itemId))
 			throw new ItemNotFoundException("Item does not exist.");
 
-		return itemRepo.findById(item.getItemId()).get();
+		return itemRepo.findById(itemId).get();
 
 	}
 
 	@Override
-	public Item removeItem(Item item) {
-		if (item.getItemId() == null || item.getItemId().length() == 0)
+	public Item removeItem(String itemId) {
+		if (itemId == null || itemId.length() == 0)
 			throw new EmptyValuesException("Item Id cannot be empty.");
 
-		if (!itemRepo.existsById(item.getItemId()))
+		if (!itemRepo.existsById(itemId))
 			throw new ItemNotFoundException("Item does not exist.");
 
-		itemRepo.deleteById(item.getItemId());
+		Item item = itemRepo.findById(itemId).get();
+		itemRepo.deleteById(itemId);
 		return item;
 	}
 
 	@Override
-	public List<Item> viewAllItems(Category cat) {
-		if (cat.getCatId() == null || cat.getCatId().length() == 0)
+	public List<Item> viewAllItemsCategory(String catName) {
+		if (catName == null || catName.length() == 0)
 			throw new EmptyValuesException("Category Id cannot be empty.");
 
-		List<Item> itemList = itemRepo.viewAllItems(cat);
+		List<Item> itemList = itemRepo.viewAllItemsCategory(catName);
 		return itemList;
 	}
 
 	@Override
-	public List<Item> viewAllItems(Restaurant res) {
-		if (res.getRestaurantId() == null || res.getRestaurantId().length() == 0)
+	public List<Item> viewAllItemsRestaurant(String resId) {
+		if (resId == null || resId.length() == 0)
 			throw new EmptyValuesException("Restaurant Id cannot be empty.");
 
-		List<Item> itemList = itemRepo.viewAllItems(res);
+		List<Item> itemList = itemRepo.viewAllItemsRestaurant(resId);
 		return itemList;
 	}
 

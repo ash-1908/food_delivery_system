@@ -9,9 +9,9 @@ public interface IBillService {
 
 	Bill updateBill(Bill bill);
 
-	Bill removeBill(Bill bill);
+	Bill removeBill(String billId);
 
-	Bill viewBill(Bill bill);
+	Bill viewBill(String billId);
 
 	List<Bill> viewBills(String startDate, String endDate);
 

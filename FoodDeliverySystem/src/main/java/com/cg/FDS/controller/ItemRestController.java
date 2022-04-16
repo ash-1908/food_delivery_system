@@ -8,15 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.FDS.model.Category;
 import com.cg.FDS.model.Item;
-import com.cg.FDS.model.Restaurant;
 import com.cg.FDS.service.IItemServiceImpl;
 
 @RestController
@@ -27,25 +25,25 @@ public class ItemRestController {
 	IItemServiceImpl itemServ;
 
 	@GetMapping("/item/view")
-	public ResponseEntity<Item> viewItem(@RequestBody Item item) {
+	public ResponseEntity<Item> viewItem(@RequestParam String itemId) {
 
-		return new ResponseEntity<Item>(itemServ.viewItem(item), HttpStatus.OK);
+		return new ResponseEntity<Item>(itemServ.viewItem(itemId), HttpStatus.OK);
 	}
 
 	@GetMapping("/item/view/category")
-	public ResponseEntity<List<Item>> viewAllItems(@RequestBody Category cat) {
+	public ResponseEntity<List<Item>> viewAllItemsCategory(@RequestParam String name) {
 
-		return new ResponseEntity<List<Item>>(itemServ.viewAllItems(cat), HttpStatus.OK);
+		return new ResponseEntity<List<Item>>(itemServ.viewAllItemsCategory(name), HttpStatus.OK);
 	}
 
 	@GetMapping("/item/view/restaurant")
-	public ResponseEntity<List<Item>> viewAllItems(@RequestBody Restaurant res) {
+	public ResponseEntity<List<Item>> viewAllItemsRestaurant(@RequestParam String name) {
 
-		return new ResponseEntity<List<Item>>(itemServ.viewAllItems(res), HttpStatus.OK);
+		return new ResponseEntity<List<Item>>(itemServ.viewAllItemsRestaurant(name), HttpStatus.OK);
 	}
 
-	@GetMapping("/item/view/{name}")
-	public ResponseEntity<List<Item>> viewAllItemsByName(@PathVariable("name") String name) {
+	@GetMapping("/item/view")
+	public ResponseEntity<List<Item>> viewAllItemsByName(@RequestParam String name) {
 
 		return new ResponseEntity<List<Item>>(itemServ.viewAllItemsByName(name), HttpStatus.OK);
 	}
@@ -69,9 +67,9 @@ public class ItemRestController {
 	}
 
 	@DeleteMapping("/item/remove")
-	public ResponseEntity<Item> removeItem(@RequestBody Item item) {
+	public ResponseEntity<Item> removeItem(@RequestParam String itemId) {
 
-		return new ResponseEntity<Item>(itemServ.removeItem(item), HttpStatus.OK);
+		return new ResponseEntity<Item>(itemServ.removeItem(itemId), HttpStatus.OK);
 	}
 
 }

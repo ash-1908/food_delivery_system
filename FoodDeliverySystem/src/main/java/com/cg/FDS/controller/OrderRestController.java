@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.FDS.model.Customer;
 import com.cg.FDS.model.OrderDetails;
-import com.cg.FDS.model.Restaurant;
 import com.cg.FDS.service.IOrderServiceImpl;
 
 @RestController
@@ -37,26 +36,26 @@ public class OrderRestController {
 	}
 
 	@DeleteMapping("/order/remove")
-	public ResponseEntity<OrderDetails> removeOrder(@RequestBody OrderDetails order) {
+	public ResponseEntity<OrderDetails> removeOrder(@RequestParam Integer orderId) {
 
-		return new ResponseEntity<OrderDetails>(orderServ.removeOrder(order), HttpStatus.OK);
+		return new ResponseEntity<OrderDetails>(orderServ.removeOrder(orderId), HttpStatus.OK);
 	}
 
 	@GetMapping("/order/view")
-	public ResponseEntity<OrderDetails> viewOrder(@RequestBody OrderDetails order) {
+	public ResponseEntity<OrderDetails> viewOrder(@RequestParam Integer orderId) {
 
-		return new ResponseEntity<OrderDetails>(orderServ.viewOrder(order), HttpStatus.OK);
+		return new ResponseEntity<OrderDetails>(orderServ.viewOrder(orderId), HttpStatus.OK);
 	}
 
 	@GetMapping("/order/view/restaurant")
-	public ResponseEntity<List<OrderDetails>> viewAllOrder(@RequestBody Restaurant res) {
+	public ResponseEntity<List<OrderDetails>> viewAllOrderRestaurant(@RequestParam String resId) {
 
-		return new ResponseEntity<List<OrderDetails>>(orderServ.viewAllOrder(res), HttpStatus.OK);
+		return new ResponseEntity<List<OrderDetails>>(orderServ.viewAllOrderRestaurant(resId), HttpStatus.OK);
 	}
 
 	@GetMapping("/order/view/customer")
-	public ResponseEntity<List<OrderDetails>> viewAllOrder(@RequestBody Customer customer) {
+	public ResponseEntity<List<OrderDetails>> viewAllOrderCustomer(@RequestParam String custId) {
 
-		return new ResponseEntity<List<OrderDetails>>(orderServ.viewAllOrder(customer), HttpStatus.OK);
+		return new ResponseEntity<List<OrderDetails>>(orderServ.viewAllOrderCustomer(custId), HttpStatus.OK);
 	}
 }

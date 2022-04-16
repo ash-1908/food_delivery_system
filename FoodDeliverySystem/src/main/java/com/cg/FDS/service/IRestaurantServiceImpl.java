@@ -81,34 +81,33 @@ public class IRestaurantServiceImpl implements IRestaurantService {
 	}
 
 	@Override
-	public Restaurant removeRestaurant(Restaurant rest) {
-		if (rest.getRestaurantId() == null || rest.getRestaurantId().length() == 0)
+	public Restaurant removeRestaurant(String resId) {
+		if (resId == null || resId.length() == 0)
 			throw new EmptyValuesException("Restaurant Id cannot be empty.");
-		if (!resRepo.existsById(rest.getRestaurantId()))
+		if (!resRepo.existsById(resId))
 			throw new RestaurantNotFoundException("Restaurant does not exist.");
 
-		rest = resRepo.findById(rest.getRestaurantId()).get();
-		String resId = rest.getRestaurantId();
-		addrServ.deleteAddress(rest.getAddress().getAddressId());
-		for (Item i : rest.getItemList()) {
+		Restaurant res = resRepo.findById(resId).get();
+		addrServ.deleteAddress(res.getAddress().getAddressId());
+		for (Item i : res.getItemList()) {
 			List<Restaurant> resList = i.getRestaurants().stream().filter((r) -> !r.getRestaurantId().equals(resId))
 					.collect(Collectors.toList());
 			i.setRestaurants(resList);
 		}
-		rest.setItemList(null);
-		resRepo.deleteById(rest.getRestaurantId());
-		return rest;
+		res.setItemList(null);
+		resRepo.deleteById(res.getRestaurantId());
+		return res;
 	}
 
 	@Override
-	public Restaurant viewRestaurant(Restaurant rest) {
-		if (rest.getRestaurantId() == null || rest.getRestaurantId().length() == 0)
+	public Restaurant viewRestaurant(String resId) {
+		if (resId == null || resId.length() == 0)
 			throw new EmptyValuesException("Restaurant Id cannot be empty.");
-		if (!resRepo.existsById(rest.getRestaurantId()))
+		if (!resRepo.existsById(resId))
 			throw new RestaurantNotFoundException("Restaurant does not exist.");
 
-		rest = resRepo.findById(rest.getRestaurantId()).get();
-		return rest;
+		Restaurant res = resRepo.findById(resId).get();
+		return res;
 	}
 
 	@Override

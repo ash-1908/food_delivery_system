@@ -19,6 +19,8 @@ public class ICartServiceImpl implements ICartService {
 
 	@Autowired
 	ICartRepository cartRepo;
+	@Autowired
+	IItemServiceImpl itemServ;
 
 	public FoodCart addCart(FoodCart cart) {
 		if (cart.getCartId() == null || cart.getCartId().length() == 0)
@@ -42,33 +44,34 @@ public class ICartServiceImpl implements ICartService {
 	}
 
 	@Override
-	public FoodCart addItemToCart(FoodCart cart, Item item) {
+	public FoodCart addItemToCart(FoodCart cart, String itemId) {
 		if (cart.getCartId() == null || cart.getCartId().length() == 0)
 			throw new EmptyValuesException("Cart Id cannot be empty.");
 		if (cart.getCustomer() == null || cart.getCustomer().getCustomerId().length() == 0)
 			throw new EmptyValuesException("Customer Id cannot be empty.");
-		if (item == null || item.getItemId() == null || item.getItemId().length() == 0)
+		if (itemId == null || itemId.length() == 0)
 			throw new EmptyValuesException("Item to add in food cart cannot be empty.");
-		if (cartRepo.existsById(item.getItemId()))
+		if (cartRepo.existsById(itemId))
 			throw new AlreadyExistInCartException("Food cart already consists the current item.");
 
+		Item item = itemServ.viewItem(itemId);
 		cart.getItemList().add(item);
 		return cart;
 	}
 
 	@Override
-	public FoodCart increaseQuantity(FoodCart cart, Item item, int quantity) {
+	public FoodCart increaseQuantity(FoodCart cart, String itemId, int quantity) {
 		if (cart.getCartId() == null || cart.getCartId().length() == 0)
 			throw new EmptyValuesException("Cart Id cannot be empty.");
 		if (cart.getCustomer() == null || cart.getCustomer().getCustomerId().length() == 0)
 			throw new EmptyValuesException("Customer Id cannot be empty.");
-		if (item == null || item.getItemId() == null || item.getItemId().length() == 0)
+		if (itemId == null || itemId.length() == 0)
 			throw new EmptyValuesException("Item to add in food cart cannot be empty.");
 		if (quantity == 0)
 			throw new EmptyValuesException("Item quantity cannot be zero.");
 
 		for (Item i : cart.getItemList()) {
-			if (i.getItemId() == item.getItemId()) {
+			if (i.getItemId() == itemId) {
 				i.setQuantity(i.getQuantity() + quantity);
 			}
 		}
@@ -76,18 +79,18 @@ public class ICartServiceImpl implements ICartService {
 	}
 
 	@Override
-	public FoodCart reduceQuantity(FoodCart cart, Item item, int quantity) {
+	public FoodCart reduceQuantity(FoodCart cart, String itemId, int quantity) {
 		if (cart.getCartId() == null || cart.getCartId().length() == 0)
 			throw new EmptyValuesException("Cart Id cannot be empty.");
 		if (cart.getCustomer() == null || cart.getCustomer().getCustomerId().length() == 0)
 			throw new EmptyValuesException("Customer Id cannot be empty.");
-		if (item == null || item.getItemId() == null || item.getItemId().length() == 0)
+		if (itemId == null || itemId.length() == 0)
 			throw new EmptyValuesException("Item to reduce in food cart cannot be empty.");
 		if (quantity == 0)
 			throw new EmptyValuesException("Item quantity cannot be zero.");
 
 		for (Item i : cart.getItemList()) {
-			if (i.getItemId() == item.getItemId()) {
+			if (i.getItemId() == itemId) {
 				int existingQuantity = i.getQuantity();
 				if (existingQuantity - quantity <= 0)
 					i.setQuantity(0);
@@ -99,16 +102,16 @@ public class ICartServiceImpl implements ICartService {
 	}
 
 	@Override
-	public FoodCart removeItem(FoodCart cart, Item item) {
+	public FoodCart removeItem(FoodCart cart, String itemId) {
 		if (cart.getCartId() == null || cart.getCartId().length() == 0)
 			throw new EmptyValuesException("Cart Id cannot be empty.");
 		if (cart.getCustomer() == null || cart.getCustomer().getCustomerId().length() == 0)
 			throw new EmptyValuesException("Customer Id cannot be empty.");
-		if (item == null || item.getItemId() == null || item.getItemId().length() == 0)
+		if (itemId == null || itemId.length() == 0)
 			throw new EmptyValuesException("Item to remove in food cart cannot be empty.");
 
 		List<Item> itemList = cart.getItemList();
-		itemList = itemList.stream().filter((i) -> i.getItemId() != item.getItemId()).collect(Collectors.toList());
+		itemList = itemList.stream().filter((i) -> i.getItemId() != itemId).collect(Collectors.toList());
 		return cart;
 	}
 

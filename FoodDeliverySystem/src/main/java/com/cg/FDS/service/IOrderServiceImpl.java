@@ -9,9 +9,7 @@ import com.cg.FDS.dao.IOrderRepository;
 import com.cg.FDS.exception.EmptyValuesException;
 import com.cg.FDS.exception.order.OrderAlreadyExistsException;
 import com.cg.FDS.exception.order.OrderNotFoundException;
-import com.cg.FDS.model.Customer;
 import com.cg.FDS.model.OrderDetails;
-import com.cg.FDS.model.Restaurant;
 
 @Service
 public class IOrderServiceImpl implements IOrderService {
@@ -20,6 +18,10 @@ public class IOrderServiceImpl implements IOrderService {
 	IOrderRepository orderRepo;
 	@Autowired
 	ICartServiceImpl cartServ;
+	@Autowired
+	ICustomerServiceImpl custServ;
+	@Autowired
+	IRestaurantServiceImpl resServ;
 
 	@Override
 	public OrderDetails addOrder(OrderDetails order) {
@@ -50,53 +52,46 @@ public class IOrderServiceImpl implements IOrderService {
 	}
 
 	@Override
-	public OrderDetails removeOrder(OrderDetails order) {
-		if (order.getOrderId() == null || order.getOrderId() == 0)
+	public OrderDetails removeOrder(Integer orderId) {
+		if (orderId == null)
 			throw new EmptyValuesException("Order Id cannot be empty.");
-		if (order.getCart() == null || order.getCart().getCartId().length() == 0)
-			throw new EmptyValuesException("Food cart in Order cannot be empty.");
-		if (!orderRepo.existsById(order.getOrderId()))
+		if (!orderRepo.existsById(orderId))
 			throw new OrderNotFoundException("Order does not exist.");
 
-		order = orderRepo.findById(order.getOrderId()).get();
+		OrderDetails order = orderRepo.findById(orderId).get();
 		cartServ.deleteCart(order.getCart().getCartId());
 		orderRepo.deleteById(order.getOrderId());
 		return order;
 	}
 
 	@Override
-	public OrderDetails viewOrder(OrderDetails order) {
-		if (order.getOrderId() == null || order.getOrderId() == 0)
+	public OrderDetails viewOrder(Integer orderId) {
+		if (orderId == null)
 			throw new EmptyValuesException("Order Id cannot be empty.");
-		if (order.getCart() == null || order.getCart().getCartId().length() == 0)
-			throw new EmptyValuesException("Food cart in Order cannot be empty.");
-		if (!orderRepo.existsById(order.getOrderId()))
+		if (!orderRepo.existsById(orderId))
 			throw new OrderNotFoundException("Order does not exist.");
 
+		OrderDetails order = orderRepo.findById(orderId).get();
 		return order;
 	}
 
 	@Override
-	public List<OrderDetails> viewAllOrder(Restaurant res) {
-		if (res.getRestaurantId() == null || res.getRestaurantId().length() == 0)
+	public List<OrderDetails> viewAllOrderRestaurant(String resId) {
+		if (resId == null || resId.length() == 0)
 			throw new EmptyValuesException("Restaurant Id cannot be empty.");
-		if (res.getItemList() == null || res.getItemList().size() == 0)
-			throw new EmptyValuesException("Item list in restaurant cannot be empty.");
 
-		List<OrderDetails> orderList = orderRepo.viewAllOrders(res);
+		resServ.viewRestaurant(resId);
+		List<OrderDetails> orderList = orderRepo.viewAllOrdersRestaurant(resId);
 		return orderList;
 	}
 
 	@Override
-	public List<OrderDetails> viewAllOrder(Customer customer) {
-		if (customer.getCustomerId() == null || customer.getCustomerId().length() == 0)
+	public List<OrderDetails> viewAllOrderCustomer(String custId) {
+		if (custId == null || custId.length() == 0)
 			throw new EmptyValuesException("Customer Id cannot be empty.");
-		if (customer.getCartList() == null || customer.getCartList().size() == 0)
-			throw new EmptyValuesException("Cart list in customer cannot be empty.");
 
-		List<OrderDetails> orderList = orderRepo.viewAllOrders(customer);
-		for (OrderDetails od : orderList)
-			System.out.println(od);
+		custServ.viewCustomer(custId);
+		List<OrderDetails> orderList = orderRepo.viewAllOrdersCustomer(custId);
 		return orderList;
 	}
 

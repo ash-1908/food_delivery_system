@@ -27,14 +27,14 @@ public class IBillServiceImpl implements IBillService {
 	ICustomerRepository custRepo;
 
 	@Override
-	public Bill viewBill(Bill bill) {
-		if (bill.getBillId() == null || bill.getBillId().length() == 0)
+	public Bill viewBill(String billId) {
+		if (billId == null || billId.length() == 0)
 			throw new EmptyValuesException("Bill Id cannot be empty.");
 
-		if (!billRepo.existsById(bill.getBillId()))
+		if (!billRepo.existsById(billId))
 			throw new BillNotFoundException("Bill does not exist.");
 
-		bill = billRepo.findById(bill.getBillId()).get();
+		Bill bill = billRepo.findById(billId).get();
 		return bill;
 	}
 
@@ -75,12 +75,13 @@ public class IBillServiceImpl implements IBillService {
 	}
 
 	@Override
-	public Bill removeBill(Bill bill) {
-		if (bill.getBillId() == null || bill.getBillId().length() == 0)
+	public Bill removeBill(String billId) {
+		if (billId == null || billId.length() == 0)
 			throw new EmptyValuesException("Bill Id cannot be empty.");
-		if (!billRepo.existsById(bill.getBillId()))
+		if (!billRepo.existsById(billId))
 			throw new BillNotFoundException("Bill does not exist.");
 
+		Bill bill = billRepo.findById(billId).get();
 		orderService.removeOrder(bill.getOrder());
 		billRepo.deleteById(bill.getBillId());
 		return bill;
