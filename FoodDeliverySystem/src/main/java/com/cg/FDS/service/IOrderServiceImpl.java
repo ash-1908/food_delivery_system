@@ -9,6 +9,7 @@ import com.cg.FDS.dao.IOrderRepository;
 import com.cg.FDS.exception.EmptyValuesException;
 import com.cg.FDS.exception.order.OrderAlreadyExistsException;
 import com.cg.FDS.exception.order.OrderNotFoundException;
+import com.cg.FDS.model.FoodCart;
 import com.cg.FDS.model.OrderDetails;
 
 @Service
@@ -32,9 +33,13 @@ public class IOrderServiceImpl implements IOrderService {
 		if (orderRepo.existsById(order.getOrderId()))
 			throw new OrderAlreadyExistsException("Order already exists.");
 
-		cartServ.addCart(order.getCart());
+		order.setCart(cartServ.getCart(order.getCart().getCartId()));
 		orderRepo.save(order);
 		return order;
+	}
+
+	public List<OrderDetails> viewAllOrders() {
+		return orderRepo.findAll();
 	}
 
 	@Override
@@ -59,8 +64,12 @@ public class IOrderServiceImpl implements IOrderService {
 			throw new OrderNotFoundException("Order does not exist.");
 
 		OrderDetails order = orderRepo.findById(orderId).get();
-		cartServ.deleteCart(order.getCart().getCartId());
-		orderRepo.deleteById(order.getOrderId());
+		FoodCart cart = order.getCart();
+		order.setCart(null);
+		orderRepo.save(order);
+		if (cart != null)
+			cartServ.deleteCart(cart.getCartId());
+		orderRepo.delete(order);
 		return order;
 	}
 
@@ -72,6 +81,10 @@ public class IOrderServiceImpl implements IOrderService {
 			throw new OrderNotFoundException("Order does not exist.");
 
 		OrderDetails order = orderRepo.findById(orderId).get();
+		if (order.getCart() == null)
+			throw new EmptyValuesException("Cart in Order is empty.");
+		FoodCart cart = cartServ.getCart(order.getCart().getCartId());
+		order.setCart(cart);
 		return order;
 	}
 

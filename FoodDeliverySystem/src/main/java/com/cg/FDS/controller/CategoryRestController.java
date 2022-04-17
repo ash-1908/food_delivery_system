@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.FDS.model.Category;
@@ -23,7 +24,7 @@ public class CategoryRestController {
 	@Autowired
 	ICategoryServiceImpl catServ;
 
-	@PostMapping("/category/add")
+	@PostMapping("/category/new")
 	public ResponseEntity<Category> addCategory(@RequestBody Category cat) {
 
 		return new ResponseEntity<Category>(catServ.addCategory(cat), HttpStatus.OK);
@@ -36,15 +37,15 @@ public class CategoryRestController {
 	}
 
 	@DeleteMapping("/category/remove")
-	public ResponseEntity<Category> removeCategory(@RequestBody Category cat) {
+	public ResponseEntity<Category> removeCategory(@RequestParam String catId) {
 
-		return new ResponseEntity<Category>(catServ.removeCategory(cat), HttpStatus.OK);
+		return new ResponseEntity<Category>(catServ.removeCategory(catId), HttpStatus.OK);
 	}
 
 	@GetMapping("/category/view")
-	public ResponseEntity<Category> viewCategory(@RequestBody Category cat) {
+	public ResponseEntity<Category> viewCategory(@RequestParam String catId) {
 
-		return new ResponseEntity<Category>(catServ.viewCategory(cat), HttpStatus.OK);
+		return new ResponseEntity<Category>(catServ.viewCategory(catId), HttpStatus.OK);
 	}
 
 	@GetMapping("/category/view/all")

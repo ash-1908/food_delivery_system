@@ -32,7 +32,7 @@ public class RestaurantRestController {
 		return new ResponseEntity<Restaurant>(rserv.viewRestaurant(resId), HttpStatus.OK);
 	}
 
-	@GetMapping("/restaurant/view")
+	@GetMapping("/restaurant/view/location")
 	public ResponseEntity<List<Restaurant>> viewNearByRestaurant(@RequestParam String location) {
 
 		return new ResponseEntity<List<Restaurant>>(rserv.viewNearByRestaurant(location), HttpStatus.OK);
@@ -59,6 +59,18 @@ public class RestaurantRestController {
 	public ResponseEntity<Restaurant> updateRestaurant(@RequestBody Restaurant res) {
 
 		return new ResponseEntity<Restaurant>(rserv.updateRestaurant(res), HttpStatus.OK);
+	}
+
+	@PutMapping("/restaurant/item/add")
+	public ResponseEntity<Restaurant> addItemToRes(@RequestParam String resId, @RequestParam String itemId) {
+
+		return new ResponseEntity<Restaurant>(rserv.addItemToRes(resId, itemId), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/restaurant/item/remove")
+	public ResponseEntity<Restaurant> removeItemFromRes(@RequestParam String resId, @RequestParam String itemId) {
+
+		return new ResponseEntity<Restaurant>(rserv.removeItemFromRes(resId, itemId), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/restaurant/remove")

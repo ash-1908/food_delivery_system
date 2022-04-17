@@ -13,8 +13,10 @@ import com.cg.FDS.exception.EmptyValuesException;
 import com.cg.FDS.exception.bill.BillAlreadyExistsException;
 import com.cg.FDS.exception.bill.BillNotFoundException;
 import com.cg.FDS.exception.customer.CustomerNotFoundException;
+import com.cg.FDS.exception.order.OrderNotFoundException;
 import com.cg.FDS.model.Bill;
 import com.cg.FDS.model.Item;
+import com.cg.FDS.model.OrderDetails;
 
 @Service
 public class IBillServiceImpl implements IBillService {
@@ -54,10 +56,16 @@ public class IBillServiceImpl implements IBillService {
 	public Bill addBill(Bill bill) {
 		if (bill.getBillId() == null || bill.getBillId().length() == 0)
 			throw new EmptyValuesException("Bill Id cannot be empty.");
+		if (bill.getOrder() == null || bill.getOrder().getOrderId() == 0)
+			throw new EmptyValuesException("Bill Id cannot be empty(or 0).");
+		if (bill.getTotalItem() == null || bill.getTotalItem() == 0)
+			throw new EmptyValuesException("Bill total items cannot be empty.");
 		if (billRepo.existsById(bill.getBillId()))
 			throw new BillAlreadyExistsException("Bill already exists.");
-
-		orderService.addOrder(bill.getOrder());
+		if (orderService.viewOrder(bill.getOrder().getOrderId()) == null)
+			throw new OrderNotFoundException("Order does not exist");
+		OrderDetails o = orderService.viewOrder(bill.getOrder().getOrderId());
+		bill.setOrder(o);
 		billRepo.save(bill);
 		return bill;
 	}
@@ -82,7 +90,11 @@ public class IBillServiceImpl implements IBillService {
 			throw new BillNotFoundException("Bill does not exist.");
 
 		Bill bill = billRepo.findById(billId).get();
-		orderService.removeOrder(bill.getOrder().getOrderId());
+		OrderDetails o = bill.getOrder();
+		bill.setOrder(null);
+		billRepo.save(bill);
+		if (o != null)
+			orderService.removeOrder(o.getOrderId());
 		billRepo.deleteById(bill.getBillId());
 		return bill;
 	}
@@ -94,7 +106,7 @@ public class IBillServiceImpl implements IBillService {
 	@Override
 	public List<Bill> viewBills(String custId) {
 		if (custId == null || custId.length() == 0)
-			throw new EmptyValuesException("Date(s) cannot be empty.");
+			throw new EmptyValuesException("Customer Id cannot be empty.");
 		if (!custRepo.existsById(custId))
 			throw new CustomerNotFoundException("Customer does not exist.");
 
@@ -108,7 +120,8 @@ public class IBillServiceImpl implements IBillService {
 			throw new EmptyValuesException("Bill Id cannot be empty.");
 		if (bill.getOrder() == null)
 			throw new EmptyValuesException("Bill items not found.");
-		List<Item> itemList = bill.getOrder().getCart().getItemList();
+
+		List<Item> itemList = orderService.viewOrder(bill.getOrder().getOrderId()).getCart().getItemList();
 		double totalCost = 0.0;
 		for (Item i : itemList) {
 			totalCost += (i.getQuantity() * i.getCost());

@@ -31,21 +31,21 @@ public class ItemRestController {
 	}
 
 	@GetMapping("/item/view/category")
-	public ResponseEntity<List<Item>> viewAllItemsCategory(@RequestParam String name) {
+	public ResponseEntity<List<Item>> viewAllItemsCategory(@RequestParam String catName) {
 
-		return new ResponseEntity<List<Item>>(itemServ.viewAllItemsCategory(name), HttpStatus.OK);
+		return new ResponseEntity<List<Item>>(itemServ.viewAllItemsCategory(catName), HttpStatus.OK);
 	}
 
 	@GetMapping("/item/view/restaurant")
-	public ResponseEntity<List<Item>> viewAllItemsRestaurant(@RequestParam String name) {
+	public ResponseEntity<List<Item>> viewAllItemsRestaurant(@RequestParam String resName) {
 
-		return new ResponseEntity<List<Item>>(itemServ.viewAllItemsRestaurant(name), HttpStatus.OK);
+		return new ResponseEntity<List<Item>>(itemServ.viewAllItemsRestaurant(resName), HttpStatus.OK);
 	}
 
-	@GetMapping("/item/view")
-	public ResponseEntity<List<Item>> viewAllItemsByName(@RequestParam String name) {
+	@GetMapping("/item/view/name")
+	public ResponseEntity<List<Item>> viewAllItemsByName(@RequestParam String itemName) {
 
-		return new ResponseEntity<List<Item>>(itemServ.viewAllItemsByName(name), HttpStatus.OK);
+		return new ResponseEntity<List<Item>>(itemServ.viewAllItemsByName(itemName), HttpStatus.OK);
 	}
 
 	@GetMapping("/item/all")

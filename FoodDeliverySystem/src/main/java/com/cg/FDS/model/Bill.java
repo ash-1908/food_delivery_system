@@ -17,7 +17,9 @@ public class Bill {
 	@Id
 	@Column(name = "billId", length = 20)
 	private String billId;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss[.SSS][.SS][.S]")
+	// @JsonSerialize(using = LocalDateSerializer.class)
+	// @JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime billDate;
 	private Integer totalItem;
 	private Double totalCost;

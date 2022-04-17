@@ -10,6 +10,7 @@ import com.cg.FDS.dao.IItemRepository;
 import com.cg.FDS.exception.EmptyValuesException;
 import com.cg.FDS.exception.item.ItemAlreadyExistsException;
 import com.cg.FDS.exception.item.ItemNotFoundException;
+import com.cg.FDS.model.Category;
 import com.cg.FDS.model.Item;
 
 @Service
@@ -40,7 +41,8 @@ public class IItemServiceImpl implements IItemService {
 		if (itemRepo.existsById(item.getItemId()))
 			throw new ItemAlreadyExistsException("Item already exists.");
 
-		catServ.addCategory(item.getCategory());
+		Category cat = catServ.viewCategory(item.getCategory().getCatId());
+		item.setCategory(cat);
 		itemRepo.save(item);
 		return item;
 	}
@@ -59,7 +61,8 @@ public class IItemServiceImpl implements IItemService {
 		if (!itemRepo.existsById(item.getItemId()))
 			throw new ItemNotFoundException("Item does not exist.");
 
-		catServ.addCategory(item.getCategory());
+		Category cat = catServ.viewCategory(item.getCategory().getCatId());
+		item.setCategory(cat);
 		itemRepo.save(item);
 		return item;
 	}

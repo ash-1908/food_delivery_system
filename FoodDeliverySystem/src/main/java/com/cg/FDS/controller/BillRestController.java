@@ -18,7 +18,7 @@ import com.cg.FDS.model.Bill;
 import com.cg.FDS.service.IBillServiceImpl;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class BillRestController {
 	@Autowired
 	IBillServiceImpl bserv;
@@ -31,15 +31,14 @@ public class BillRestController {
 	@GetMapping("/bill/view/filter/date")
 	public ResponseEntity<List<Bill>> viewBill(@RequestParam("startDate") String startDate,
 			@RequestParam("endDate") String endDate) {
-		List<Bill> billList = bserv.viewBills(startDate, endDate);
-		return new ResponseEntity<List<Bill>>(billList, HttpStatus.OK);
+
+		return new ResponseEntity<List<Bill>>(bserv.viewBills(startDate, endDate), HttpStatus.OK);
 	}
 
 	@GetMapping("/bill/view/filter/customer")
 	public ResponseEntity<List<Bill>> viewBills(@RequestParam("custId") String custId) {
 
-		List<Bill> billList = bserv.viewBills(custId);
-		return new ResponseEntity<List<Bill>>(billList, HttpStatus.OK);
+		return new ResponseEntity<List<Bill>>(bserv.viewBills(custId), HttpStatus.OK);
 	}
 
 	@GetMapping("/bill/all")
@@ -50,8 +49,8 @@ public class BillRestController {
 
 	@PostMapping("/bill/new")
 	public ResponseEntity<Bill> addBill(@RequestBody Bill bill) {
-		bill = bserv.addBill(bill);
-		return new ResponseEntity<Bill>(bill, HttpStatus.OK);
+
+		return new ResponseEntity<Bill>(bserv.addBill(bill), HttpStatus.OK);
 	}
 
 	@PutMapping("/bill/update")

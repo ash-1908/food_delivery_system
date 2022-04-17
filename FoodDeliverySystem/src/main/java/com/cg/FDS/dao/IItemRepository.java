@@ -13,7 +13,7 @@ public interface IItemRepository extends JpaRepository<Item, String> {
 	@Query("SELECT i FROM Item i JOIN  i.restaurants r WHERE r.restaurantId =?1")
 	List<Item> viewAllItemsRestaurant(String resId);
 
-	@Query("FROM Item WHERE category.name=?1")
+	@Query("SELECT i FROM Item i WHERE i.category.categoryName=?1")
 	List<Item> viewAllItemsCategory(String catName);
 
 	@Query("FROM Item WHERE itemName = ?1")

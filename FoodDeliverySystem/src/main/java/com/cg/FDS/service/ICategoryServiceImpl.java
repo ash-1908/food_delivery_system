@@ -44,28 +44,32 @@ public class ICategoryServiceImpl implements ICategoryService {
 	}
 
 	@Override
-	public Category removeCategory(Category cat) {
-		if (cat.getCatId() == null || cat.getCatId().length() == 0)
+	public Category removeCategory(String catId) {
+		if (catId == null || catId.length() == 0)
 			throw new EmptyValuesException("Category Id cannot be empty.");
-		if (!catRepo.existsById(cat.getCatId()))
+		if (!catRepo.existsById(catId))
 			throw new CategoryNotFoundException("Category does not exist.");
 
-		catRepo.deleteById(cat.getCatId());
+		Category cat = catRepo.findById(catId).get();
+		catRepo.deleteById(catId);
 		return cat;
 	}
 
 	@Override
-	public Category viewCategory(Category cat) {
-		if (cat.getCatId() == null || cat.getCatId().length() == 0)
+	public Category viewCategory(String catId) {
+		if (catId == null || catId.length() == 0)
 			throw new EmptyValuesException("Category Id cannot be empty.");
+		if (!catRepo.existsById(catId))
+			throw new CategoryNotFoundException("Category does not exist.");
 
+		Category cat = catRepo.findById(catId).get();
 		return cat;
 
 	}
 
 	@Override
 	public List<Category> viewAllCategory() {
-		List<Category> categoryList = catRepo.viewAllCategory();
+		List<Category> categoryList = catRepo.findAll();
 		return categoryList;
 	}
 

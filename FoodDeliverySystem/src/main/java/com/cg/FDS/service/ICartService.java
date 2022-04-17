@@ -3,13 +3,13 @@ package com.cg.FDS.service;
 import com.cg.FDS.model.FoodCart;
 
 public interface ICartService {
-	public FoodCart addItemToCart(FoodCart cart, String itemId);
+	public FoodCart addItemToCart(String cartId, String itemId);
 
-	public FoodCart increaseQuantity(FoodCart cart, String itemId, int quantity);
+	public FoodCart increaseQuantity(String cartId, String itemId, int quantity);
 
-	public FoodCart reduceQuantity(FoodCart cart, String itemId, int quantity);
+	public FoodCart reduceQuantity(String cartId, String itemId, int quantity);
 
-	public FoodCart removeItem(FoodCart cart, String itemId);
+	public FoodCart removeItem(String cartId, String itemId);
 
-	public FoodCart clearCart(FoodCart cart);
+	public FoodCart clearCart(String cartId);
 }

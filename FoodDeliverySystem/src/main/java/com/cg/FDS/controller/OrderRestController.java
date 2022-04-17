@@ -47,6 +47,12 @@ public class OrderRestController {
 		return new ResponseEntity<OrderDetails>(orderServ.viewOrder(orderId), HttpStatus.OK);
 	}
 
+	@GetMapping("/order/all")
+	public ResponseEntity<List<OrderDetails>> viewAllOrder() {
+
+		return new ResponseEntity<List<OrderDetails>>(orderServ.viewAllOrders(), HttpStatus.OK);
+	}
+
 	@GetMapping("/order/view/restaurant")
 	public ResponseEntity<List<OrderDetails>> viewAllOrderRestaurant(@RequestParam String resId) {
 

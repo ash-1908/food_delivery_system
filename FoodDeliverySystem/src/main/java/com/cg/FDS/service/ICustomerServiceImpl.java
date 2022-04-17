@@ -69,18 +69,19 @@ public class ICustomerServiceImpl implements ICustomerService {
 	public Customer removeCustomer(String custId) {
 		if (custId == null || custId.length() == 0)
 			throw new EmptyValuesException("Customer Id cannot be empty.");
-
 		if (!custRepo.existsById(custId))
 			throw new CustomerNotFoundException("Customer does not exist.");
 
 		Customer customer = custRepo.findById(custId).get();
-		Address adr = customer.getAddress();
+		Address adr = null;
+		if (customer.getAddress() != null)
+			adr = customer.getAddress();
 
 		customer.setAddress(null);
 		customer.setCartList(null);
 		custRepo.save(customer);
-
-		addrServ.deleteAddress(adr.getAddressId());
+		if (adr != null)
+			addrServ.deleteAddress(adr.getAddressId());
 		custRepo.deleteById(customer.getCustomerId());
 		return customer;
 	}

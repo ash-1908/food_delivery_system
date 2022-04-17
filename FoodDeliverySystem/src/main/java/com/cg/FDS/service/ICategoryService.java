@@ -5,11 +5,15 @@ import java.util.List;
 import com.cg.FDS.model.Category;
 
 public interface ICategoryService {
-	
-	 Category addCategory(Category cat);
-	 Category updateCategory(Category cat);
-	 Category removeCategory(Category cat);
-	 Category viewCategory(Category cat);
-	 List<Category> viewAllCategory();
+
+	Category addCategory(Category cat);
+
+	Category updateCategory(Category cat);
+
+	Category removeCategory(String catId);
+
+	Category viewCategory(String catId);
+
+	List<Category> viewAllCategory();
 
 }
