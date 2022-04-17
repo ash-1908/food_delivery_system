@@ -5,9 +5,9 @@ import { CategoryService } from '../category-service.service';
 
 
 @Component({
-    selector: 'app-Restaurant-add',
-    templateUrl: './Restaurant-add.component.html',
-    styleUrls: ['./Restaurant-add.component.css']
+    selector: 'app-category-update',
+    templateUrl: './category-update.component.html',
+    styleUrls: ['./category-update.component.css']
   })
 
   export class CategoryUpdateComponent implements OnInit {

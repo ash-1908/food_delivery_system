@@ -1,18 +1,20 @@
 <h2>Add Item</h2>
+<div class="container">
 <table>
     <tr>
         <td>Item Id</td>
-        <td><input type="text" [(ngModel )]="item.itemId"></td>
+        <td><input type="text"  class="item.itemId" [(ngModel )]="item.itemId"></td>
     </tr>
     <tr>
         <td>Item Name</td>
-        <td><input type="text" [(ngModel) ]="item.itemName"></td>
+        <td><input type="text" class="item.itemName" [(ngModel) ]="item.itemName"></td>
     </tr>
     <tr>
         <td> 
-            <td><button (click)="addItem()">Add Item</button></td>
+            <td><button class="btn btn-primary" (click)="addItem()">Add Item</button></td>
             <td>{{item.itemId}} {{item.itemName}}</td>
     </tr>
 
 </table>
 <p>{{msg}}</p>
+</div>

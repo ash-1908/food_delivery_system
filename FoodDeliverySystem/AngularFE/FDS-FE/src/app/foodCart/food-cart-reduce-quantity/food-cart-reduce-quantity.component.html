@@ -1,24 +1,26 @@
 <h2>Reduce Quantity of Item</h2>
+<div class="container">
 <table>
     <tr>
         <td>Cart ID</td>
-        <td> <input type="text"  [(ngModel) ]="cart.cartId"></td>
+        <td> <input type="text"  class="cart.cartId" [(ngModel) ]="cart.cartId"></td>
     </tr>
     <tr>
         <td>Item ID</td>
-        <td> <input type="text"  [(ngModel) ]="item.itemId"></td>
+        <td> <input type="text" class="item.itemId"  [(ngModel) ]="item.itemId"></td>
     </tr>
     
     <tr>
         <td>Item Name</td>
-        <td> <input type="text"  [(ngModel) ]="item.itemName"></td>
+        <td> <input type="text" class="item.itemName"  [(ngModel) ]="item.itemName"></td>
     </tr>
 
     <tr>
         <td>Quantity</td>
-        <td> <input type="text"  [(ngModel) ]="item.quantity"></td>
+        <td> <input type="text"  class="item.quantity" [(ngModel) ]="item.quantity"></td>
     </tr>
 
-        <td><button (click)="reduceQuantity()">Quantity Reduced</button></td>
+        <td><button  class="btn btn-danger" (click)="reduceQuantity()">Quantity Reduced</button></td>
         
 </table>
+</div>
