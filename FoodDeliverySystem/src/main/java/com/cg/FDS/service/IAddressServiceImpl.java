@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.FDS.dao.IAddressRepository;
+import com.cg.FDS.exception.EmptyValuesException;
 import com.cg.FDS.model.Address;
 
 @Service
@@ -13,6 +14,10 @@ public class IAddressServiceImpl {
 	IAddressRepository addrRepo;
 
 	public Address addAddress(Address adr) {
+		if (adr.getBuildingName() == null || adr.getBuildingName().length() == 0)
+			throw new EmptyValuesException("Building name in address cannot be empty.");
+		if (adr.getPincode() == null || adr.getPincode().length() == 0)
+			throw new EmptyValuesException("Pincode in address cannot be empty.");
 		addrRepo.save(adr);
 		return adr;
 	}

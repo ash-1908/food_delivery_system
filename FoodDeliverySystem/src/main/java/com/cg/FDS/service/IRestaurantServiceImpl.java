@@ -78,11 +78,10 @@ public class IRestaurantServiceImpl implements IRestaurantService {
 			throw new EmptyValuesException("Restaurant Id cannot be empty.");
 		if (resRepo.existsById(rest.getRestaurantId()))
 			throw new RestaurantAlreadyExistsException("Restaurant already exists.");
-		if (rest.getAddress() == null || rest.getAddress().getAddressId() == null
-				|| rest.getAddress().getAddressId().length() == 0)
+		if (rest.getAddress() == null)
 			throw new EmptyValuesException("Restaurant address cannot be empty.");
 
-		Address adr = addrServ.getAddress(rest.getAddress().getAddressId());
+		Address adr = addrServ.addAddress(rest.getAddress());
 		if (rest.getItemList().size() != 0) {
 			List<Item> itemList = new ArrayList<>();
 			for (Item i : rest.getItemList()) {
@@ -109,7 +108,7 @@ public class IRestaurantServiceImpl implements IRestaurantService {
 		if (addrServ.getAddress(rest.getAddress().getAddressId()) == null)
 			rest.setAddress((addrServ.addAddress(rest.getAddress())));
 		else
-			rest.setAddress(addrServ.getAddress(rest.getAddress().getAddressId()));
+			rest.setAddress(addrServ.updateAddress(rest.getAddress()));
 
 		// if item list is empty copy old item list
 		if (rest.getItemList() == null) {
