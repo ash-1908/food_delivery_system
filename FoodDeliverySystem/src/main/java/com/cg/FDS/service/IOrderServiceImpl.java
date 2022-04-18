@@ -51,7 +51,7 @@ public class IOrderServiceImpl implements IOrderService {
 		if (!orderRepo.existsById(order.getOrderId()))
 			throw new OrderNotFoundException("Order does not exist.");
 
-		cartServ.addCart(order.getCart());
+		cartServ.updateCart(order.getCart());
 		orderRepo.save(order);
 		return order;
 	}

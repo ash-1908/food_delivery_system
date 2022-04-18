@@ -31,6 +31,27 @@ public class ICartServiceImpl implements ICartService {
 		return cartRepo.findAll();
 	}
 
+	public FoodCart updateCart(FoodCart cart) {
+		if (cart.getCartId() == null || cart.getCartId().length() == 0)
+			throw new EmptyValuesException("Cart id cannot be empty.");
+		if (!cartRepo.existsById(cart.getCartId()))
+			throw new FoodCartAlreadyExistsException("Cart does not exist.");
+		if (cart.getCustomer() == null || cart.getCustomer().getCustomerId().length() == 0)
+			throw new EmptyValuesException("Customer in cart cannot be empty.");
+
+		FoodCart oldCart = cartRepo.findById(cart.getCartId()).get();
+		if (!oldCart.getCustomer().getCustomerId().equals(cart.getCustomer().getCustomerId()))
+			throw new FoodCartAlreadyExistsException("Food Cart already exists for a different customer.");
+
+		Customer c = cart.getCustomer();
+		List<Item> itemList = cart.getItemList();
+
+		oldCart.setCustomer(c);
+		oldCart.setItemList(itemList);
+		cartRepo.save(oldCart);
+		return oldCart;
+	}
+
 	public FoodCart getCart(String cartId) {
 		if (!cartRepo.existsById(cartId))
 			throw new FoodCartAlreadyExistsException("Cart does not exist.");
