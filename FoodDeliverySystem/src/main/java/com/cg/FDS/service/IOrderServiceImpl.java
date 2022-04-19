@@ -67,8 +67,6 @@ public class IOrderServiceImpl implements IOrderService {
 		FoodCart cart = order.getCart();
 		order.setCart(null);
 		orderRepo.save(order);
-		if (cart != null)
-			cartServ.deleteCart(cart.getCartId());
 		orderRepo.delete(order);
 		return order;
 	}

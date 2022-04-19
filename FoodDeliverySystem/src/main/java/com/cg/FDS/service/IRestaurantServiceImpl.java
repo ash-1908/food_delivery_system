@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.cg.FDS.dao.IRestaurantRepository;
 import com.cg.FDS.exception.EmptyValuesException;
+import com.cg.FDS.exception.customer.AddressAlreadyExistsException;
 import com.cg.FDS.exception.item.ItemNotFoundException;
 import com.cg.FDS.exception.restaurant.RestaurantAlreadyExistsException;
 import com.cg.FDS.exception.restaurant.RestaurantNotFoundException;
@@ -80,6 +81,13 @@ public class IRestaurantServiceImpl implements IRestaurantService {
 			throw new RestaurantAlreadyExistsException("Restaurant already exists.");
 		if (rest.getAddress() == null)
 			throw new EmptyValuesException("Restaurant address cannot be empty.");
+
+		String city = rest.getAddress().getCity().toLowerCase();
+		rest.getAddress().setCity(city);
+		if (addrServ.getAddress(rest.getAddress().getAddressId()) == null)
+			addrServ.addAddress(rest.getAddress());
+		else
+			throw new AddressAlreadyExistsException("Address with this id already exists");
 
 		Address adr = addrServ.addAddress(rest.getAddress());
 		if (rest.getItemList().size() != 0) {
@@ -162,7 +170,7 @@ public class IRestaurantServiceImpl implements IRestaurantService {
 		if (location == null || location.length() == 0)
 			throw new EmptyValuesException("Restaurant location cannot be empty.");
 
-		List<Restaurant> restList = resRepo.viewNearByRestaurant(location);
+		List<Restaurant> restList = resRepo.viewNearByRestaurant(location.toLowerCase());
 		return restList;
 	}
 

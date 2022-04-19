@@ -40,8 +40,6 @@ public class ICartServiceImpl implements ICartService {
 			throw new EmptyValuesException("Customer in cart cannot be empty.");
 
 		FoodCart oldCart = cartRepo.findById(cart.getCartId()).get();
-		if (!oldCart.getCustomer().getCustomerId().equals(cart.getCustomer().getCustomerId()))
-			throw new FoodCartAlreadyExistsException("Food Cart already exists for a different customer.");
 
 		Customer c = cart.getCustomer();
 		List<Item> itemList = cart.getItemList();
@@ -78,7 +76,7 @@ public class ICartServiceImpl implements ICartService {
 
 		List<Item> itemList = new ArrayList<Item>();
 		for (Item i : cart.getItemList()) {
-			itemList.add(itemServ.viewItem(i.getItemId()));
+			itemList.add(itemServ.updateItem(i));
 		}
 
 		cart.setItemList(itemList);
@@ -95,12 +93,18 @@ public class ICartServiceImpl implements ICartService {
 			throw new FoodCartNotFoundException("Cart does not exist.");
 
 		FoodCart cart = cartRepo.findById(cartId).get();
-		Customer c = cart.getCustomer();
 		List<Item> itemList = cart.getItemList();
+		Customer c = cart.getCustomer();
+		if (c != null) {
+			List<FoodCart> cartList = c.getCartList().stream().filter((fc) -> !fc.getCartId().equals(cartId))
+					.collect(Collectors.toList());
+			c.setCartList(cartList);
+			custServ.updateCustomer(c);
+		}
 		cart.setCustomer(null);
 		cart.setItemList(null);
-		cartRepo.save(cart);
 		cartRepo.deleteById(cartId);
+
 		cart.setCustomer(c);
 		cart.setItemList(itemList);
 		return cart;

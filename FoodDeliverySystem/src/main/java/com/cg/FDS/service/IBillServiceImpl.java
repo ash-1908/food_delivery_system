@@ -77,7 +77,7 @@ public class IBillServiceImpl implements IBillService {
 		if (!billRepo.existsById(bill.getBillId()))
 			throw new BillNotFoundException("Bill does not exist.");
 
-		orderService.addOrder(bill.getOrder());
+		// orderService.addOrder(bill.getOrder());
 		billRepo.save(bill);
 		return bill;
 	}

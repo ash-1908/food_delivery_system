@@ -23,6 +23,12 @@ public class CartRestController {
 	@Autowired
 	ICartServiceImpl cartServ;
 
+	@GetMapping("/cart/view")
+	public ResponseEntity<FoodCart> viewCart(@RequestParam String cartId) {
+
+		return new ResponseEntity<FoodCart>(cartServ.getCart(cartId), HttpStatus.OK);
+	}
+
 	@GetMapping("/cart/all")
 	public ResponseEntity<List<FoodCart>> getAllCarts() {
 
@@ -33,6 +39,12 @@ public class CartRestController {
 	public ResponseEntity<FoodCart> addNewCart(@RequestBody FoodCart cart) {
 
 		return new ResponseEntity<FoodCart>(cartServ.addNewCart(cart), HttpStatus.OK);
+	}
+
+	@PutMapping("/cart/update")
+	public ResponseEntity<FoodCart> updateCart(@RequestBody FoodCart cart) {
+
+		return new ResponseEntity<FoodCart>(cartServ.updateCart(cart), HttpStatus.OK);
 	}
 
 	@PostMapping("/cart/add")

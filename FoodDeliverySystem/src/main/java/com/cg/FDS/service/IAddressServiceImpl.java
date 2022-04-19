@@ -37,10 +37,10 @@ public class IAddressServiceImpl {
 	}
 
 	public Address deleteAddress(String adr_id) {
-		if (addrRepo.existsById(adr_id)) {
-			addrRepo.deleteById(adr_id);
-			return addrRepo.findById(adr_id).get();
-		}
-		return null;
+		if (!addrRepo.existsById(adr_id))
+			throw new EmptyValuesException("Address does not exists");
+		Address adr = addrRepo.findById(adr_id).get();
+		addrRepo.deleteById(adr_id);
+		return adr;
 	}
 }

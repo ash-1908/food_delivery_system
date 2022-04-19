@@ -2,7 +2,6 @@ package com.cg.FDS.model;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -24,7 +23,7 @@ public class Bill {
 	private Integer totalItem;
 	private Double totalCost;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	private OrderDetails order;
 
 	public Bill() {

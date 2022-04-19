@@ -18,6 +18,7 @@ import com.cg.FDS.exception.cart.FoodCartAlreadyExistsException;
 import com.cg.FDS.exception.cart.FoodCartNotFoundException;
 import com.cg.FDS.exception.category.CategoryAlreadyExistsException;
 import com.cg.FDS.exception.category.CategoryNotFoundException;
+import com.cg.FDS.exception.customer.AddressAlreadyExistsException;
 import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
 import com.cg.FDS.exception.customer.CustomerNotFoundException;
 import com.cg.FDS.exception.item.ItemAlreadyExistsException;
@@ -34,6 +35,13 @@ import com.cg.FDS.exception.restaurant.RestaurantNotFoundException;
 public class MyRestControllerAdvice extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(EmptyValuesException.class)
 	public @ResponseBody ResponseEntity<ErrorInfo> handleEmptyValuesException(EmptyValuesException e,
+			HttpServletRequest req) {
+		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
+		return new ResponseEntity<ErrorInfo>(err, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(AddressAlreadyExistsException.class)
+	public @ResponseBody ResponseEntity<ErrorInfo> handleAddressAlreadyExistsException(AddressAlreadyExistsException e,
 			HttpServletRequest req) {
 		ErrorInfo err = new ErrorInfo(LocalDateTime.now(), e.getMessage(), req.getRequestURI());
 		return new ResponseEntity<ErrorInfo>(err, HttpStatus.BAD_REQUEST);

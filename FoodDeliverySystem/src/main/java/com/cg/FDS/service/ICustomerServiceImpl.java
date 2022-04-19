@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cg.FDS.dao.ICustomerRepository;
 import com.cg.FDS.exception.EmptyValuesException;
+import com.cg.FDS.exception.customer.AddressAlreadyExistsException;
 import com.cg.FDS.exception.customer.CustomerAlreadyExistsException;
 import com.cg.FDS.exception.customer.CustomerNotFoundException;
 import com.cg.FDS.model.Address;
@@ -35,7 +36,11 @@ public class ICustomerServiceImpl implements ICustomerService {
 		if (custRepo.existsById(customer.getCustomerId()))
 			throw new CustomerAlreadyExistsException("Customer already exists.");
 
-		addrServ.addAddress(customer.getAddress());
+		if (addrServ.getAddress(customer.getAddress().getAddressId()) == null)
+			addrServ.addAddress(customer.getAddress());
+		else
+			throw new AddressAlreadyExistsException("Address with this id already exists");
+
 		custRepo.save(customer);
 		return customer;
 	}
@@ -51,16 +56,6 @@ public class ICustomerServiceImpl implements ICustomerService {
 		if (!custRepo.existsById(customer.getCustomerId()))
 			throw new CustomerNotFoundException("Customer does not exist.");
 
-		Customer oldCust = custRepo.getById(customer.getCustomerId());
-		// address is null -> dont update address of customer
-		if (customer.getAddress() == null || customer.getAddress().getAddressId() == null
-				|| customer.getAddress().getAddressId().length() == 0)
-			customer.setAddress(oldCust.getAddress());
-		// address id is new
-		else {
-			addrServ.deleteAddress(oldCust.getAddress().getAddressId());
-			addrServ.addAddress(customer.getAddress());
-		}
 		custRepo.save(customer);
 		return customer;
 	}
@@ -73,6 +68,7 @@ public class ICustomerServiceImpl implements ICustomerService {
 			throw new CustomerNotFoundException("Customer does not exist.");
 
 		Customer customer = custRepo.findById(custId).get();
+
 		Address adr = null;
 		if (customer.getAddress() != null)
 			adr = customer.getAddress();
@@ -80,8 +76,10 @@ public class ICustomerServiceImpl implements ICustomerService {
 		customer.setAddress(null);
 		customer.setCartList(null);
 		custRepo.save(customer);
+
 		if (adr != null)
 			addrServ.deleteAddress(adr.getAddressId());
+
 		custRepo.deleteById(customer.getCustomerId());
 		return customer;
 	}
